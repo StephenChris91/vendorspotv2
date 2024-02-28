@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Category from "@/components/category";
 import DealsSection from "@/components/deals-section";
+import ExtraServices from "@/components/extra-services";
 import QuoteSection from "@/components/quotesection";
 import RecommendedProducts from "@/components/recommended";
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,7 @@ export default async function Index() {
       <Category />
       <QuoteSection />
       <RecommendedProducts />
+      <ExtraServices />
     </div>
   );
 }
