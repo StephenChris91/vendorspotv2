@@ -28,8 +28,17 @@ import {
   } from "@/components/ui/select"
 
 const formSchema = z.object({
-    username: z.string().min(2, {
-        message: "Username must be at least 2 characters.",
+    discription: z.string().min(2, {
+        message: "Please input a discription",
+    }),
+    details: z.string().min(2, {
+        message: "Please provide more details",
+    }),
+    quantity: z.string().min(1, {
+        message: "Please provide a quantity",
+    }),
+    vendor: z.string().min(1, {
+        message: "Please choose a vendor",
     }),
 })
 
@@ -38,7 +47,10 @@ export function QuotesForm() {
         const form = useForm<z.infer<typeof formSchema>>({
                 resolver: zodResolver(formSchema),
                 defaultValues: {
-                    username: "",
+                    discription: "",
+                    details: "",
+                    quantity: "",
+                    vendor: "",
                 },
             })
          
@@ -58,8 +70,8 @@ export function QuotesForm() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
                 <FormField
                     control={form.control}
-                    name="username"
-                    render={({ field }) => (
+                    name="discription"
+                    render={({ field, fieldState, formState }) => ( // Update the type of the render function
                         <FormItem>
                             <FormControl>
                                 <Input placeholder="What item you need?" {...field} />
@@ -70,8 +82,8 @@ export function QuotesForm() {
                     />
                 <FormField
                     control={form.control}
-                    name="username"
-                    render={({ field }) => (
+                    name="details"
+                    render={({ field, fieldState, formState }) => ( // Update the type of the render function
                         <FormItem>
                             <FormControl>
                             <FormControl>
@@ -89,8 +101,8 @@ export function QuotesForm() {
                     <div className="flex gap-2">
                     <FormField
                             control={form.control}
-                            name="username"
-                            render={({ field }) => (
+                            name="quantity"
+                            render={({ field, fieldState, formState }) => ( // Update the type of the render function
                                 <FormItem>
                                     <FormControl>
                                     <FormControl>
@@ -103,13 +115,13 @@ export function QuotesForm() {
                             />
                         <FormField
                         control={form.control}
-                        name="username"
-                        render={({ field }) => (
+                        name="vendor"
+                        render={({ field, fieldState, formState }) => ( // Update the type of the render function
                             <FormItem>
                                 <FormControl>
                                 <FormControl>
                                     <Select>
-                                        <SelectTrigger className="w-[180px]">
+                                        <SelectTrigger className="w-full">
                                             <SelectValue placeholder="Pcs" />
                                         </SelectTrigger>
                                         <SelectContent>
