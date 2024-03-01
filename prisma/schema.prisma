@@ -1,0 +1,128 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProductStatus {
+  Published
+  Draft
+  Suspended
+  OutOfStock
+}
+
+enum ProductType {
+  Simple
+  Variable
+}
+
+enum userRole {
+  Customer
+  Vendor
+  Admin
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String
+  name      String
+  role      userRole? @default(Customer)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  deletedAt DateTime  @default(now())
+  shopId    Int
+  shop      Shop?     @relation(fields: [shopId], references: [id])
+}
+
+model Shop {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  address     String
+  phone       String
+  email       String
+  logo        String
+  banner      String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+  deletedAt   DateTime  @default(now())
+  users       User[]
+  products    Product[]
+}
+
+model Product {
+  id                           Int           @id @default(autoincrement())
+  name                         String
+  slug                         String?
+  description                  String?
+  type_id                      Int?
+  price                        Float
+  sale_price                   Int?
+  language                     String
+  min_price                    Float
+  max_price                    Float
+  sku                          Int           @default(autoincrement())
+  quantity                     Int
+  in_stock                     Boolean
+  is_taxable                   Boolean
+  shipping_class_id            Int?          @default(autoincrement())
+  status                       ProductStatus @default(Published)
+  product_type                 ProductType   @default(Simple)
+  height                       Int?
+  width                        Int?
+  image                        Json
+  image_id                     Int?
+  video                        String?
+  gallery                      Json[]
+  gallery_id                   Int?
+  deleted_at                   DateTime?     @default(now())
+  created_at                   DateTime      @default(now())
+  updated_at                   DateTime      @default(now())
+  author_id                    String?
+  manufacturer_id              String?
+  is_digital                   Boolean?
+  is_external                  Boolean?
+  external_product_url         String?
+  external_product_button_next String?
+  ratings                      Float
+  total_reviews                Int
+  rating_count                 Int?
+  my_review                    String?
+  in_wishlist                  Boolean?
+  categories                   String
+  shop                         Shop?         @relation(fields: [shop_id], references: [id])
+  shop_id                      Int
+  type                         String?
+  // Shop                      Shop          @relation(fields: [shop_id], references: [id])
+  // images                    Image[]
+  Image                        Image?
+  Gallery                      Gallery?
+}
+
+model Image {
+  id        Int      @id @default(autoincrement())
+  original  String
+  thumbnail String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id])
+  productId Int      @unique
+  gallery   Gallery? @relation(fields: [galleryId], references: [id])
+  galleryId Int      @unique
+}
+
+model Gallery {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  images    Image[]
+  product   Product  @relation(fields: [productId], references: [id])
+  productId Int      @unique
+}

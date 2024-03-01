@@ -1,6 +1,7 @@
 import Subscribe from "./subscribe-section";
 import logo from "@/app/v-logo.png";
 import Image from "next/image";
+import Link from "next/link";
 
 //import icons
 import { FaFacebook } from "react-icons/fa";
@@ -24,89 +25,89 @@ export default function Footer() {
             Best information about the company gies here but now lorem ipsum is
           </p>
           <div className="flex justify-start items-start gap-2 text-gray-600">
-            <a href="/" target="_blank" rel="noreferrer">
-              <AiFillFacebook className="text-3xl text-gray-400" />
-            </a>
-            <a href="/" target="_blank" rel="noreferrer">
-              <AiFillTwitterCircle className="text-gray-400 text-3xl" />
-            </a>
-            <a href="/" target="_blank" rel="noreferrer">
-              <AiFillInstagram className="text-gray-400 text-3xl" />
-            </a>
-            <a href="/" target="_blank" rel="noreferrer">
-              <AiFillLinkedin className="text-gray-400 text-3xl" />
-            </a>
-            <a href="/" target="_blank" rel="noreferrer">
-              <AiFillYoutube className="text-gray-400 text-3xl" />
-            </a>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <AiFillFacebook className="text-3xl text-gray-400 hover:text-blue-500" />
+            </Link>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <AiFillTwitterCircle className="text-gray-400 text-3xl hover:text-blue-500" />
+            </Link>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <AiFillInstagram className="text-gray-400 text-3xl hover:text-blue-500" />
+            </Link>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <AiFillLinkedin className="text-gray-400 text-3xl hover:text-blue-500" />
+            </Link>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <AiFillYoutube className="text-gray-400 text-3xl hover:text-blue-500" />
+            </Link>
           </div>
         </div>
         <div className="flex flex-col space-y-2">
           <h3 className="text-gray-700">About</h3>
           <div className="flex flex-col space-y-2">
-            <a href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700">About Us</p>
-            </a>
-            <a href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700">Find Stores</p>
-            </a>
-            <a href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700">Categories</p>
-            </a>
-            <a href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700">Blogs</p>
-            </a>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <p className="text-gray-700 hover:text-blue-500">About Us</p>
+            </Link>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <p className="text-gray-700 hover:text-blue-500">Find Stores</p>
+            </Link>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <p className="text-gray-700 hover:text-blue-500">Categories</p>
+            </Link>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <p className="text-gray-700 hover:text-blue-500">Blogs</p>
+            </Link>
           </div>
         </div>
         <div className="flex flex-col space-y-2">
           <h3 className="text-gray-700">Partnership</h3>
           <div className="flex flex-col space-y-2">
-            <a href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700">About Us</p>
-            </a>
-            <a href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700">Find Stores</p>
-            </a>
-            <a href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700">Categories</p>
-            </a>
-            <a href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700">Blogs</p>
-            </a>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <p className="text-gray-700 hover:text-blue-500">About Us</p>
+            </Link>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <p className="text-gray-700 hover:text-blue-500">Find Stores</p>
+            </Link>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <p className="text-gray-700 hover:text-blue-500">Categories</p>
+            </Link>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <p className="text-gray-700 hover:text-blue-500">Blogs</p>
+            </Link>
           </div>
         </div>
         <div className="flex flex-col space-y-2">
           <h3 className="text-gray-700">Information</h3>
           <div className="flex flex-col space-y-2">
-            <a href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700">About Us</p>
-            </a>
-            <a href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700">Find Stores</p>
-            </a>
-            <a href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700">Categories</p>
-            </a>
-            <a href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700">Blogs</p>
-            </a>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <p className="text-gray-700 hover:text-blue-500">Help Center</p>
+            </Link>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <p className="text-gray-700 hover:text-blue-500">Money Refund</p>
+            </Link>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <p className="text-gray-700 hover:text-blue-500">Shipping</p>
+            </Link>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <p className="text-gray-700 hover:text-blue-500">Contact Us</p>
+            </Link>
           </div>
         </div>
         <div className="flex flex-col space-y-2">
           <h3 className="text-gray-700">For Users</h3>
           <div className="flex flex-col space-y-2">
-            <a href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700">About Us</p>
-            </a>
-            <a href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700">Find Stores</p>
-            </a>
-            <a href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700">Categories</p>
-            </a>
-            <a href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700">Blogs</p>
-            </a>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <p className="text-gray-700 hover:text-blue-500">Login</p>
+            </Link>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <p className="text-gray-700 hover:text-blue-500">Register</p>
+            </Link>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <p className="text-gray-700 hover:text-blue-500">Settings</p>
+            </Link>
+            <Link href="/" target="_blank" rel="noreferrer">
+              <p className="text-gray-700 hover:text-blue-500">My Orders</p>
+            </Link>
           </div>
         </div>
         <div className="flex flex-col space-y-2">
