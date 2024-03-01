@@ -13,12 +13,7 @@ import { useUser } from "@/app/hooks/useUser";
 import SignOut from "./auth/signout";
 
 export default function UserComponent() {
-  const [username, setUsername] = useState("James");
   const router = useRouter();
-
-  const logout = useLogout();
-
-  // const supabase = createClient();
 
   const user = useUser();
 
@@ -39,7 +34,7 @@ export default function UserComponent() {
               <Image src={avatar} alt="avatar" width={50} height={50} />
             )}
             {user ? (
-              <p>Hi! {username} Welcome to Vendorspot</p>
+              <p>Hi! {user.user_metadata.firstname} Welcome to Vendorspot</p>
             ) : (
               <p>Hi!, Please sign in to enjoy all our benefits</p>
             )}

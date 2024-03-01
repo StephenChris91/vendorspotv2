@@ -69,9 +69,12 @@ export default function Login() {
 
   return (
     <div className="w-96 p-5 mt-32 flex flex-col m-auto items-start h-auto bg-gray-50 shadow-sm">
-      <h1 className="text-3xl font-semibold mb-5">Sign Up</h1>
+      <h1 className="text-3xl font-semibold mb-5">Login</h1>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-3 min-w-full"
+        >
           <FormField
             control={form.control}
             name="email"
@@ -80,7 +83,7 @@ export default function Login() {
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="First Name"
+                    placeholder="Enter your email address..."
                     {...field}
                     className="w-full p-5 rounded-sm"
                   />
@@ -98,7 +101,7 @@ export default function Login() {
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Last Name"
+                      placeholder="Enter your password..."
                       {...field}
                       className="w-full p-5 rounded-sm"
                     />

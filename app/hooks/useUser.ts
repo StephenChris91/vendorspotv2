@@ -1,27 +1,23 @@
 "use client"
 
-import { useState, useEffect } from 'react';
-import { createClient } from '@/utils/supabase/client';
-import type { User } from '@/app/types/types';
-
+import { useEffect, useState } from 'react';
+import { User, createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 export function useUser() {
     const [user, setUser] = useState<User | null>(null);
+    const supabase = createClientComponentClient();
 
-    const supabase = createClient();
     useEffect(() => {
-        const fetchUser = async () => {
-            const { data, error } = await supabase.auth.getUser();
+        // Check active user on mount
+        supabase.auth.getUser().then((user) => setUser(user.data.user));
 
-            if (error) {
-                console.error('Error fetching user:', error);
-                return;
-            }
-            console.log(data);
-            setUser(data.user as User); // Type assertion to cast email to string
+        // Subscribe to auth changes
+        const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => setUser(session?.user ?? null));
+
+        // Unsubscribe on unmount
+        return () => {
+            authListener.subscription.unsubscribe();
         };
-
-        fetchUser();
     }, []);
 
   return user;
