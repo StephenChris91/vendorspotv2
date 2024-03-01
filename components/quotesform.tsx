@@ -121,7 +121,7 @@ export function QuotesForm() {
                                 <FormControl>
                                 <FormControl>
                                     <Select>
-                                        <SelectTrigger className="w-full">
+                                        <SelectTrigger className="w-[180px]">
                                             <SelectValue placeholder="Pcs" />
                                         </SelectTrigger>
                                         <SelectContent>
