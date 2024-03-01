@@ -6,7 +6,6 @@ import QuoteSection from "@/components/quotesection";
 import RecommendedProducts from "@/components/recommended";
 import { Button } from "@/components/ui/button";
 
-
 export default async function Index() {
   // const canInitSupabaseClient = () => {
   //   // This function is just for the interactive tutorial.
@@ -23,8 +22,8 @@ export default async function Index() {
 
   return (
     <div className="flex-1 w-full flex flex-col gap-5 items-center">
-     <Header />
-     <DealsSection />
+      <Header />
+      <DealsSection />
       <Category />
       <QuoteSection />
       <RecommendedProducts />

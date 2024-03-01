@@ -12,12 +12,12 @@ export interface catTitle {
     title: string;
 }
 
-export type User = {
+export interface User  {
     email: string;
-    password: string;
-    firstname: string;
-    lastname: string;
-    confirmPassword: string;
+    password?: string | undefined;
+    firstname?: string;
+    lastname?: string;
+    confirmPassword?: string;
     role?: boolean;
     shop?: boolean;
 }

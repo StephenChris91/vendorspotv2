@@ -1,14 +1,22 @@
+"use client"
+
 import { redirect } from 'next/navigation';
 import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 
-export function useLogout() {
+export async function useLogout() {
 //   const router = useRouter();
   const supabase = createClient();
   const router = useRouter();
 
   const logout = useCallback(async () => {
+    const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if(user) redirect('/login');
+
     const { error } = await supabase.auth.signOut();
 
     if (error) {
@@ -17,7 +25,7 @@ export function useLogout() {
     }
 
     router.push('/');
-  }, [router, supabase]);
+  }, [router,supabase]);
 
   return logout;
 }

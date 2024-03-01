@@ -6,6 +6,9 @@ import { cn } from "@/lib/utils";
 import Navbar from "@/components/navbar";
 import { SubNav } from "@/components/sub-nav";
 import Footer from "@/components/footer";
+import AuthProvider from "@/components/authprovider";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -22,19 +25,31 @@ export const metadata = {
   description: "Buy Anything, Anywhere, Anytime",
 };
 
-export default function RootLayout({
+export const revalidate = 0;
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const supabase = createServerComponentClient({ cookies });
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  // <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>;
+
   return (
     <html lang="en" className={GeistSans.className}>
       <body className={cn(fontSans.variable)}>
         <main className="min-h-screen flex flex-col items-center md:p-0 ">
-          <Navbar />
-          <SubNav />
-          <div className="wrapper">{children}</div>
-          <Footer />
+          <AuthProvider accessToken={session?.access_token}>
+            <Navbar />
+            <SubNav />
+            <div className="wrapper">{children}</div>
+            <Footer />
+          </AuthProvider>
         </main>
       </body>
     </html>

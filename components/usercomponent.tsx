@@ -8,21 +8,19 @@ import avatar from "@/public/avatar.jpg";
 import { redirect } from "next/navigation";
 import { useLogout } from "@/app/hooks/useLogout";
 import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
+import { useUser } from "@/app/hooks/useUser";
+import SignOut from "./auth/signout";
 
-export default async function UserComponent() {
+export default function UserComponent() {
   const [username, setUsername] = useState("James");
+  const router = useRouter();
 
   const logout = useLogout();
 
-  const supabase = createClient();
+  // const supabase = createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/login");
-  }
+  const user = useUser();
 
   return (
     <>
@@ -46,23 +44,18 @@ export default async function UserComponent() {
               <p>Hi!, Please sign in to enjoy all our benefits</p>
             )}
           </div>
-          <Button
-            className="bg-blue-600 hover:bg-blue-700 w-[90%] shadow-none"
-            onClick={redirect("/profile")}
-          >
+          <Button className="bg-blue-600 hover:bg-blue-700 w-[90%] shadow-none">
             {user ? "Profile" : "Join Us"}
           </Button>
           {!user ? (
-            <Button className="bg-gray-50 hover:bg-blue-700  w-[90%] shadow-none border-2 hover:border-none border-blue-200 text-blue-600 hover:text-white">
+            <Button
+              onClick={() => router.push("/login")}
+              className="bg-gray-50 hover:bg-blue-700  w-[90%] shadow-none border-2 hover:border-none border-blue-200 text-blue-600 hover:text-white"
+            >
               Login
             </Button>
           ) : (
-            <Button
-              className="bg-blue-600 hover:bg-blue-700 w-[90%] shadow-none"
-              onClick={logout}
-            >
-              Logout
-            </Button>
+            <SignOut />
           )}
         </div>
         <div className="w-full h-full p-1 rounded-sm bg-neutral-orange">

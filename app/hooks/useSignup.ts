@@ -2,6 +2,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import type { User } from "../types/types";
+import { useUser } from "./useUser";
 
 
 
@@ -10,30 +11,27 @@ export const signUp = async (formData: User) => {
     "use server";
     const supabase = createClient();
 
+    const user = useUser();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (user) {
-    return redirect("/dashboard");
-  }
+    if(user){
+        alert("You are already logged in");
+    }
 
 
-      const { data, error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
         email: formData.email,
-        password: formData.password,
+        password: formData.password ?? '',
         options: {
-          emailRedirectTo: `${origin}/auth/callback`,
-          data: {
-                              confirmPassword: formData.confirmPassword,
-                              firstname: formData.firstname,
-                              lastname: formData.lastname,
-                              role: formData.role,
-                              shop: formData.shop
-                          }
+            emailRedirectTo: `${origin}/auth/callback`,
+            data: {
+                        confirmPassword: formData.confirmPassword,
+                        firstname: formData.firstname,
+                        lastname: formData.lastname,
+                        role: formData.role,
+                        shop: formData.shop
+                }
         },
-      });
+    });
 
       console.log(data);
 

@@ -1,21 +1,16 @@
-import { createClient } from "@/utils/supabase/server";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export const signIn = async (formData: FormData) => {
-  "use server";
+import Login from "@/components/auth/signin";
 
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-  const supabase = createClient();
+export default async function SignInPage() {
+  const supabase = createServerComponentClient({ cookies });
+  const { data } = await supabase.auth.getSession();
 
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-
-  if (error) {
-    return redirect("/login?message=Could not authenticate user");
+  if (data?.session) {
+    redirect("/");
   }
 
-  return redirect("/dashboard");
-};
+  return <Login />;
+}
