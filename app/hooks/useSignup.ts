@@ -1,25 +1,53 @@
-import { headers } from "next/headers";
+"use server"
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import type { User } from "../types/types";
 
 
 
 
-export const signUp = async (formData: FormData) => {
+export const signUp = async (formData: User) => {
     "use server";
-
-    const origin = headers().get("origin");
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
     const supabase = createClient();
 
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${origin}/auth/callback`,
-      },
-    });
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    return redirect("/dashboard");
+  }
+
+
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          emailRedirectTo: `${origin}/auth/callback`,
+          data: {
+                              confirmPassword: formData.confirmPassword,
+                              firstname: formData.firstname,
+                              lastname: formData.lastname,
+                              role: formData.role,
+                              shop: formData.shop
+                          }
+        },
+      });
+
+      console.log(data);
+
+        // const { user } = data
+  
+    //   if(user){
+    //     // router.push('/')
+    //     console.log(user)
+    //     console.log(data)
+    //   } else {
+    //     console.log(error)
+    //   }
+
+    
 
     if (error) {
       return redirect("/login?message=Could not authenticate user");
