@@ -14,10 +14,11 @@ export interface catTitle {
 
 export interface User  {
     email: string;
-    password?: string | undefined;
+    password: string | undefined;
     firstname?: string;
     lastname?: string;
     confirmPassword?: string;
     role?: boolean;
     shop?: boolean;
+    avatar?: HTMLFileInputElement;
 }

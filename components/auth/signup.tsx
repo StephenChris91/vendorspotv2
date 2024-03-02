@@ -1,7 +1,8 @@
 "use client";
+// import { createClient } from '@supabase/supabase-js';
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { ControllerRenderProps, useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { signUp } from "@/app/hooks/useSignup";
@@ -32,9 +33,15 @@ const formSchema = z.object({
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters." }),
-  confirmPassword: z.string().min(8, { message: "Passwords do not match" }),
+  confirmPassword: z
+    .string()
+    .min(8, { message: "Passwords do not match" })
+    .refine((data) => data !== formSchema.password, {
+      message: "Passwords do not match",
+    }),
   role: z.boolean().default(false).optional(),
   shop: z.boolean().default(false).optional(),
+  avatar: z.string().optional(), // Add file field to the schema
 });
 
 export default function Signup() {
@@ -55,24 +62,56 @@ export default function Signup() {
       confirmPassword: "",
       role: false,
       shop: false,
+      avatar: "",
     },
   });
 
   const onSubmit = async (d: z.infer<typeof formSchema>) => {
     //first check if a user with the same email already exists
 
-    if (d.password !== d.confirmPassword) {
-      console.log("passwords must match");
-      throw new Error("password must match");
-    }
-    // return redirect("/login");
+    // Retrieve the file uploaded by the user
+    const fileInput = (await document.getElementById(
+      "picture"
+    )) as HTMLInputElement;
 
+    if (!fileInput.files || fileInput.files.length === 0) {
+      console.log(fileInput.files);
+      console.error("No file selected");
+      return;
+    }
+
+    const file = fileInput.files[0];
+
+    // Rest of your code...
+    // Upload the file to the user's folder in the 'vendors' bucket
+    const filePath = `vendor/${d.firstname}/${file.name}`;
+    const { error: uploadError } = await supabase.storage
+      .from("vendor")
+      .upload(filePath, file);
+
+    if (uploadError) {
+      console.error(uploadError);
+      return;
+    }
+
+    // Retrieve the URL of the uploaded file
+    const { data: urlData } = supabase.storage
+      .from("vendors")
+      .getPublicUrl(filePath);
+
+    if (!urlData || !urlData.publicUrl) {
+      console.error("Error retrieving URL");
+      return;
+    }
+
+    // Add the URL as the user's avatar in the additional data sent to the database
     const { data, error } = await supabase.auth.signUp({
       email: d.email,
       password: d.password ?? "",
       options: {
         // emailRedirectTo: `${window.location.origin}/auth/callback`,
         data: {
+          avatar: urlData.publicUrl,
           confirmPassword: d.confirmPassword ?? "",
           firstname: d.firstname,
           lastname: d.lastname,
@@ -189,8 +228,24 @@ export default function Signup() {
           />
           <FormField
             control={form.control}
-            name="role"
-            render={({ field }) => (
+            name="avatar"
+            render={({
+              field,
+            }: {
+              field: ControllerRenderProps<
+                {
+                  firstname: string;
+                  lastname: string;
+                  email: string;
+                  password: string;
+                  confirmPassword: string;
+                  role?: boolean | undefined;
+                  shop?: boolean | undefined;
+                  avatar?: string | undefined;
+                },
+                "avatar"
+              >;
+            }) => (
               <FormItem className="flex flex-col items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
                 <FormControl>
                   {/* <Label htmlFor="picture">Picture</Label> */}

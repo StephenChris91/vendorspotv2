@@ -16,6 +16,7 @@ export default function UserComponent() {
   const router = useRouter();
 
   const user = useUser();
+  console.log(user);
 
   return (
     <>
@@ -24,7 +25,11 @@ export default function UserComponent() {
           <div className="flex gap-2">
             {user ? (
               <Image
-                src={userAvatar}
+                src={
+                  user.user_metadata.avatar
+                    ? user.user_metadata.avatar
+                    : userAvatar
+                }
                 alt="alt"
                 width={50}
                 height={50}
