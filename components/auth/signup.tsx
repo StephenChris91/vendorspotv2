@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 const formSchema = z.object({
   firstname: z.string().min(2, {
@@ -37,10 +38,12 @@ const formSchema = z.object({
 });
 
 export default function Signup() {
+  const supabase = createClientComponentClient();
+
   // ...
 
   const router = useRouter();
-  const supabase = createClient();
+  //   const supabase = createClient();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -68,9 +71,9 @@ export default function Signup() {
       email: d.email,
       password: d.password ?? "",
       options: {
-        emailRedirectTo: `${origin}/auth/callback`,
+        // emailRedirectTo: `${window.location.origin}/auth/callback`,
         data: {
-          confirmPassword: d.confirmPassword,
+          confirmPassword: d.confirmPassword ?? "",
           firstname: d.firstname,
           lastname: d.lastname,
           role: d.role,
@@ -78,11 +81,9 @@ export default function Signup() {
         },
       },
     });
-    //check that user exists
-    //if user exists, check that password is correct
-    //if password is correct, redirect to dashboard
-    //if password is incorrect, display error message
-    //if user does not exist, display error message
+
+    console.log(d, data);
+    // supabase.from("users").insert([data]);
   };
 
   return (
