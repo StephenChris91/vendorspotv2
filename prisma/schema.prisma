@@ -39,6 +39,8 @@ model User {
   deletedAt DateTime  @default(now())
   shopId    Int
   shop      Shop?     @relation(fields: [shopId], references: [id])
+
+  // @@map("auth.users")
 }
 
 model Shop {

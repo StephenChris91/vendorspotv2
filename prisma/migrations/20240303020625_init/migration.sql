@@ -1,8 +1,11 @@
 -- CreateEnum
-CREATE TYPE "ProductStatus" AS ENUM ('PUBLISHED', 'DRAFT', 'SUSPENDED', 'OUTOFSTOCK');
+CREATE TYPE "ProductStatus" AS ENUM ('Published', 'Draft', 'Suspended', 'OutOfStock');
 
 -- CreateEnum
-CREATE TYPE "ProductType" AS ENUM ('SIMPLE', 'VARIABLE');
+CREATE TYPE "ProductType" AS ENUM ('Simple', 'Variable');
+
+-- CreateEnum
+CREATE TYPE "userRole" AS ENUM ('Customer', 'Vendor', 'Admin');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -10,7 +13,7 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "role" TEXT NOT NULL,
+    "role" "userRole" DEFAULT 'Customer',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deletedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -42,40 +45,42 @@ CREATE TABLE "Product" (
     "name" TEXT NOT NULL,
     "slug" TEXT,
     "description" TEXT,
-    "typeId" INTEGER,
+    "type_id" INTEGER,
     "price" DOUBLE PRECISION NOT NULL,
-    "salePrice" INTEGER NOT NULL,
+    "sale_price" INTEGER,
     "language" TEXT NOT NULL,
-    "minPrice" DOUBLE PRECISION NOT NULL,
-    "maxPrice" DOUBLE PRECISION NOT NULL,
+    "min_price" DOUBLE PRECISION NOT NULL,
+    "max_price" DOUBLE PRECISION NOT NULL,
     "sku" SERIAL NOT NULL,
     "quantity" INTEGER NOT NULL,
-    "inStock" BOOLEAN NOT NULL,
-    "isTaxable" BOOLEAN NOT NULL,
-    "shippingClassId" SERIAL,
-    "status" "ProductStatus" NOT NULL DEFAULT 'PUBLISHED',
-    "productType" "ProductType" NOT NULL DEFAULT 'SIMPLE',
+    "in_stock" BOOLEAN NOT NULL,
+    "is_taxable" BOOLEAN NOT NULL,
+    "shipping_class_id" SERIAL,
+    "status" "ProductStatus" NOT NULL DEFAULT 'Published',
+    "product_type" "ProductType" NOT NULL DEFAULT 'Simple',
     "height" INTEGER,
     "width" INTEGER,
-    "imageId" INTEGER NOT NULL,
+    "image" JSONB NOT NULL,
+    "image_id" INTEGER,
     "video" TEXT,
-    "galleryId" INTEGER NOT NULL,
-    "deletedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "authorId" TEXT,
-    "manufacturerId" TEXT NOT NULL,
-    "isDigital" BOOLEAN,
-    "isExternal" BOOLEAN,
-    "externalProductUrl" TEXT,
-    "externalProductButtonNext" TEXT,
+    "gallery" JSONB[],
+    "gallery_id" INTEGER,
+    "deleted_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "author_id" TEXT,
+    "manufacturer_id" TEXT,
+    "is_digital" BOOLEAN,
+    "is_external" BOOLEAN,
+    "external_product_url" TEXT,
+    "external_product_button_next" TEXT,
     "ratings" DOUBLE PRECISION NOT NULL,
-    "totalReviews" INTEGER NOT NULL,
-    "ratingCount" INTEGER,
-    "myReview" TEXT,
-    "inWishlist" BOOLEAN,
+    "total_reviews" INTEGER NOT NULL,
+    "rating_count" INTEGER,
+    "my_review" TEXT,
+    "in_wishlist" BOOLEAN,
     "categories" TEXT NOT NULL,
-    "shopId" INTEGER NOT NULL,
+    "shop_id" INTEGER NOT NULL,
     "type" TEXT,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
@@ -89,6 +94,7 @@ CREATE TABLE "Image" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "productId" INTEGER NOT NULL,
+    "galleryId" INTEGER NOT NULL,
 
     CONSTRAINT "Image_pkey" PRIMARY KEY ("id")
 );
@@ -107,13 +113,10 @@ CREATE TABLE "Gallery" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Product_sku_key" ON "Product"("sku");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Product_shippingClassId_key" ON "Product"("shippingClassId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Image_productId_key" ON "Image"("productId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Image_galleryId_key" ON "Image"("galleryId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Gallery_productId_key" ON "Gallery"("productId");
@@ -122,10 +125,13 @@ CREATE UNIQUE INDEX "Gallery_productId_key" ON "Gallery"("productId");
 ALTER TABLE "User" ADD CONSTRAINT "User_shopId_fkey" FOREIGN KEY ("shopId") REFERENCES "Shop"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Product" ADD CONSTRAINT "Product_shopId_fkey" FOREIGN KEY ("shopId") REFERENCES "Shop"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Product" ADD CONSTRAINT "Product_shop_id_fkey" FOREIGN KEY ("shop_id") REFERENCES "Shop"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Image" ADD CONSTRAINT "Image_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Image" ADD CONSTRAINT "Image_galleryId_fkey" FOREIGN KEY ("galleryId") REFERENCES "Gallery"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Gallery" ADD CONSTRAINT "Gallery_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
