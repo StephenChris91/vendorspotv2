@@ -9,6 +9,7 @@ import Footer from "@/components/footer";
 import AuthProvider from "@/components/authprovider";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import { useRouter } from "next/navigation";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -29,8 +30,10 @@ export const revalidate = 0;
 
 export default async function RootLayout({
   children,
+  isDashboard,
 }: {
   children: React.ReactNode;
+  isDashboard?: boolean;
 }) {
   const supabase = createServerComponentClient({ cookies });
 
@@ -47,7 +50,7 @@ export default async function RootLayout({
           <AuthProvider accessToken={session?.access_token}>
             <Navbar />
             <SubNav />
-            <div className="wrapper">{children}</div>
+            <div className={isDashboard ? "" : "wrapper"}>{children}</div>
             <Footer />
           </AuthProvider>
         </main>

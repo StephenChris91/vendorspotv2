@@ -28,7 +28,7 @@ enum userRole {
   Admin
 }
 
-model User {
+model profiles {
   id        Int       @id @default(autoincrement())
   email     String    @unique
   password  String
@@ -38,12 +38,12 @@ model User {
   updatedAt DateTime  @default(now())
   deletedAt DateTime  @default(now())
   shopId    Int
-  shop      Shop?     @relation(fields: [shopId], references: [id])
+  shop      shop?
 
   // @@map("auth.users")
 }
 
-model Shop {
+model shop {
   id          Int       @id @default(autoincrement())
   name        String
   description String
@@ -55,11 +55,12 @@ model Shop {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @default(now())
   deletedAt   DateTime  @default(now())
-  users       User[]
-  products    Product[]
+  profile     profiles? @relation(fields: [profileId], references: [id])
+  profileId   Int       @unique
+  products    product[]
 }
 
-model Product {
+model product {
   id                           Int           @id @default(autoincrement())
   name                         String
   slug                         String?
@@ -99,32 +100,32 @@ model Product {
   my_review                    String?
   in_wishlist                  Boolean?
   categories                   String
-  shop                         Shop?         @relation(fields: [shop_id], references: [id])
+  shop                         shop?         @relation(fields: [shop_id], references: [id])
   shop_id                      Int
   type                         String?
   // Shop                      Shop          @relation(fields: [shop_id], references: [id])
   // images                    Image[]
-  Image                        Image?
-  Gallery                      Gallery?
+  Image                        image?
+  Gallery                      gallery?
 }
 
-model Image {
+model image {
   id        Int      @id @default(autoincrement())
   original  String
   thumbnail String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-  product   Product  @relation(fields: [productId], references: [id])
+  product   product  @relation(fields: [productId], references: [id])
   productId Int      @unique
-  gallery   Gallery? @relation(fields: [galleryId], references: [id])
+  gallery   gallery? @relation(fields: [galleryId], references: [id])
   galleryId Int      @unique
 }
 
-model Gallery {
+model gallery {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-  images    Image[]
-  product   Product  @relation(fields: [productId], references: [id])
+  images    image[]
+  product   product  @relation(fields: [productId], references: [id])
   productId Int      @unique
 }

@@ -83,9 +83,9 @@ export default function Signup() {
     const file = fileInput.files[0];
 
     // Upload the file to the user's folder in the 'vendors' bucket
-    const filePath = `vendor/${d.firstname}/${file.name}`;
+    const filePath = `vendors/${d.firstname}/${file.name}`;
     const { error: uploadError } = await supabase.storage
-      .from("vendor")
+      .from("vendors")
       .upload(filePath, file);
 
     if (uploadError) {
@@ -95,7 +95,7 @@ export default function Signup() {
 
     // Retrieve the URL of the uploaded file
     const { data: urlData } = supabase.storage
-      .from("vendor")
+      .from("vendors")
       .getPublicUrl(filePath);
 
     if (!urlData || !urlData.publicUrl) {
