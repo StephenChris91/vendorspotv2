@@ -14,10 +14,10 @@ import { AiFillFacebook } from "react-icons/ai";
 import apple from "@/public/app-store.png";
 import google from "@/public/google-pay.png";
 
-export default function Footer() {
+export default function Footer({ showSubscribe = true }) {
   return (
     <>
-      <Subscribe />
+      {showSubscribe && <Subscribe />}
       <footer className="bg-gray-50 flex justify-between items-center mx-auto w-full px-28 py-12">
         <div className="flex flex-col space-y-2 w-96">
           <Image src={logo} alt="footer logo" width={120} height={undefined} />

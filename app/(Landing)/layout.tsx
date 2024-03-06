@@ -1,5 +1,5 @@
 import { GeistSans } from "geist/font/sans";
-import "../../globals.css";
+import "../globals.css";
 import { Inter as FontSans } from "next/font/google";
 // import "@/styles/globals.css"
 import { cn } from "@/lib/utils";
@@ -46,12 +46,12 @@ export default async function RootLayout({
   return (
     <html lang="en" className={GeistSans.className}>
       <body className={cn(fontSans.variable)}>
-        <main className="min-h-screen flex flex-col items-center md:p-0 w-full">
+        <main className="min-h-screen flex flex-col items-center md:p-0 ">
           <AuthProvider accessToken={session?.access_token}>
             <Navbar />
-            <SubNav isDashboard={false} />
-            <div className="container">{children}</div>
-            <Footer showSubscribe={false} />
+            <SubNav />
+            <div className={isDashboard ? "" : "wrapper"}>{children}</div>
+            <Footer />
           </AuthProvider>
         </main>
       </body>
