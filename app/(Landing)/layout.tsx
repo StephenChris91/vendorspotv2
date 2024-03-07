@@ -20,15 +20,15 @@ const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
 
-export const metadata = {
+const metadata = {
   metadataBase: new URL(defaultUrl),
   title: "VendorSpot",
   description: "Buy Anything, Anywhere, Anytime",
 };
 
-export const revalidate = 0;
+const revalidate = 0;
 
-async function Layout({
+export async function Layout({
   children,
   isDashboard,
 }: {
