@@ -28,7 +28,7 @@ const metadata = {
 
 const revalidate = 0;
 
-export default async function RootLayout({
+export async function RootLayout({
   children,
   isDashboard,
 }: {
