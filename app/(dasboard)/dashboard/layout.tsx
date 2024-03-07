@@ -8,7 +8,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { GeistSans } from "geist/font/sans";
 import { cookies } from "next/headers";
 
-async function RootLayout({
+async function Layout({
   children,
   isDashboard,
 }: {
@@ -22,18 +22,14 @@ async function RootLayout({
   } = await supabase.auth.getSession();
 
   return (
-    <html lang="en" className={GeistSans.className}>
-      <body className={cn(fontSans.variable)}>
-        <main className="min-h-screen  md:p-0 w-full">
-          <AuthProvider accessToken={session?.access_token}>
-            <div className="container flex items-start justify-start">
-              <AdminSideBar />
-              <AdminMainSection>{children}</AdminMainSection>
-            </div>
-            <Footer showSubscribe={false} />
-          </AuthProvider>
-        </main>
-      </body>
-    </html>
+    <main className="min-h-screen  md:p-0 w-full">
+      <AuthProvider accessToken={session?.access_token}>
+        <div className="container flex items-start justify-start">
+          <AdminSideBar />
+          <AdminMainSection>{children}</AdminMainSection>
+        </div>
+        <Footer showSubscribe={false} />
+      </AuthProvider>
+    </main>
   );
 }
