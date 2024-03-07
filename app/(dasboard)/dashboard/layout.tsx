@@ -8,7 +8,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { GeistSans } from "geist/font/sans";
 import { cookies } from "next/headers";
 
-export default async function RootLayout({
+async function RootLayout({
   children,
   isDashboard,
 }: {
