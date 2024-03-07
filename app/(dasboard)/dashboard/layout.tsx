@@ -1,35 +1,22 @@
-import { fontSans } from "@/app/(pages)/layout";
-import AuthProvider from "@/components/authprovider";
 import AdminMainSection from "@/components/dasboard/admin-main";
 import AdminSideBar from "@/components/dasboard/admin-sidebar";
 import Footer from "@/components/footer";
-import { cn } from "@/lib/utils";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { GeistSans } from "geist/font/sans";
-import { cookies } from "next/headers";
+import type { ReactNode } from "react";
 
-async function Layout({
-  children,
-  isDashboard,
-}: {
-  children: React.ReactNode;
-  isDashboard?: boolean;
-}) {
-  const supabase = createServerComponentClient({ cookies });
+type LayoutProps = {
+  children: ReactNode;
+};
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
+export default function Layout({ children }: LayoutProps) {
   return (
-    <main className="min-h-screen  md:p-0 w-full">
-      <AuthProvider accessToken={session?.access_token}>
+    <section>
+      <main className="min-h-screen  md:p-0 w-full">
         <div className="container flex items-start justify-start">
           <AdminSideBar />
           <AdminMainSection>{children}</AdminMainSection>
         </div>
         <Footer showSubscribe={false} />
-      </AuthProvider>
-    </main>
+      </main>
+    </section>
   );
 }
