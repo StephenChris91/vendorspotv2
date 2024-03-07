@@ -26,15 +26,13 @@ const metadata = {
   description: "Buy Anything, Anywhere, Anytime",
 };
 
-const revalidate = 0;
-
-export default async function Layout({
-  children,
-  isDashboard,
-}: {
+type LayoutProps = {
   children: React.ReactNode;
   isDashboard?: boolean;
-}) {
+};
+const revalidate = 0;
+
+export default async function Layout({ children, isDashboard }: LayoutProps) {
   const supabase = createServerComponentClient({ cookies });
 
   const {
