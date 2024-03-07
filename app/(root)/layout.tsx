@@ -29,15 +29,16 @@ const metadata = {
 type LayoutProps = {
   children: React.ReactNode;
   isDashboard?: boolean;
+  session?: any;
 };
 const revalidate = 0;
 
-export default async function Layout({ children, isDashboard }: LayoutProps) {
+export default function Layout({
+  children,
+  isDashboard,
+  session,
+}: LayoutProps) {
   const supabase = createServerComponentClient({ cookies });
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
 
   // <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>;
 
