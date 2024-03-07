@@ -9,6 +9,9 @@ import { useRouter } from "next/navigation";
 import { useUser } from "@/app/hooks/useUser";
 import SignOut from "./auth/signout";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ReactNode } from "react";
+
 export default function UserComponent() {
   const router = useRouter();
 
@@ -21,18 +24,24 @@ export default function UserComponent() {
         <div className="w-full h-auto p-1 rounded-sm bg-blue-50 flex flex-col items-center mx-auto gap-2">
           <div className="flex gap-2">
             {user ? (
-              <Image
-                src={
-                  user.user_metadata.avatar
-                    ? user.user_metadata.avatar
-                    : userAvatar
-                }
-                alt="alt"
-                width={50}
-                height={50}
-                className="rounded-full"
-              />
+              <Avatar>
+                <AvatarImage src={user.user_metadata.avatar} />
+                {/* <AvatarFallback>
+                  {userAvatar as unknown as ReactNode}
+                </AvatarFallback> */}
+              </Avatar>
             ) : (
+              // <Image
+              //   src={
+              //     user.user_metadata.avatar
+              //       ? user.user_metadata.avatar
+              //       : userAvatar
+              //   }
+              //   alt="alt"
+              //   width={50}
+              //   height={50}
+              //   className="rounded-full"
+              // />
               <Image src={avatar} alt="avatar" width={50} height={50} />
             )}
             {user ? (

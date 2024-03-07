@@ -1,8 +1,15 @@
-const AdminMainSection = () => {
+type AdminMainSectionProps = {
+  children?: React.ReactNode;
+};
+
+const AdminMainSection: React.FC<AdminMainSectionProps> = ({ children }) => {
+  // ...
   return (
-    <section className="min-h-screen">
-      <h1>Admin Main Section</h1>
-    </section>
+    <div>
+      {/* ... */}
+      {children}
+      {/* ... */}
+    </div>
   );
 };
 

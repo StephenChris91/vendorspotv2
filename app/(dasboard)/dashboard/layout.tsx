@@ -1,32 +1,12 @@
-import { GeistSans } from "geist/font/sans";
-import "../../globals.css";
-import { Inter as FontSans } from "next/font/google";
-// import "@/styles/globals.css"
-import { cn } from "@/lib/utils";
-import Navbar from "@/components/navbar";
-import { SubNav } from "@/components/sub-nav";
-import Footer from "@/components/footer";
+import { fontSans } from "@/app/(pages)/layout";
 import AuthProvider from "@/components/authprovider";
+import AdminMainSection from "@/components/dasboard/admin-main";
+import AdminSideBar from "@/components/dasboard/admin-sidebar";
+import Footer from "@/components/footer";
+import { cn } from "@/lib/utils";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { GeistSans } from "geist/font/sans";
 import { cookies } from "next/headers";
-import { useRouter } from "next/navigation";
-
-export const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
-
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
-
-export const metadata = {
-  metadataBase: new URL(defaultUrl),
-  title: "VendorSpot",
-  description: "Buy Anything, Anywhere, Anytime",
-};
-
-export const revalidate = 0;
 
 export default async function RootLayout({
   children,
@@ -41,16 +21,15 @@ export default async function RootLayout({
     data: { session },
   } = await supabase.auth.getSession();
 
-  // <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>;
-
   return (
     <html lang="en" className={GeistSans.className}>
       <body className={cn(fontSans.variable)}>
-        <main className="min-h-screen flex flex-col items-center md:p-0 w-full">
+        <main className="min-h-screen  md:p-0 w-full">
           <AuthProvider accessToken={session?.access_token}>
-            <Navbar />
-            <SubNav isDashboard={false} />
-            <div className="container">{children}</div>
+            <div className="container flex items-start justify-start">
+              <AdminSideBar />
+              <AdminMainSection>{children}</AdminMainSection>
+            </div>
             <Footer showSubscribe={false} />
           </AuthProvider>
         </main>

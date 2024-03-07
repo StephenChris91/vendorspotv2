@@ -47,7 +47,7 @@ const Navbar = () => {
     <nav className="border-b-2 p-4 w-full bg-gray-50">
       <div className="max-w-screen-lg mx-auto flex space-x-10 justify-between items-center">
         {/* Brand Logo */}
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 cursor-pointer">
           <Link href="/" legacyBehavior passHref>
             <Image src={Logo} alt=" Logo" width={100} height={100} />
           </Link>
