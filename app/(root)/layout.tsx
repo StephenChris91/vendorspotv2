@@ -33,7 +33,11 @@ type LayoutProps = {
 };
 const revalidate = 0;
 
-export function Layout({ children, isDashboard, session }: LayoutProps) {
+export default function Layout({
+  children,
+  isDashboard,
+  session,
+}: LayoutProps) {
   const supabase = createServerComponentClient({ cookies });
 
   // <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>;
