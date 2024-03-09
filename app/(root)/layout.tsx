@@ -33,14 +33,15 @@ type LayoutProps = {
 };
 const revalidate = 0;
 
-export default function Layout(
-  { children }: { children: React.ReactNode },
-  { isDashboard, session }: LayoutProps
-) {
-  const supabase = createServerComponentClient({ cookies });
+// <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>;
 
-  // <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>;
-
+export default function Layout({
+  children,
+  session,
+}: {
+  children: React.ReactNode;
+  session: any;
+}) {
   return (
     <html lang="en" className={GeistSans.className}>
       <body className={cn(fontSans.variable)}>
@@ -48,7 +49,7 @@ export default function Layout(
           <AuthProvider accessToken={session?.access_token}>
             <Navbar />
             <SubNav />
-            <div className={isDashboard ? "" : "wrapper"}>{children}</div>
+            <div className="wrapper">{children}</div>
             <Footer />
           </AuthProvider>
         </main>
