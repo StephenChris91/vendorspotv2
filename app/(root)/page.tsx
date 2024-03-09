@@ -10,7 +10,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Layout from "./layout";
 
-export async function getSession() {
+async function getSession() {
   const supabase = createServerComponentClient({ cookies });
   const {
     data: { session },
@@ -27,7 +27,7 @@ export default function Page({ session }: { session: any }) {
 
   return (
     <div className="flex-1 w-full flex flex-col gap-5 items-center">
-      <Layout session={session}>
+      <Layout session={session as any}>
         <Header />
         <DealsSection />
         <Category />
