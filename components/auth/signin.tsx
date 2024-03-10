@@ -5,11 +5,12 @@ import { SyncLoader } from "react-spinners";
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 import { User } from "@/app/types/types";
-import { SubmitButton } from "@/app/login/submit-button";
+import { SubmitButton } from "@/app/(pages)/login/submit-button";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+// import { useToast } from "@/components/ui/use-toast";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +23,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "../ui/use-toast";
 
 const formSchema = z.object({
   email: z.string().min(2, {
@@ -36,6 +38,8 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
 
   const supabase = createClient();
+  // const toast = useToast();
+  const { toast } = useToast();
 
   async function signIn(formData: User) {
     const { error } = await supabase.auth.signInWithPassword({
@@ -65,6 +69,24 @@ export default function Login() {
       email: values.email,
       password: values.password,
     });
+    if (data.user) {
+      // console.log(data);
+      toast({
+        variant: "success",
+        title: "Signed in!",
+        description: "You are now signed in!",
+        duration: 9000,
+      });
+      // redirect("/");
+    } else {
+      console.error(error);
+      toast({
+        variant: "error",
+        title: "An error occurred",
+        description: "An error occurred while signing in",
+        isClosable: true,
+      });
+    }
   }
 
   return (

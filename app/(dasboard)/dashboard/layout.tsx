@@ -50,7 +50,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <AdminSideBar />
               <AdminMainSection>{children}</AdminMainSection>
             </div>
-            <Footer showSubscribe={false} />
+            {/* <Footer showSubscribe={false} /> */}
           </main>
         </section>
       </body>

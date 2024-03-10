@@ -328,7 +328,6 @@ const AdminSideBar = () => {
             >
               Add new FAQs
             </Link>
-            {/* Add more links as needed */}
           </div>
         )}
         <div className="flex justify-start items-center  hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">

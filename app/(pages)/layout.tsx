@@ -10,6 +10,7 @@ import AuthProvider from "@/components/authprovider";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { useRouter } from "next/navigation";
+import { Toaster } from "@/components/ui/toaster";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -29,13 +30,13 @@ const metadata = {
 type LayoutProps = {
   children: React.ReactNode;
   isDashboard?: boolean;
-  session?: any;
+  // session?: any;
 };
 const revalidate = 0;
 
 export default function Layout(
   { children }: { children: React.ReactNode },
-  { isDashboard, session }: LayoutProps
+  session: any
 ) {
   const supabase = createServerComponentClient({ cookies });
 
@@ -48,8 +49,9 @@ export default function Layout(
           <AuthProvider accessToken={session?.access_token}>
             <Navbar />
             <SubNav />
-            <div className={isDashboard ? "" : "wrapper"}>{children}</div>
+            <div className="wrapper">{children}</div>
             <Footer />
+            <Toaster />
           </AuthProvider>
         </main>
       </body>
