@@ -45,7 +45,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <html lang="en" className={GeistSans.className}>
       <body className={cn(fontSans.variable)}>
         <section>
-          <main className="min-h-screen  md:p-0 w-full">
+          <main className="md:p-0 w-full">
             <div className="container flex items-start justify-start">
               <AdminSideBar />
               <AdminMainSection>{children}</AdminMainSection>

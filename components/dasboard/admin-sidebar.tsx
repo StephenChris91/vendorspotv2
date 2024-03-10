@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { IoChevronForward, IoChevronDown } from "react-icons/io5";
-import { FiShoppingCart, FiEdit } from "react-icons/fi";
+import { FiShoppingCart, FiEdit, FiUser, FiUserPlus } from "react-icons/fi";
 import { LuLayoutGrid } from "react-icons/lu";
 import { useState, useCallback } from "react";
 import { BsBoxSeam } from "react-icons/bs";
@@ -24,7 +24,20 @@ import {
   PiHouseLineDuotone,
   PiListNumbersDuotone,
   PiSwapDuotone,
+  PiUsersThreeDuotone,
+  PiUserListDuotone,
+  PiScrollDuotone,
+  PiStorefrontDuotone,
+  PiUsersFourDuotone,
+  PiUserThin,
+  PiStarDuotone,
+  PiQuestionDuotone,
+  PiGiftDuotone,
+  PiLightningDuotone,
+  PiChatsCircleDuotone,
+  PiFadersDuotone,
 } from "react-icons/pi";
+
 import { AiTwotoneSetting } from "react-icons/ai";
 
 const AdminSideBar = () => {
@@ -33,6 +46,10 @@ const AdminSideBar = () => {
   const [isRefunds, setRefunds] = useState(false);
   const [isFAQDropdown, setFAQDropdown] = useState(false);
   const [isTermsDropdown, setTermsDropdown] = useState(false);
+  const [vendorDropdown, setVendorDropdown] = useState(false);
+  const [staffDropdown, setStaffDropdown] = useState(false);
+  const [isFlashSale, setIsFlashSale] = useState(false);
+  const [isCoupons, setIsCoupons] = useState(false);
 
   const toggle = useCallback(
     (setter: React.Dispatch<React.SetStateAction<boolean>>) => {
@@ -44,7 +61,7 @@ const AdminSideBar = () => {
   return (
     <section
       id="sidebar"
-      className="min-h-screen bg-white w-80 px-5 py-2 flex flex-col gap-5"
+      className="overflow-y-auto h-[800px] bg-white w-80 px-5 py-2 flex flex-col gap-5"
     >
       <div className="">
         <h5 className="text-gray-400 mb-5">MAIN</h5>
@@ -354,49 +371,310 @@ const AdminSideBar = () => {
         )}
       </div>
       <div>
-        <h5 className="text-gray-400 mb-4">ORDER MANAGEMENT</h5>
+        <h5 className="text-gray-400 mb-4">USER MANAGEMENT</h5>
         <Link
           href="/dashboard"
           className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
         >
           <span>
-            <PiListNumbersDuotone />
+            <PiUsersThreeDuotone />
           </span>{" "}
-          Orders
+          All Users
         </Link>
         <Link
           href="/dashboard"
           className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
         >
           <span>
-            <FiEdit />
+            <PiUserListDuotone />
           </span>{" "}
-          Create Orders
+          Admin List
         </Link>
+        <div className="flex justify-start items-center  hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">
+          <Link
+            href="/dashboard"
+            className="flex justify-start items-center  gap-2 ml-0 w-full "
+          >
+            <PiStorefrontDuotone />
+            <span className="">Vendors</span>
+          </Link>
+          {!vendorDropdown ? (
+            <IoChevronForward
+              className="cursor-pointer"
+              onClick={() => toggle(setVendorDropdown)}
+            />
+          ) : (
+            <IoChevronDown
+              className="cursor-pointer"
+              onClick={() => toggle(setVendorDropdown)}
+            />
+          )}
+        </div>
+        {vendorDropdown && (
+          <div className="flex flex-col gap-3 ml-2 p-2">
+            <Link
+              href="/link1"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              All Vendors
+            </Link>
+            <Link
+              href="/link2"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              Pending Vendors
+            </Link>
+            {/* Add more links as needed */}
+          </div>
+        )}
+        <div className="flex justify-start items-center  hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">
+          <Link
+            href="/dashboard"
+            className="flex justify-start items-center  gap-2 ml-0 w-full "
+          >
+            <PiUsersFourDuotone />
+            <span className="">Staff</span>
+          </Link>
+          {!staffDropdown ? (
+            <IoChevronForward
+              className="cursor-pointer"
+              onClick={() => toggle(setStaffDropdown)}
+            />
+          ) : (
+            <IoChevronDown
+              className="cursor-pointer"
+              onClick={() => toggle(setStaffDropdown)}
+            />
+          )}
+        </div>
+        {staffDropdown && (
+          <div className="flex flex-col gap-3 ml-2 p-2">
+            <Link
+              href="/link1"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              My Staff
+            </Link>
+            <Link
+              href="/link2"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              Vendor Staff
+            </Link>
+            {/* Add more links as needed */}
+          </div>
+        )}
         <Link
           href="/dashboard"
           className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
         >
           <span>
-            <PiSwapDuotone />
+            <PiUserThin />
           </span>{" "}
-          Transactions
+          Customers
         </Link>
       </div>
-      <div>
-        <h5 className="text-gray-400">USER CONTROL</h5>
-      </div>
+
       <div>
         <h5 className="text-gray-400">FEEDBACK CONTROL</h5>
+        <Link
+          href="/dashboard"
+          className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
+        >
+          <span>
+            <PiStackDuotone />
+          </span>{" "}
+          Reviews
+        </Link>
+        <Link
+          href="/dashboard"
+          className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
+        >
+          <span>
+            <PiQuestionDuotone />
+          </span>{" "}
+          Questions
+        </Link>
       </div>
       <div>
         <h5 className="text-gray-400">PROMO MANAGEMENT</h5>
+        <div className="flex justify-start items-center  hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">
+          <Link
+            href="/dashboard"
+            className="flex justify-start items-center  gap-2 ml-0 w-full "
+          >
+            <PiGiftDuotone />
+            <span className="">Coupons</span>
+          </Link>
+          {!isCoupons ? (
+            <IoChevronForward
+              className="cursor-pointer"
+              onClick={() => toggle(setIsCoupons)}
+            />
+          ) : (
+            <IoChevronDown
+              className="cursor-pointer"
+              onClick={() => toggle(setIsCoupons)}
+            />
+          )}
+        </div>
+        {isCoupons && (
+          <div className="flex flex-col gap-3 ml-2 p-2">
+            <Link
+              href="/link1"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              All Coupons
+            </Link>
+            <Link
+              href="/link2"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              Add New Coupons
+            </Link>
+            {/* Add more links as needed */}
+          </div>
+        )}
+        <div className="flex justify-start items-center  hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">
+          <Link
+            href="/dashboard"
+            className="flex justify-start items-center  gap-2 ml-0 w-full "
+          >
+            <PiLightningDuotone />
+            <span className="">Flash Sale</span>
+          </Link>
+          {!isFlashSale ? (
+            <IoChevronForward
+              className="cursor-pointer"
+              onClick={() => toggle(setIsFlashSale)}
+            />
+          ) : (
+            <IoChevronDown
+              className="cursor-pointer"
+              onClick={() => toggle(setIsFlashSale)}
+            />
+          )}
+        </div>
+        {isFlashSale && (
+          <div className="flex flex-col gap-3 ml-2 p-2">
+            <Link
+              href="/link1"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              All Campaigns
+            </Link>
+            <Link
+              href="/link2"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              Add New Campaigns
+            </Link>
+            <Link
+              href="/link2"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              Vendor Campaigns
+            </Link>
+            {/* Add more links as needed */}
+          </div>
+        )}
       </div>
       <div>
         <h5 className="text-gray-400">FEATURE MANAGEMENT</h5>
+        <Link
+          href="/dashboard"
+          className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
+        >
+          <span>
+            <PiChatsCircleDuotone />
+          </span>{" "}
+          Message
+        </Link>
+        <Link
+          href="/dashboard"
+          className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
+        >
+          <span>
+            <PiScrollDuotone />
+          </span>{" "}
+          Store Notice
+        </Link>
       </div>
       <div>
         <h5 className="text-gray-400">SITE MANAGEMENT</h5>
+        <div className="flex justify-start items-center  hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">
+          <Link
+            href="/dashboard"
+            className="flex justify-start items-center  gap-2 ml-0 w-full "
+          >
+            <PiFadersDuotone />
+            <span className="">Settings</span>
+          </Link>
+          {!isFlashSale ? (
+            <IoChevronForward
+              className="cursor-pointer"
+              onClick={() => toggle(setIsFlashSale)}
+            />
+          ) : (
+            <IoChevronDown
+              className="cursor-pointer"
+              onClick={() => toggle(setIsFlashSale)}
+            />
+          )}
+        </div>
+        {isFlashSale && (
+          <div className="flex flex-col gap-3 ml-2 p-2">
+            <Link
+              href="/link1"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              General Settings
+            </Link>
+            <Link
+              href="/link2"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              Payment Settings
+            </Link>
+            <Link
+              href="/link2"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              SEO Settings
+            </Link>
+            <Link
+              href="/link1"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              Event Settings
+            </Link>
+            <Link
+              href="/link2"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              Shop Settings
+            </Link>
+            <Link
+              href="/link2"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              Maintenance Settings
+            </Link>
+            <Link
+              href="/link2"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              Company Information
+            </Link>
+            <Link
+              href="/link2"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              Promo Popup
+            </Link>
+            {/* Add more links as needed */}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -15,7 +15,10 @@ const AdminMainSection: React.FC<AdminMainSectionProps> = ({ children }) => {
     <div>
       {/* ... */}
       {children}
-      <Link href="/" className="rounded-sm p-2 text-gray-100 bg-gray-800 w-20">
+      <Link
+        href="/"
+        className="h-[800px] rounded-sm p-2 text-gray-100 bg-gray-800 w-20"
+      >
         Back
       </Link>
       {/* ... */}

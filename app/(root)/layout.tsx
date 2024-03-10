@@ -21,7 +21,7 @@ const defaultUrl = process.env.VERCEL_URL
   : "http://localhost:3000";
 
 const metadata = {
-  metadataBase: new URL(defaultUrl),
+  // metadataBase: new URL(defaultUrl),
   title: "VendorSpot",
   description: "Buy Anything, Anywhere, Anytime",
 };
