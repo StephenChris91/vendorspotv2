@@ -32,7 +32,7 @@ const AdminTopbar = () => {
           </div>
         </div>
       </div>
-      <div className="w-1/3 py-6 px-1">
+      <div className="w-1/3 py- px-1">
         <div className="flex justify-center gap-3 items-center mx-auto w-full">
           <div className="h-full">
             <Button
