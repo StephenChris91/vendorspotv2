@@ -22,3 +22,8 @@ export interface User  {
     shop?: boolean;
     avatar?: HTMLFileInputElement;
 }
+
+export interface TabProps {
+    title: string;
+    content: JSXElement;
+  }
