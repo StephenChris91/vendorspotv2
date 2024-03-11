@@ -3,11 +3,16 @@
 import { useUser } from "@/app/hooks/useUser";
 import AdminMainSection from "@/components/dasboard/admin-main";
 import AdminSideBar from "@/components/dasboard/admin-sidebar";
+import Summary from "@/components/dasboard/summary";
 
 export default async function Dashboard() {
   // const supabase = createClient();
 
   const user = useUser();
 
-  return <></>;
+  return (
+    <div className="p-10">
+      <Summary />
+    </div>
+  );
 }

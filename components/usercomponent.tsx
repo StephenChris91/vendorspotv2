@@ -18,6 +18,10 @@ export default function UserComponent() {
   const user = useUser();
   console.log(user);
 
+  const abbvName =
+    user?.user_metadata.firstname.split(" ")[0].charAt(0) +
+    user?.user_metadata.lastname.split(" ")[0].charAt(0);
+
   return (
     <>
       <div className="col-span-1 h-full flex flex-col gap-2">
@@ -25,23 +29,10 @@ export default function UserComponent() {
           <div className="flex gap-2">
             {user ? (
               <Avatar>
-                <AvatarImage src={user.user_metadata.avatar} />
-                {/* <AvatarFallback>
-                  {userAvatar as unknown as ReactNode}
-                </AvatarFallback> */}
+                <AvatarImage src={user?.user_metadata.avatar} alt="@shadcn" />
+                <AvatarFallback>{abbvName}</AvatarFallback>
               </Avatar>
             ) : (
-              // <Image
-              //   src={
-              //     user.user_metadata.avatar
-              //       ? user.user_metadata.avatar
-              //       : userAvatar
-              //   }
-              //   alt="alt"
-              //   width={50}
-              //   height={50}
-              //   className="rounded-full"
-              // />
               <Image src={avatar} alt="avatar" width={50} height={50} />
             )}
             {user ? (
