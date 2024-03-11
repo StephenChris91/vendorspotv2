@@ -13,7 +13,7 @@ const AdminMainSection: React.FC<AdminMainSectionProps> = ({ children }) => {
   const router = useRouter();
   // ...
   return (
-    <div>
+    <div className="w-full">
       <AdminTopbar />
       {children}
       <Link
