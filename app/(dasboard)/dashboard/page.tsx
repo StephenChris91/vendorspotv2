@@ -9,9 +9,5 @@ export default async function Dashboard() {
 
   const user = useUser();
 
-  return (
-    <>
-      <h1>Hello {user?.user_metadata.firstname}</h1>
-    </>
-  );
+  return <></>;
 }

@@ -16,12 +16,6 @@ const AdminMainSection: React.FC<AdminMainSectionProps> = ({ children }) => {
     <div className="w-full">
       <AdminTopbar />
       {children}
-      <Link
-        href="/"
-        className="h-[800px] rounded-sm p-2 text-gray-100 bg-gray-800 w-20"
-      >
-        Back
-      </Link>
     </div>
   );
 };
