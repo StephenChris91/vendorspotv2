@@ -6,6 +6,7 @@ import { FiShoppingCart, FiEdit, FiUser, FiUserPlus } from "react-icons/fi";
 import { LuLayoutGrid } from "react-icons/lu";
 import { useState, useCallback } from "react";
 import { BsBoxSeam } from "react-icons/bs";
+import { ScrollArea } from "../ui/scroll-area";
 
 import {
   PiStackDuotone,
@@ -59,10 +60,7 @@ const AdminSideBar = () => {
   );
 
   return (
-    <section
-      id="sidebar"
-      className="overflow-y-auto h-[800px] bg-white w-80 px-5 py-2 flex flex-col gap-5"
-    >
+    <ScrollArea className="h-screen w-[350px] bg-white rounded-md border p-4 z-50">
       <div className="">
         <h5 className="text-gray-400 mb-5">MAIN</h5>
         <Link
@@ -675,7 +673,7 @@ const AdminSideBar = () => {
           </div>
         )}
       </div>
-    </section>
+    </ScrollArea>
   );
 };
 

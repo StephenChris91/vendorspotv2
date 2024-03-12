@@ -1,4 +1,5 @@
 import { StaticImageData } from "next/image";
+import { JSXElementConstructor } from "react";
 
 export interface Product {
     id: number;
@@ -26,4 +27,17 @@ export interface User  {
 export interface TabProps {
     title: string;
     content: JSXElement;
+  }
+
+export type OrderProcessing = {
+    id: string
+    amount: number
+    status: "pending" | "processing" | "success" | "failed"
+    email: string
+    trackingNumber: number
+    customer: string
+    productQty: number
+    orderDate: string
+    total: number
+    actions?: JSXElement
   }

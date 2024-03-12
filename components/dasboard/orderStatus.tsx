@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const OrderStatus = () => {
   const card = (title: string, amount: number) => (
-    <div className="flex justify-between items-center mx-auto gap-3 bg-gray-50 w-1/4 rounded-lg p-5 border-b-4 border-green-600 ">
+    <div className="flex justify-between items-center mx-auto gap-3 bg-gray-50 w-1/4 rounded-lg p-5 border-b-4 border-green-600">
       <div className="p-2 bg-gray-200 place-items-center">
         <FcMoneyTransfer className="text-3xl" />
       </div>
@@ -15,7 +15,7 @@ const OrderStatus = () => {
   );
 
   return (
-    <div className="rounded-sm bg-white p-8 flex flex-col justify-between items-center mx-auto gap-6 w-full">
+    <div className="rounded-sm bg-white p-8 flex flex-col justify-between items-center mx-auto gap-6 w-full mb-10">
       <Tabs defaultValue="Today" className="w-full">
         <div className="flex justify-between items-center mx-auto w-full mb-7">
           <h1>Order Status</h1>

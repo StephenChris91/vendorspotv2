@@ -13,7 +13,7 @@ const AdminTopbar = () => {
     user?.user_metadata.firstname.split(" ")[0].charAt(0) +
     user?.user_metadata.lastname.split(" ")[0].charAt(0);
   return (
-    <div className="flex bg-white justify-between items-center mx-auto gap-6 border-r-2">
+    <div className="flex bg-white justify-between items-center mx-auto gap-6 border-r-2 fixed top-0 left-0 mb-20 w-[90%] ml-40 z-40">
       <div className="w-3/4 p-6 border-r-2">
         <div className="flex justify-between items-center mx-auto gap-6 border-r-2">
           <HiOutlineMenuAlt3 className="text-3xl cursor-pointer" />
