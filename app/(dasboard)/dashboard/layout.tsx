@@ -42,7 +42,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   // <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>;
 
   return (
-    <html lang="en" className={GeistSans.className}>
+    <html lang="en" className={cn(GeistSans.className)}>
       <body className={cn(fontSans.variable)}>
         <section>
           <main className="md:p-0 w-full">

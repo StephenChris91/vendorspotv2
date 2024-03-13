@@ -43,7 +43,7 @@ export default function Layout({
   session: any;
 }) {
   return (
-    <html lang="en" className={GeistSans.className}>
+    <html lang="en">
       <body className={cn(fontSans.variable)}>
         <main className="min-h-screen flex flex-col items-center md:p-0 ">
           <AuthProvider accessToken={session?.access_token}>

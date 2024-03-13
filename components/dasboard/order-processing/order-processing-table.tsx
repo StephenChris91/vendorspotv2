@@ -59,7 +59,7 @@ export default async function OrderProcessingTable() {
   const data = await getData();
 
   return (
-    <div className="bg-white w-full mx-auto p-10 rounded-sm">
+    <div className="bg-white w-full mx-auto p-10 rounded-sm mb-10">
       <OrderTable columns={columns} data={data} />
     </div>
   );

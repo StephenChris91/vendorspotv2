@@ -1,9 +1,8 @@
 "use client";
 
 import { useUser } from "@/app/hooks/useUser";
-import AdminMainSection from "@/components/dasboard/admin-main";
-import AdminSideBar from "@/components/dasboard/admin-sidebar";
 import OrderProcessingTable from "@/components/dasboard/order-processing/order-processing-table";
+import OrderHistory from "@/components/dasboard/orderHistory";
 import OrderStatus from "@/components/dasboard/orderStatus";
 import Summary from "@/components/dasboard/summary";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -19,6 +18,7 @@ export default async function Dashboard() {
         <Summary />
         <OrderStatus />
         <OrderProcessingTable />
+        <OrderHistory />
       </div>
     </ScrollArea>
   );
