@@ -79,7 +79,7 @@ const AdminSideBar = () => {
             className="flex justify-start items-center mx-auto gap-2 ml-0  "
           >
             <FiShoppingCart />
-            <span className="">My Shop</span>
+            <span className="">Shop</span>
           </Link>
           {!isShopDropdown ? (
             <IoChevronForward
@@ -99,13 +99,19 @@ const AdminSideBar = () => {
               href="/link1"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
-              Link 1
+              All Shops
             </Link>
             <Link
               href="/link2"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
-              Link 2
+              My Shop
+            </Link>
+            <Link
+              href="/dashboard/createshop"
+              className="ml-5 hover:text-blue-600 text-gray-800"
+            >
+              Add New Shop
             </Link>
             {/* Add more links as needed */}
           </div>

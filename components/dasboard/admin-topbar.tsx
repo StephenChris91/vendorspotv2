@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUser } from "@/app/hooks/useUser";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const AdminTopbar = () => {
   const user = useUser();
@@ -26,8 +27,11 @@ const AdminTopbar = () => {
             />
           </div>
           <div className="border-none">
-            <Button className="rounded-full border-none bg-green-600">
-              Create Shop
+            <Button
+              className="rounded-full border-none bg-green-600"
+              // onClick={() => router.push("/dashboard/createshop")}
+            >
+              <Link href="/dashboard/createshop">Create Shop</Link>
             </Button>
           </div>
         </div>

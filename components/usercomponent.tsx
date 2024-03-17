@@ -1,19 +1,17 @@
 "use client";
 
+// import { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import userAvatar from "@/public/user.png";
-import avatar from "@/public/avatar.jpg";
 
 import { useRouter } from "next/navigation";
 import { useUser } from "@/app/hooks/useUser";
 import SignOut from "./auth/signout";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ReactNode } from "react";
+import Link from "next/link";
 
 export default function UserComponent() {
-  const router = useRouter();
+  // const router = useRouter();
 
   const user = useUser();
   console.log(user);
@@ -32,9 +30,8 @@ export default function UserComponent() {
                 <AvatarImage src={user?.user_metadata.avatar} alt="@shadcn" />
                 <AvatarFallback>{abbvName}</AvatarFallback>
               </Avatar>
-            ) : (
-              <Image src={avatar} alt="avatar" width={50} height={50} />
-            )}
+            ) : // <Image src={avatar} alt="avatar" width={50} height={50} />
+            null}
             {user ? (
               <p>Hi! {user.user_metadata.firstname} Welcome to Vendorspot</p>
             ) : (
@@ -44,18 +41,15 @@ export default function UserComponent() {
           {user && user.user_metadata.role ? (
             <Button
               className="bg-blue-600 hover:bg-blue-700 w-[90%] shadow-none"
-              onClick={() => router.push("/dashboard")}
+              // onClick={() => router.push("/dashboard")}
             >
-              Dashboard
+              <Link href="/dashboard">Dashboard</Link>
             </Button>
           ) : null}
 
           {!user ? (
-            <Button
-              onClick={() => router.push("/login")}
-              className="bg-gray-50 hover:bg-blue-700  w-[90%] shadow-none border-2 hover:border-none border-blue-200 text-blue-600 hover:text-white"
-            >
-              Login
+            <Button className="bg-gray-50 hover:bg-blue-700  w-[90%] shadow-none border-2 hover:border-none border-blue-200 text-blue-600 hover:text-white">
+              <Link href="/login">Login</Link>
             </Button>
           ) : (
             <SignOut />

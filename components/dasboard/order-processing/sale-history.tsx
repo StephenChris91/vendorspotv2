@@ -47,10 +47,10 @@ const SaleHistory = () => {
         chart.render();
       });
     }
-  }, [options]);
+  }, []);
 
   return (
-    <div className="bg-white w-1/2 p-5">
+    <div className="bg-white w-2/4 p-5">
       <h1>Sales History</h1>
       <div id="chart" ref={ref}></div>
     </div>

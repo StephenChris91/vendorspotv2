@@ -43,3 +43,11 @@ h6 {
 .container {
     @apply m-0 min-w-full min-h-full p-0;
 }
+
+#summary-header::before{
+    content: '';
+    width: 96px;
+    height: auto;
+    background-color: red;
+    display: block;
+}
