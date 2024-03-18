@@ -35,6 +35,10 @@ h6 {
     @apply text-xs;
 }
 
+.header-color{
+    @apply text-gray-700
+}
+
 .wrapper {
     @apply mx-auto;
     @apply px-28;
@@ -50,4 +54,8 @@ h6 {
     height: auto;
     background-color: red;
     display: block;
+}
+
+.react-tel-input .form-control{
+    width: 100% !important;
 }

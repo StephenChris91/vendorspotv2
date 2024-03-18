@@ -133,8 +133,4 @@ export const columns: ColumnDef<OrderProcessing>[] = [
       );
     },
   },
-  //   {
-  //     accessorKey: "actions",
-  //     header: "Actions",
-  //   },
 ];

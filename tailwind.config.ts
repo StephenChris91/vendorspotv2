@@ -7,10 +7,13 @@ const colors = require('tailwindcss/colors')
 const config = {
   darkMode: ["class"],
   content: [
+    "./node_modules/flowbite-react/lib/**/*.js",
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./public/**/*.html",
   ],
   prefix: "",
   theme: {
@@ -66,7 +69,9 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("flowbite/plugin")({
+    charts: true,
+  })],
 } satisfies Config
 
 export default config

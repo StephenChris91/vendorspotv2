@@ -48,9 +48,11 @@ export default function UserComponent() {
           ) : null}
 
           {!user ? (
-            <Button className="bg-gray-50 hover:bg-blue-700  w-[90%] shadow-none border-2 hover:border-none border-blue-200 text-blue-600 hover:text-white">
-              <Link href="/login">Login</Link>
-            </Button>
+            <Link href="/login" className="w-full text-center">
+              <Button className="bg-gray-50 hover:bg-blue-700 p-5  w-[90%] shadow-none border-2 hover:border-none border-blue-200 text-blue-600 hover:text-white">
+                Login
+              </Button>
+            </Link>
           ) : (
             <SignOut />
           )}
