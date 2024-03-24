@@ -1,25 +1,19 @@
-import AddBasicInfo from "@/components/dasboard/createshop/addBasicInfo";
-import AddCoverImage from "@/components/dasboard/createshop/addCoverImage";
-import AddLogo from "@/components/dasboard/createshop/addLogo";
-import AddPaymentInfo from "@/components/dasboard/createshop/addPaymentInfo";
-import AddShopAddress from "@/components/dasboard/createshop/addShopAddress";
-import AddShopSettings from "@/components/dasboard/createshop/addShopSettings";
-import Separator from "@/components/separator";
+"use client";
 
-const CreateShop = () => {
+import { FormProvider } from "../FormContext/formcontext";
+import CreateShop from "./createShop";
+import { useContext } from "react";
+import { FormContext } from "../FormContext/formcontext";
+
+const Shop = () => {
+  const onSubmit = () => {
+    console.log(formData);
+  };
   return (
-    <div className="px-20 relative mt-32">
-      <Separator>
-        <h1 className="font-semibold">Create Shop</h1>
-      </Separator>
-      <AddLogo />
-      <AddCoverImage />
-      <AddBasicInfo />
-      <AddPaymentInfo />
-      <AddShopAddress />
-      <AddShopSettings />
-    </div>
+    <FormProvider>
+      <CreateShop />
+    </FormProvider>
   );
 };
 
-export default CreateShop;
+export default Shop;

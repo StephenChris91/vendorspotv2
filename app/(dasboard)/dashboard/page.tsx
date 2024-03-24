@@ -7,7 +7,7 @@ import OrderStatus from "@/components/dasboard/orderStatus";
 import Summary from "@/components/dasboard/summary";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-export default async function Dashboard() {
+export default function Dashboard() {
   // const supabase = createClient();
 
   const user = useUser();

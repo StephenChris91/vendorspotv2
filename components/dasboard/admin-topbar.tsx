@@ -49,7 +49,7 @@ const AdminTopbar = () => {
           </div>
           <div className="h-full flex gap-3 justify-between items-center mx-auto">
             <Avatar>
-              <AvatarImage src={user?.user_metadata.avatar} alt="@shadcn" />
+              <AvatarImage src={user?.user_metadata.avatar} alt="user image" />
               <AvatarFallback>{abbvName}</AvatarFallback>
             </Avatar>
             <div>

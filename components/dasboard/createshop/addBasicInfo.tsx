@@ -17,8 +17,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
+import { useContext, useEffect } from "react";
+import { FormContext } from "@/app/(dasboard)/dashboard/FormContext/formcontext";
 
 const AddBasicInfo = () => {
+  const context = useContext(FormContext);
+
+  if (!context) {
+    throw new Error("AddShopAddress must be used within a FormProvider");
+  }
+
+  const { formData, updateFormData } = context;
+
   const formSchema = z.object({
     name: z.string().min(2, {
       message: "Username must be at least 2 characters.",
@@ -44,6 +54,20 @@ const AddBasicInfo = () => {
       description: "",
     },
   });
+
+  const { control, watch } = form;
+  const watchedName = watch("name");
+  const watchedSlug = watch("slug");
+  const watchedDesc = watch("description");
+
+  useEffect(() => {
+    updateFormData({
+      ...formData,
+      name: watchedName,
+      slug: watchedSlug,
+      description: watchedDesc,
+    });
+  }, [watchedName, watchedSlug, watchedDesc]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
@@ -99,7 +123,7 @@ const AddBasicInfo = () => {
               />
               <FormField
                 control={form.control}
-                name="slug"
+                name="description"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Description</FormLabel>

@@ -1,6 +1,6 @@
 import { SyncLoader } from "react-spinners";
 
-export default async function Loading() {
+export default function Loading() {
   return (
     <div className="flex justify-center items-center m-auto">
       <SyncLoader color="" size={30} />

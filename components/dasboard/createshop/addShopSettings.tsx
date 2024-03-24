@@ -17,48 +17,30 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
 // import "react-phone-number-input/style.css";
-import Select from "react-select";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Textarea } from "@/components/ui/textarea";
-import { useEffect, useState } from "react";
-import { DropdownMenuShortcut } from "@/components/ui/dropdown-menu";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuSub,
-  DropdownMenuSubTrigger,
-  DropdownMenuPortal,
-  DropdownMenuSubContent,
-} from "@radix-ui/react-dropdown-menu";
+import { useEffect, useState, useContext } from "react";
+import { FormContext } from "@/app/(dasboard)/dashboard/FormContext/formcontext";
 
 const AddShopSettings = () => {
   const [countries, setCountries] = useState([]);
+  const context = useContext(FormContext);
 
-  useEffect(() => {
-    axios.get("https://restcountries.com/v2/all").then((response) => {
-      const countriesData = response.data.map((country: any) => ({
-        value: country.alpha2Code,
-        label: `${country.name} (${country.callingCodes[0]})`,
-        flag: country.flags.svg,
-      }));
-      setCountries(countriesData);
-    });
-  }, []);
+  if (!context) {
+    throw new Error("AddShopAddress must be used within a FormProvider");
+  }
 
+  const { formData, updateFormData } = context;
+
+  // const { updateFormData } = formContext;
   const formSchema = z.object({
     phoneNumber: z.string().min(1, {
       message: "Phone number is required.",
     }),
     website: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
+      message: "website must be at least 2 characters.",
     }),
   });
 
@@ -70,10 +52,32 @@ const AddShopSettings = () => {
     },
   });
 
+  const getCountryOptions = () => {
+    axios.get("https://restcountries.com/v2/all").then((response) => {
+      const countriesData = response.data.map((country: any) => ({
+        value: country.alpha2Code,
+        label: `${country.name} (${country.callingCodes[0]})`,
+        flag: country.flags.svg,
+      }));
+      setCountries(countriesData); // Set the state with the new countriesData
+    });
+  };
+
+  const { control, watch } = form;
+  const watchedPhoneNumber = watch("phoneNumber");
+  const watchedWebsite = watch("website");
+
+  useEffect(() => {
+    updateFormData({
+      ...formData,
+      phoneNumber: watchedPhoneNumber,
+      website: watchedWebsite,
+    });
+  }, [watchedPhoneNumber, watchedWebsite]);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
+    // updateFormData({ formData: values });
   }
   // const form = useForm()
   return (
