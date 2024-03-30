@@ -37,6 +37,7 @@ import {
   PiLightningDuotone,
   PiChatsCircleDuotone,
   PiFadersDuotone,
+  PiArrowSquareOutDuotone,
 } from "react-icons/pi";
 
 import { AiTwotoneSetting } from "react-icons/ai";
@@ -62,9 +63,9 @@ const AdminSideBar = () => {
   return (
     <ScrollArea className="h-screen w-[350px] bg-white rounded-md border p-4 z-50">
       <div className="">
-        <h5 className="text-gray-400 mb-5">MAIN</h5>
+        <h5 className="text-gray-400 mb-4 mt-4">MAIN</h5>
         <Link
-          href="/dashboard"
+          href="/dashboard="
           className="flex justify-start items-center mx-auto gap-2 hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm"
         >
           <LuLayoutGrid />
@@ -72,7 +73,7 @@ const AdminSideBar = () => {
         </Link>
       </div>
       <div className="">
-        <h5 className="text-gray-400 mb-5">SHOP MANAGEMENT</h5>
+        <h5 className="text-gray-400 mb-4 mt-4">SHOP MANAGEMENT</h5>
         <div className="flex justify-start items-center mx-auto hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">
           <Link
             href="/dashboard"
@@ -96,17 +97,17 @@ const AdminSideBar = () => {
         {isShopDropdown && (
           <div className="flex flex-col gap-3 ml-2 p-2">
             <Link
-              href="/link1"
+              href="/dashboard/all-shops"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               All Shops
             </Link>
-            <Link
-              href="/link2"
+            {/* <Link
+              href="/dashboard/my-shop"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               My Shop
-            </Link>
+            </Link> */}
             <Link
               href="/dashboard/createshop"
               className="ml-5 hover:text-blue-600 text-gray-800"
@@ -118,11 +119,11 @@ const AdminSideBar = () => {
         )}
       </div>
       <div className="">
-        <h5 className="text-gray-400 mb-5">PRODUCT MANAGEMENT</h5>
+        <h5 className="text-gray-400 mb-4 mt-4">PRODUCT MANAGEMENT</h5>
         <div className="flex flex-col  mx-auto gap-3">
           <div className="flex justify-start items-center  hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">
             <Link
-              href="/dashboard"
+              href=""
               className="flex justify-start items-center  gap-2 ml-0 w-full "
             >
               <BsBoxSeam />
@@ -143,19 +144,19 @@ const AdminSideBar = () => {
           {isProductDropdown && (
             <div className="flex flex-col gap-3 ml-2 p-2">
               <Link
-                href="/link1"
+                href="/dashboard/all-products"
                 className="ml-5 hover:text-blue-600 text-gray-800"
               >
                 All Products
               </Link>
               <Link
-                href="/link2"
+                href="/dashboard/my-draft-products"
                 className="ml-5 hover:text-blue-600 text-gray-800"
               >
                 My Draft Products
               </Link>
               <Link
-                href="/link2"
+                href="/dashboard/low-and-out-of-stock-products"
                 className="ml-5 hover:text-blue-600 text-gray-800"
               >
                 All Low & Out of Stock Products
@@ -164,7 +165,7 @@ const AdminSideBar = () => {
             </div>
           )}
           <Link
-            href="/dashboard"
+            href="/dashboard/inventory"
             className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
           >
             <span>
@@ -173,7 +174,7 @@ const AdminSideBar = () => {
             Inventory
           </Link>
           <Link
-            href="/dashboard"
+            href="/dashboard/categories"
             className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
           >
             <span>
@@ -182,7 +183,7 @@ const AdminSideBar = () => {
             Categories
           </Link>
           <Link
-            href="/dashboard"
+            href="/dashboard/tags"
             className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
           >
             <span>
@@ -191,7 +192,7 @@ const AdminSideBar = () => {
             Tags
           </Link>
           <Link
-            href="/dashboard"
+            href="/dashboard/brands"
             className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
           >
             <span>
@@ -202,9 +203,9 @@ const AdminSideBar = () => {
         </div>
       </div>
       <div>
-        <h5 className="text-gray-400">E-COMMERCE MANAGEMENT</h5>
+        <h5 className="text-gray-400 mb-4 mt-4">E-COMMERCE MANAGEMENT</h5>
         <Link
-          href="/dashboard"
+          href="/dashboard/tax"
           className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
         >
           <span>
@@ -213,7 +214,7 @@ const AdminSideBar = () => {
           Taxes
         </Link>
         <Link
-          href="/dashboard"
+          href="/dashboard/shippings"
           className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
         >
           <span>
@@ -222,7 +223,7 @@ const AdminSideBar = () => {
           Shippings
         </Link>
         <Link
-          href="/dashboard"
+          href="/dashboard/withdrawals"
           className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
         >
           <span>
@@ -232,7 +233,7 @@ const AdminSideBar = () => {
         </Link>
         <div className="flex justify-start items-center  hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">
           <Link
-            href="/dashboard"
+            href="/dashboard/refunds"
             className="flex justify-start items-center  gap-2 ml-0 w-full "
           >
             <PiHandCoinsDuotone />
@@ -253,31 +254,31 @@ const AdminSideBar = () => {
         {isRefunds && (
           <div className="flex flex-col gap-3 ml-2 p-2">
             <Link
-              href="/link1"
+              href="/dashboard/reported-refunds"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Reported Refunds
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/refunds-policy"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Refund Policies
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/add-new-refunds-policy"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Add New Refunds Policy
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/refunds-reasons"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Refunds Reasons
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/add-new-refunds-reasons"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Add New Refunds Reasons
@@ -287,9 +288,9 @@ const AdminSideBar = () => {
         )}
       </div>
       <div>
-        <h5 className="text-gray-400">PAGE CONTROL</h5>
+        <h5 className="text-gray-400 mt-4 mb-4">PAGE CONTROL</h5>
         <Link
-          href="/dashboard"
+          href="/dashboard/page-groups"
           className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
         >
           <span>
@@ -300,7 +301,7 @@ const AdminSideBar = () => {
 
         <div className="flex justify-start items-center  hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">
           <Link
-            href="/dashboard"
+            href="/"
             className="flex justify-start items-center  gap-2 ml-0 w-full "
           >
             <AiTwotoneSetting />
@@ -321,13 +322,13 @@ const AdminSideBar = () => {
         {isFAQDropdown && (
           <div className="flex flex-col gap-3 ml-2 p-2">
             <Link
-              href="/link1"
+              href="/dashboard/all-faqs"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               All FAQs
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/add-new-faqs"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Add new FAQs
@@ -336,7 +337,7 @@ const AdminSideBar = () => {
         )}
         <div className="flex justify-start items-center  hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">
           <Link
-            href="/dashboard"
+            href=""
             className="flex justify-start items-center  gap-2 ml-0 w-full "
           >
             <PiFileTextDuotone />
@@ -357,13 +358,13 @@ const AdminSideBar = () => {
         {isTermsDropdown && (
           <div className="flex flex-col gap-3 ml-2 p-2">
             <Link
-              href="/link1"
+              href="/dashboard/all-terms"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               All Terms
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/add-new-terms"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Add new Terms
@@ -374,9 +375,39 @@ const AdminSideBar = () => {
         )}
       </div>
       <div>
-        <h5 className="text-gray-400 mb-4">USER MANAGEMENT</h5>
+        <h5 className="text-gray-400 mb-4 mt-4">ORDER MANAGEMENT</h5>
         <Link
-          href="/dashboard"
+          href="/dashboard/orders"
+          className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
+        >
+          <span>
+            <PiListNumbersDuotone />
+          </span>{" "}
+          Orders
+        </Link>
+        <Link
+          href="/dashboard/create-orders"
+          className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
+        >
+          <span>
+            <PiArrowSquareOutDuotone />
+          </span>{" "}
+          Create Orders
+        </Link>
+        <Link
+          href="/dashboard/transactions"
+          className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
+        >
+          <span>
+            <PiSwapDuotone />
+          </span>{" "}
+          Transaction
+        </Link>
+      </div>
+      <div>
+        <h5 className="text-gray-400 mb-4 mt-4">USER MANAGEMENT</h5>
+        <Link
+          href="/dashboard/all-users"
           className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
         >
           <span>
@@ -385,7 +416,7 @@ const AdminSideBar = () => {
           All Users
         </Link>
         <Link
-          href="/dashboard"
+          href="/dashboard/admin-list"
           className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
         >
           <span>
@@ -395,7 +426,7 @@ const AdminSideBar = () => {
         </Link>
         <div className="flex justify-start items-center  hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">
           <Link
-            href="/dashboard"
+            href=""
             className="flex justify-start items-center  gap-2 ml-0 w-full "
           >
             <PiStorefrontDuotone />
@@ -416,13 +447,13 @@ const AdminSideBar = () => {
         {vendorDropdown && (
           <div className="flex flex-col gap-3 ml-2 p-2">
             <Link
-              href="/link1"
+              href="/dashboard/all-vendors"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               All Vendors
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/pending-vendors"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Pending Vendors
@@ -432,7 +463,7 @@ const AdminSideBar = () => {
         )}
         <div className="flex justify-start items-center  hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">
           <Link
-            href="/dashboard"
+            href=""
             className="flex justify-start items-center  gap-2 ml-0 w-full "
           >
             <PiUsersFourDuotone />
@@ -453,13 +484,13 @@ const AdminSideBar = () => {
         {staffDropdown && (
           <div className="flex flex-col gap-3 ml-2 p-2">
             <Link
-              href="/link1"
+              href="/dashboard/my-staff"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               My Staff
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/vendor-staff"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Vendor Staff
@@ -468,7 +499,7 @@ const AdminSideBar = () => {
           </div>
         )}
         <Link
-          href="/dashboard"
+          href="/dashboard/customers"
           className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
         >
           <span>
@@ -479,9 +510,9 @@ const AdminSideBar = () => {
       </div>
 
       <div>
-        <h5 className="text-gray-400">FEEDBACK CONTROL</h5>
+        <h5 className="text-gray-400 mb-4 mt-4">FEEDBACK CONTROL</h5>
         <Link
-          href="/dashboard"
+          href="/dashboard/reviews"
           className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
         >
           <span>
@@ -490,7 +521,7 @@ const AdminSideBar = () => {
           Reviews
         </Link>
         <Link
-          href="/dashboard"
+          href="/dashboard/questions"
           className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
         >
           <span>
@@ -500,10 +531,10 @@ const AdminSideBar = () => {
         </Link>
       </div>
       <div>
-        <h5 className="text-gray-400">PROMO MANAGEMENT</h5>
+        <h5 className="text-gray-400 mb-4 mt-4">PROMO MANAGEMENT</h5>
         <div className="flex justify-start items-center  hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">
           <Link
-            href="/dashboard"
+            href=""
             className="flex justify-start items-center  gap-2 ml-0 w-full "
           >
             <PiGiftDuotone />
@@ -524,13 +555,13 @@ const AdminSideBar = () => {
         {isCoupons && (
           <div className="flex flex-col gap-3 ml-2 p-2">
             <Link
-              href="/link1"
+              href="/dashboard/all-coupons"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               All Coupons
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/add-new-coupons"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Add New Coupons
@@ -540,7 +571,7 @@ const AdminSideBar = () => {
         )}
         <div className="flex justify-start items-center  hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">
           <Link
-            href="/dashboard"
+            href=""
             className="flex justify-start items-center  gap-2 ml-0 w-full "
           >
             <PiLightningDuotone />
@@ -561,19 +592,19 @@ const AdminSideBar = () => {
         {isFlashSale && (
           <div className="flex flex-col gap-3 ml-2 p-2">
             <Link
-              href="/link1"
+              href="/dashboard/all-campaigns"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               All Campaigns
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/add-new-campaign"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Add New Campaigns
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/vendor-campaigns"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Vendor Campaigns
@@ -583,9 +614,9 @@ const AdminSideBar = () => {
         )}
       </div>
       <div>
-        <h5 className="text-gray-400">FEATURE MANAGEMENT</h5>
+        <h5 className="text-gray-400 mb-4 mt-4">FEATURE MANAGEMENT</h5>
         <Link
-          href="/dashboard"
+          href="/dashboard/message"
           className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
         >
           <span>
@@ -594,7 +625,7 @@ const AdminSideBar = () => {
           Message
         </Link>
         <Link
-          href="/dashboard"
+          href="/dashboard/store-notice"
           className="flex gap-3 justify-start items-center hover:bg-blue-100 hover:text-blue-600 text-gray-800 p-3 rounded-sm"
         >
           <span>
@@ -604,10 +635,10 @@ const AdminSideBar = () => {
         </Link>
       </div>
       <div>
-        <h5 className="text-gray-400">SITE MANAGEMENT</h5>
+        <h5 className="text-gray-400 mb-4 mt-4">SITE MANAGEMENT</h5>
         <div className="flex justify-start items-center  hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">
           <Link
-            href="/dashboard"
+            href=""
             className="flex justify-start items-center  gap-2 ml-0 w-full "
           >
             <PiFadersDuotone />
@@ -628,49 +659,49 @@ const AdminSideBar = () => {
         {isFlashSale && (
           <div className="flex flex-col gap-3 ml-2 p-2">
             <Link
-              href="/link1"
+              href="/dashboard/general-settings"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               General Settings
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/payment-settings"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Payment Settings
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/seo-settings"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               SEO Settings
             </Link>
             <Link
-              href="/link1"
+              href="/dashboard/event-settings"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Event Settings
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/shop-settings"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Shop Settings
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/maintenance-settings"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Maintenance Settings
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/company-information"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Company Information
             </Link>
             <Link
-              href="/link2"
+              href="/dashboard/promo-popup"
               className="ml-5 hover:text-blue-600 text-gray-800"
             >
               Promo Popup

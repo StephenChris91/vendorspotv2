@@ -7,10 +7,9 @@ import AddPaymentInfo from "@/components/dasboard/createshop/addPaymentInfo";
 import AddShopAddress from "@/components/dasboard/createshop/addShopAddress";
 import AddShopSettings from "@/components/dasboard/createshop/addShopSettings";
 import Separator from "@/components/separator";
-import { FormProvider } from "../FormContext/formcontext";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { Button } from "@/components/ui/button";
-import { FormContext } from "../FormContext/formcontext";
+import { FormContext } from "../../FormContext/formcontext";
 
 const CreateShop = () => {
   const formContext = useContext(FormContext);
@@ -37,10 +36,7 @@ const CreateShop = () => {
       <AddShopAddress />
       <AddShopSettings />
 
-      <Button
-        className="p-6 bg-green-500 text-white max-w-lg"
-        onClick={onSubmit}
-      >
+      <Button className="p-6 w-full bg-green-500 text-white" onClick={onSubmit}>
         Save
       </Button>
       {/* <CreateShopPage /> */}
