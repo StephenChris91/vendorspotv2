@@ -41,3 +41,21 @@ export type OrderProcessing = {
     total: number
     actions?: JSXElement
   }
+
+export type ProductType = {
+    id: string,
+    product: string,
+    productType: "simple" | "variables",
+    shop: string,
+    quantity: number,
+    status: "pendings" | "processing" | "success" | "failed",
+}
+
+export type DraftProductType = {
+    id: string,
+    product: string,
+    productType: "simple" | "variables",
+    shop: string,
+    quantity: number,
+    status: "pendings" | "processing" | "success" | "failed",
+}

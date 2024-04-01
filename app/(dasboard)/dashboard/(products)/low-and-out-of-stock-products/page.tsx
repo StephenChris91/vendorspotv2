@@ -1,9 +1,9 @@
-const LowAndOutOfStockProducts = () => {
+import LowAndOutOfStockProducts from "@/components/dasboard/low-and-out-of-stock/low-and-out-of-stock";
+
+const LowAndOutOfStockProduct = () => {
   return (
-    <div className=" p-10 mt-32">
-      <div className="w-full bg-white rounded-sm p-5 ">
-        <h1>All Low & Out of Stock Products Page</h1>
-      </div>
+    <div className="p-10 mt-32">
+      <LowAndOutOfStockProducts />
     </div>
   );
 };

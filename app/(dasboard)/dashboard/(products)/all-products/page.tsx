@@ -1,9 +1,11 @@
+"use client";
+
+import AllProductsTable from "@/components/dasboard/all-products/all-products-table";
+
 const AllProducts = () => {
   return (
-    <div className=" p-10 mt-32">
-      <div className="w-full bg-white rounded-sm p-5 ">
-        <h1>All Products Page</h1>
-      </div>
+    <div className="p-10 mt-32">
+      <AllProductsTable />
     </div>
   );
 };

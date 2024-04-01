@@ -55,8 +55,8 @@ async function getData(): Promise<OrderProcessing[]> {
     },
   ];
 }
-export default function OrderProcessingTable() {
-  const data = getData();
+export default async function OrderProcessingTable() {
+  const data = await getData();
 
   return (
     <div className="bg-white w-full mx-auto p-10 rounded-sm mb-10">
