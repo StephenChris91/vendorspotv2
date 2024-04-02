@@ -1,9 +1,9 @@
+import WithdrawsTable from "@/components/dasboard/tables/withdraws/withdraws";
+
 const Categories = () => {
   return (
     <div className=" p-10 mt-32">
-      <div className="w-full bg-white rounded-sm p-5 ">
-        <h1>Withdrawals Page</h1>
-      </div>
+      <WithdrawsTable />
     </div>
   );
 };

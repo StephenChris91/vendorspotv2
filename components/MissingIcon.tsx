@@ -1,6 +1,6 @@
 const MissingIcon = () => {
   return (
-    <div className="text-center flex justify-center items-center mx-auto flex-col">
+    <div className="text-center flex justify-center items-center mx-auto flex-col mb-4">
       <svg
         viewBox="0 0 251 199"
         fill="none"

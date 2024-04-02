@@ -59,3 +59,65 @@ export type DraftProductType = {
     quantity: number,
     status: "pendings" | "processing" | "success" | "failed",
 }
+export type InventoryType = {
+    id: string,
+    name: string,
+    quantity: number,
+    quantity_sold: number,
+    sku: number
+}
+export type CategoriesType = {
+    id: string,
+    name: string,
+    details: string,
+    icon: string,
+    slug: string,
+    group: string
+}
+export type TagsType = {
+    id: string,
+    name: string,
+    icon: string,
+    slug: string,
+    group: string
+}
+export type TaxesType = {
+    id: string,
+    name: string,
+    country: string,
+    city: string,
+    zip: string,
+}
+export type ShippingType = {
+    id: string,
+    name: string,
+    amount: number,
+    global: string,
+    type : string,
+}
+export type WithdrawsType = {
+    shipId: string,
+    shop: string,
+    created: string,
+    payment_method: string,
+    status : string,
+}
+export type RefundsReasonsType = {
+    id: string,
+    name: string,
+    slug: string
+}
+export type ReportedRefundsType = {
+    id: string,
+    heading: string,
+    description: string,
+    applied_on: string,
+    status : string,
+}
+export type RefundsPolicyType = {
+    id: string,
+    heading: string,
+    description: string,
+    applied_on: string,
+    status : string,
+}

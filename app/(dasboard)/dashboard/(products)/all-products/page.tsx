@@ -1,6 +1,6 @@
 "use client";
 
-import AllProductsTable from "@/components/dasboard/all-products/all-products-table";
+import AllProductsTable from "@/components/dasboard/tables/products/all-products/all-products-table";
 
 const AllProducts = () => {
   return (

@@ -1,9 +1,9 @@
+import TagsTable from "@/components/dasboard/tables/tags/tags-table";
+
 const Categories = () => {
   return (
     <div className=" p-10 mt-32">
-      <div className="w-full bg-white rounded-sm p-5 ">
-        <h1>Tags Page</h1>
-      </div>
+      <TagsTable />
     </div>
   );
 };

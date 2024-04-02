@@ -65,7 +65,7 @@ const AdminSideBar = () => {
       <div className="">
         <h5 className="text-gray-400 mb-4 mt-4">MAIN</h5>
         <Link
-          href="/dashboard="
+          href="/dashboard"
           className="flex justify-start items-center mx-auto gap-2 hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm"
         >
           <LuLayoutGrid />
@@ -233,7 +233,7 @@ const AdminSideBar = () => {
         </Link>
         <div className="flex justify-start items-center  hover:bg-blue-100 text-gray-800 hover:text-blue-600 p-3 rounded-sm">
           <Link
-            href="/dashboard/refunds"
+            href=""
             className="flex justify-start items-center  gap-2 ml-0 w-full "
           >
             <PiHandCoinsDuotone />

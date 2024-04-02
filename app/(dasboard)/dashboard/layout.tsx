@@ -3,6 +3,7 @@ import "../../globals.css";
 import { Inter as FontSans } from "next/font/google";
 // import "@/styles/globals.css"
 import { cn } from "@/lib/utils";
+import "react-quill/dist/quill.snow.css";
 
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";

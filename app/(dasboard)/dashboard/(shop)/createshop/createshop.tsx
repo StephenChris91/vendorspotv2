@@ -1,11 +1,11 @@
 "use client";
 
-import AddBasicInfo from "@/components/dasboard/createshop/addBasicInfo";
-import AddCoverImage from "@/components/dasboard/createshop/addCoverImage";
-import AddLogo from "@/components/dasboard/createshop/addLogo";
-import AddPaymentInfo from "@/components/dasboard/createshop/addPaymentInfo";
-import AddShopAddress from "@/components/dasboard/createshop/addShopAddress";
-import AddShopSettings from "@/components/dasboard/createshop/addShopSettings";
+import AddBasicInfo from "@/components/dasboard/tables/createshop/addBasicInfo";
+import AddCoverImage from "@/components/dasboard/tables/createshop/addCoverImage";
+import AddLogo from "@/components/dasboard/tables/createshop/addLogo";
+import AddPaymentInfo from "@/components/dasboard/tables/createshop/addPaymentInfo";
+import AddShopAddress from "@/components/dasboard/tables/createshop/addShopAddress";
+import AddShopSettings from "@/components/dasboard/tables/createshop/addShopSettings";
 import Separator from "@/components/separator";
 import { useContext } from "react";
 import { Button } from "@/components/ui/button";

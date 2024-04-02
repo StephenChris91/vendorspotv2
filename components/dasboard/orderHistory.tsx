@@ -1,4 +1,4 @@
-import SaleHistory from "./order-processing/sale-history";
+import SaleHistory from "./tables/order-processing/sale-history";
 import PopularProducts from "./popularProducts";
 
 const OrderHistory = () => {

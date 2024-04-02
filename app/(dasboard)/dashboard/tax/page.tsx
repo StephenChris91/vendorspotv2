@@ -1,9 +1,9 @@
+import TaxesTable from "@/components/dasboard/tables/taxes/taxes-table";
+
 const Categories = () => {
   return (
     <div className=" p-10 mt-32">
-      <div className="w-full bg-white rounded-sm p-5 ">
-        <h1>Tax Page</h1>
-      </div>
+      <TaxesTable />
     </div>
   );
 };

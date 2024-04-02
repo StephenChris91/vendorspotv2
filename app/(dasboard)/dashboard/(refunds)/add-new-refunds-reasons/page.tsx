@@ -1,11 +1,10 @@
-const AddNewRefundsReasons = () => {
+import AddNewRefundsReasons from "@/components/dasboard/add-new-refunds-reasons";
+const AddNewRefundReasons = () => {
   return (
     <div className=" p-10 mt-32">
-      <div className="w-full bg-white rounded-sm p-5 ">
-        <h1>Add New Refunds Reasons Page</h1>
-      </div>
+      <AddNewRefundsReasons />
     </div>
   );
 };
 
-export default AddNewRefundsReasons;
+export default AddNewRefundReasons;

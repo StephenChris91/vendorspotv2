@@ -1,7 +1,7 @@
 "use client";
 
 import { useUser } from "@/app/hooks/useUser";
-import OrderProcessingTable from "@/components/dasboard/order-processing/order-processing-table";
+import OrderProcessingTable from "@/components/dasboard/tables/order-processing/order-processing-table";
 import OrderHistory from "@/components/dasboard/orderHistory";
 import OrderStatus from "@/components/dasboard/orderStatus";
 import Summary from "@/components/dasboard/summary";

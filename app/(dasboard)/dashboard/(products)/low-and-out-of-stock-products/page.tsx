@@ -1,4 +1,4 @@
-import LowAndOutOfStockProducts from "@/components/dasboard/low-and-out-of-stock/low-and-out-of-stock";
+import LowAndOutOfStockProducts from "@/components/dasboard/tables/products/low-and-out-of-stock/low-and-out-of-stock";
 
 const LowAndOutOfStockProduct = () => {
   return (

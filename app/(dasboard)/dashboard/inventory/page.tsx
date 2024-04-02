@@ -1,9 +1,9 @@
+import InventoryTable from "@/components/dasboard/tables/inventory/draft-products-table";
+
 const Inventory = () => {
   return (
     <div className=" p-10 mt-32">
-      <div className="w-full bg-white rounded-sm p-5 ">
-        <h1>Inventory Page</h1>
-      </div>
+      <InventoryTable />
     </div>
   );
 };

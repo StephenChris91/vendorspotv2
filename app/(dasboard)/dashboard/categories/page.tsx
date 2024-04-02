@@ -1,9 +1,9 @@
+import CategoriesTable from "@/components/dasboard/tables/categories/draft-products-table";
+
 const Categories = () => {
   return (
     <div className=" p-10 mt-32">
-      <div className="w-full bg-white rounded-sm p-5 ">
-        <h1>Categories Page</h1>
-      </div>
+      <CategoriesTable />
     </div>
   );
 };
