@@ -35,7 +35,7 @@ const revalidate = 0;
 
 // <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>;
 
-export default function Layout({
+export function Layout({
   children,
   session,
 }: {
