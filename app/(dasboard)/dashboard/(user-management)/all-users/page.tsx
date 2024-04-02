@@ -1,9 +1,9 @@
+import AllUsersTable from "@/components/dasboard/tables/all-users/all-users-table";
+
 const AllUsers = () => {
   return (
     <div className=" p-10 mt-32">
-      <div className="w-full bg-white rounded-sm p-5 ">
-        <h1>All Users Page</h1>
-      </div>
+      <AllUsersTable />
     </div>
   );
 };

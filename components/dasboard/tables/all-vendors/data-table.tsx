@@ -47,34 +47,9 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      <div className="w-full bg-white mb-8">
+      <div className="w-full bg-white mb-8 rounded-md">
         <div className="flex space-x-3 justify-between items-center mx-auto p-7 border-b-2 pb-8 rounded-md">
-          <h1>Refunds Policy</h1>
-          <div className="flex space-x-4">
-            <Input
-              placeholder="Filter orders by status..."
-              value={
-                (table.getColumn("status")?.getFilterValue() as string) ?? ""
-              }
-              onChange={(event) =>
-                table.getColumn("status")?.setFilterValue(event.target.value)
-              }
-              className="max-w-lg p-3 rounded-sm shadow-none"
-            />
-            <Input
-              placeholder="Filter orders by status..."
-              value={
-                (table.getColumn("status")?.getFilterValue() as string) ?? ""
-              }
-              onChange={(event) =>
-                table.getColumn("status")?.setFilterValue(event.target.value)
-              }
-              className="max-w-lg p-3 rounded-sm shadow-none"
-            />
-            <Button className="bg-green-600 rounded-full p-3 text-white">
-              +Add Refunds Policy
-            </Button>
-          </div>
+          <h1>Vendors</h1>
         </div>
       </div>
       <div className="rounded-md border-2 bg-white p-7">

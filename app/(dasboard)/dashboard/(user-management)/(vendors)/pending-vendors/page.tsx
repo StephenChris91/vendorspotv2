@@ -1,9 +1,9 @@
+import AllPendingVendorsTables from "@/components/dasboard/tables/all-pending-vendors/all-pending-vendors";
+
 const PendingVendors = () => {
   return (
     <div className=" p-10 mt-32">
-      <div className="w-full bg-white rounded-sm p-5 ">
-        <h1>Pending Vendors Page</h1>
-      </div>
+      <AllPendingVendorsTables />
     </div>
   );
 };

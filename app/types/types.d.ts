@@ -1,5 +1,6 @@
 import { StaticImageData } from "next/image";
 import { JSXElementConstructor } from "react";
+import { JsxElement } from "typescript";
 
 export interface Product {
     id: number;
@@ -120,4 +121,66 @@ export type RefundsPolicyType = {
     description: string,
     applied_on: string,
     status : string,
+}
+export type PageGroupType = {
+    id: string,
+    homepage: string,
+    slug: string,
+    icon: string,
+}
+export type FAQsTYpe = {
+    id: string,
+    title: string,
+    description: string,
+    type : string,
+    issued_by: string,
+}
+export type TermsAndConditionsType = {
+    id: string,
+    title: string,
+    description: string,
+    type : string,
+    issued_by: string,
+    status: string,
+    approval_action: string,
+}
+export type OrdersType = {
+    tracking_number: number,
+    customer: JSXElement,
+    products: number,
+    order_date : string,
+    delivery_fee: float,
+    total: float,
+    status: string,
+}
+export type TransactionType = {
+    tracking_number: number,
+    product_price: float,
+    taxable_amount: float,
+    discount : float,
+    delivery_fee: float,
+    payment_gateway: string,
+    payment_status: string,
+    total: number
+}
+export type AllUserType = {
+    id: string,
+    name: number,
+    permissions: float,
+    available_wallet_point: float,
+    status : float,
+}
+export type AllVendorsTypes = {
+    id: string,
+    name: number,
+    permissions: float,
+    available_wallet_point: float,
+    status : float,
+}
+export type AllPendingVendorsTypes = {
+    id: string,
+    name: number,
+    permissions: float,
+    available_wallet_point: float,
+    status : float,
 }

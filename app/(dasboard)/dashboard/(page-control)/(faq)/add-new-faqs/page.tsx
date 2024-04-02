@@ -1,9 +1,9 @@
+import CreateFAQPage from "@/components/dasboard/create-faq";
+
 const AddNewFAQs = () => {
   return (
-    <div className=" p-10 mt-32">
-      <div className="w-full bg-white rounded-sm p-5 ">
-        <h1>Add New FAQs Page</h1>
-      </div>
+    <div className="">
+      <CreateFAQPage />
     </div>
   );
 };

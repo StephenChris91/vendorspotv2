@@ -1,8 +1,8 @@
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
-import type { RefundsPolicyType } from "@/app/types/types";
+import type { OrdersType } from "@/app/types/types";
 
-async function getData(): Promise<RefundsPolicyType[]> {
+async function getData(): Promise<OrdersType[]> {
   // Fetch data from your API here.
   return [
     // {
@@ -41,7 +41,7 @@ async function getData(): Promise<RefundsPolicyType[]> {
   ];
 }
 
-export default async function RefundsPolicyTable() {
+export default async function OrdersTable() {
   const data = await getData();
 
   return (

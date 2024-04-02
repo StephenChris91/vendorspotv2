@@ -36,9 +36,16 @@ const CreateShop = () => {
       <AddShopAddress />
       <AddShopSettings />
 
-      <Button className="p-6 w-full bg-green-500 text-white" onClick={onSubmit}>
-        Save
-      </Button>
+      <div className="sticky bottom-0 -mx-5 bg-gray-100/10 py-3 px-5 backdrop-blur text-end md:py-5 lg:-mx-8 lg:px-8 z-10">
+        <div className="text-end">
+          <button
+            data-variant="normal"
+            className=" bg-green-600 text-white inline-flex items-center justify-center flex-shrink-0 font-semibold rounded outline-none transition duration-300 ease-in-out focus:outline-none focus:shadow focus:ring-1 focus:ring-accent-700 bg-accent text-light border border-transparent hover:bg-accent-hover px-5 py-0 h-12 text-sm md:text-base"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
       {/* <CreateShopPage /> */}
     </div>
   );

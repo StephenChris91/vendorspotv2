@@ -6,28 +6,24 @@ import { TbEdit } from "react-icons/tb";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-import { RefundsPolicyType } from "@/app/types/types";
+import { PageGroupType } from "@/app/types/types";
 
-export const columns: ColumnDef<RefundsPolicyType>[] = [
+export const columns: ColumnDef<PageGroupType>[] = [
   {
     accessorKey: "id",
     header: "ID",
   },
   {
-    accessorKey: "heading",
-    header: "Heading",
+    accessorKey: "homepage",
+    header: "Homepage Name",
   },
   {
-    accessorKey: "description",
-    header: "Description",
+    accessorKey: "slug",
+    header: "Slug",
   },
   {
-    accessorKey: "applied_on",
-    header: "Applied On",
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "icon",
+    header: "Icon",
   },
   {
     accessorKey: "actions",
