@@ -1,3 +1,5 @@
+"use client"
+
 // sessionContext.tsx
 import React, { createContext, useContext } from "react";
 
