@@ -23,6 +23,7 @@
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "^2.39.7",
     "@tanstack/react-table": "^8.13.2",
+    "@trpc/server": "^10.45.2",
     "apexcharts": "^3.47.0",
     "autoprefixer": "10.4.17",
     "axios": "^1.6.8",
