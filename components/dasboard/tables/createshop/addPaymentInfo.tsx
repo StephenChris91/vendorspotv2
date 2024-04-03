@@ -20,7 +20,7 @@ import { useContext, useEffect } from "react";
 import {
   FormContext,
   FormProvider,
-} from "@/app/(dasboard)/dashboard/FormContext/formcontext";
+} from "@/app/context/FormContext/formcontext";
 
 const AddPaymentInfo = () => {
   const context = useContext(FormContext);

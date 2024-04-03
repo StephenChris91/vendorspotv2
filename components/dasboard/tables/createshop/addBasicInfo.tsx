@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import { useContext, useEffect } from "react";
-import { FormContext } from "@/app/(dasboard)/dashboard/FormContext/formcontext";
+import { FormContext } from "@/app/context/FormContext/formcontext";
 
 const AddBasicInfo = () => {
   const context = useContext(FormContext);

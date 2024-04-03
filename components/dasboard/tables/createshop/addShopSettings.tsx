@@ -22,7 +22,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEffect, useState, useContext } from "react";
-import { FormContext } from "@/app/(dasboard)/dashboard/FormContext/formcontext";
+import { FormContext } from "@/app/context/FormContext/formcontext";
 
 const AddShopSettings = () => {
   const [countries, setCountries] = useState([]);

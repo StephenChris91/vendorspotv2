@@ -1,6 +1,5 @@
-"use client";
-
-import React, { createContext, useContext } from "react";
+// Layout.tsx
+import { useSession } from "../hooks/useSession";
 import { GeistSans } from "geist/font/sans";
 import "../globals.css";
 import { Inter as FontSans } from "next/font/google";
@@ -15,34 +14,9 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
-type SessionContextType = {
-  session: any;
-};
-
-const SessionContext = createContext<SessionContextType | undefined>(undefined);
-
 type LayoutProps = {
   children: React.ReactNode;
 };
-
-export function useSession() {
-  const context = useContext(SessionContext);
-  if (context === undefined) {
-    throw new Error("useSession must be used within a SessionProvider");
-  }
-  return context;
-}
-
-export function SessionProvider({
-  children,
-  session,
-}: LayoutProps & SessionContextType) {
-  return (
-    <SessionContext.Provider value={{ session }}>
-      {children}
-    </SessionContext.Provider>
-  );
-}
 
 export default function Layout({ children }: LayoutProps) {
   const { session } = useSession();

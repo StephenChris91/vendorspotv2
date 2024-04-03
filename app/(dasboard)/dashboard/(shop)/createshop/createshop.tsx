@@ -9,7 +9,7 @@ import AddShopSettings from "@/components/dasboard/tables/createshop/addShopSett
 import Separator from "@/components/separator";
 import { useContext } from "react";
 import { Button } from "@/components/ui/button";
-import { FormContext } from "../../FormContext/formcontext";
+import { FormContext } from "../../../../context/FormContext/formcontext";
 
 const CreateShop = () => {
   const formContext = useContext(FormContext);
