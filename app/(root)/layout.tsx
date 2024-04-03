@@ -1,3 +1,4 @@
+import React, { createContext, useContext } from "react";
 import { GeistSans } from "geist/font/sans";
 import "../globals.css";
 import { Inter as FontSans } from "next/font/google";
@@ -6,22 +7,43 @@ import Navbar from "@/components/navbar";
 import { SubNav } from "@/components/sub-nav";
 import Footer from "@/components/footer";
 import AuthProvider from "@/components/authprovider";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import { useRouter } from "next/navigation";
 
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-export default function Layout({
+type SessionContextType = {
+  session: any;
+};
+
+const SessionContext = createContext<SessionContextType | undefined>(undefined);
+
+type LayoutProps = {
+  children: React.ReactNode;
+};
+
+export function useSession() {
+  const context = useContext(SessionContext);
+  if (context === undefined) {
+    throw new Error("useSession must be used within a SessionProvider");
+  }
+  return context;
+}
+
+export function SessionProvider({
   children,
   session,
-}: {
-  children: React.ReactNode;
-  session: any;
-}) {
+}: LayoutProps & SessionContextType) {
+  return (
+    <SessionContext.Provider value={{ session }}>
+      {children}
+    </SessionContext.Provider>
+  );
+}
+
+export default function Layout({ children }: LayoutProps) {
+  const { session } = useSession();
   return (
     <div
       className={cn(
