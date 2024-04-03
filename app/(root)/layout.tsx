@@ -1,3 +1,5 @@
+"use client";
+
 import React, { createContext, useContext } from "react";
 import { GeistSans } from "geist/font/sans";
 import "../globals.css";
