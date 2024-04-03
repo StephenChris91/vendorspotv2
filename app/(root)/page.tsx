@@ -25,9 +25,11 @@ export default function Page({ session }: { session: any }) {
     return redirect("/dashboard");
   }
 
+  // ...
+
   return (
     <div className="flex-1 w-full flex flex-col gap-5 items-center">
-      <Layout session={session}>
+      <Layout>
         <Header />
         <DealsSection />
         <Category />
