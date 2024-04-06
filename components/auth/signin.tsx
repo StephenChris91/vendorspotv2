@@ -72,7 +72,7 @@ export default function Login() {
     if (data.user) {
       // console.log(data);
       toast({
-        variant: "success",
+        variant: "default",
         title: "Signed in!",
         description: "You are now signed in!",
         duration: 9000,
@@ -81,10 +81,10 @@ export default function Login() {
     } else {
       console.error(error);
       toast({
-        variant: "error",
+        variant: "default",
         title: "An error occurred",
         description: "An error occurred while signing in",
-        isClosable: true,
+        // isClosable: true,
       });
     }
   }

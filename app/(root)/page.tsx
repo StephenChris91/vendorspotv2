@@ -1,4 +1,3 @@
-// page.tsx
 import { redirect } from "next/navigation";
 import Header from "@/components/Header";
 import Category from "@/components/category";
@@ -10,35 +9,34 @@ import { Button } from "@/components/ui/button";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Layout from "./layout";
-import { SessionProvider } from "../context/user-context/user-context";
+
 async function getSession() {
   const supabase = createServerComponentClient({ cookies });
   const {
     data: { session },
   } = await supabase.auth.getSession();
 
-  return { session };
+  return {
+    props: { session }, // will be passed to the page component as props
+  };
 }
-
-export default async function Page() {
-  const { session } = await getSession();
-
+export default function Page({ session }: { session: any }) {
   if (session) {
     return redirect("/dashboard");
   }
 
+  // ...
+
   return (
-    <SessionProvider session={session}>
-      <div className="flex-1 w-full flex flex-col gap-5 items-center">
-        <Layout>
-          <Header />
-          <DealsSection />
-          <Category />
-          <QuoteSection />
-          <RecommendedProducts />
-          <ExtraServices />
-        </Layout>
-      </div>
-    </SessionProvider>
+    <div className="flex-1 w-full flex flex-col gap-5 items-center">
+      <Layout session={session}>
+        <Header />
+        <DealsSection />
+        <Category />
+        <QuoteSection />
+        <RecommendedProducts />
+        <ExtraServices />
+      </Layout>
+    </div>
   );
 }

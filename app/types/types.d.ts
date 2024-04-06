@@ -184,3 +184,37 @@ export type AllPendingVendorsTypes = {
     available_wallet_point: float,
     status : float,
 }
+export type MyStaffTypes = {
+    name: string,
+    email: string,
+    status: string,
+}
+export type VendorStaffTypes = {
+    name: string,
+    email: string,
+    status: string,
+}
+export type CustomerTypes = {
+    id: string, 
+    name: string,
+    permissions: string,
+    available_wallet_points: string,
+    status: string
+}
+export type ReviewsType = {
+    id: string, 
+    product: JsxElement,
+    customer_review: JsxElement,
+    rating: number,
+    reports: string,
+    date: string,
+    status: string
+}
+export type QuestionsType = {
+    id: string, 
+    image: JsxElement,
+    question_and_answer: JsxElement,
+    customer: string,
+    feedbacks: JsxElement,
+    date: string,
+}

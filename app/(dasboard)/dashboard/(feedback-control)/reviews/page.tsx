@@ -1,9 +1,9 @@
+import ReviewsTable from "@/components/dasboard/tables/reviews/reviews-table";
+
 const Reviews = () => {
   return (
     <div className=" p-10 mt-32">
-      <div className="w-full bg-white rounded-sm p-5 ">
-        <h1>Add New FAQs Page</h1>
-      </div>
+      <ReviewsTable />
     </div>
   );
 };
