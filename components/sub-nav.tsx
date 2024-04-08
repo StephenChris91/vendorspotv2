@@ -53,7 +53,7 @@ export const SubNav = ({ isDashboard = true }) => {
           <Link href="/" className="hover:text-blue-600">
             Flash Sales
           </Link>
-          <Link href="/" className="hover:text-blue-600">
+          <Link href="/vendors" className="hover:text-blue-600">
             Vendors
           </Link>
           <Link href="/" className="hover:text-blue-600">
