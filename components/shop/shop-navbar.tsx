@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -10,10 +10,11 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 
 const Navigation = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 1224px)",
+    query: "(min-width: 768px)", // Adjust breakpoint for desktop screens
   });
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 640px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" }); // Adjust breakpoint for tablet and mobile screens
   const navRef = useRef(null);
 
   useGSAP(() => {
@@ -24,12 +25,21 @@ const Navigation = () => {
     });
   });
 
+  function toggleMobileMenu() {
+    setIsOpen(!isOpen);
+  }
+
   return (
-    <nav ref={navRef} className="w-full sticky">
-      {isDesktopOrLaptop && (
-        <div className="flex justify-between items-center mx-auto bg-gray-50 p-6 px-20">
+    <nav ref={navRef} className="w-full sticky top-0 z-10 bg-gray-50 p-5">
+      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+        {/* Logo */}
+        <Link href="/">
           <Image width={120} src={Logo} alt="logo" />
-          <div className="flex gap-3">
+        </Link>
+
+        {/* Navigation Links */}
+        {isDesktopOrLaptop && (
+          <div className="hidden lg:flex gap-4">
             <Link href="/" className="hover:text-blue-500">
               Shops
             </Link>
@@ -45,11 +55,36 @@ const Navigation = () => {
               </Button>
             </Link>
           </div>
-        </div>
-      )}
-      {isTabletOrMobile && (
-        <div className="flex flex-col justify-start items-start mx-auto bg-gray-50 p-6">
-          <Image width={120} src={Logo} alt="logo" />
+        )}
+
+        {/* Mobile Menu Toggle */}
+        {isTabletOrMobile && (
+          <button
+            className="lg:hidden"
+            onClick={() => toggleMobileMenu()}
+            ref={navRef}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+        )}
+      </div>
+
+      {/* Mobile Menu */}
+      {isTabletOrMobile && isOpen ? (
+        <div className="container mx-auto px-4 py-2">
           <div className="flex flex-col gap-3">
             <Link href="/" className="hover:text-blue-500">
               Shops
@@ -61,12 +96,14 @@ const Navigation = () => {
               Contact
             </Link>
             <Link href="/" className="hover:text-blue-500">
-              <Button className="bg-green-600 text-white p-3 hover:bg-green-700 rounded-sm">
+              <Button className="bg-blue-600 text-white p-3 hover:bg-blue-700 rounded-sm">
                 Become A Seller
               </Button>
             </Link>
           </div>
         </div>
+      ) : (
+        ""
       )}
     </nav>
   );

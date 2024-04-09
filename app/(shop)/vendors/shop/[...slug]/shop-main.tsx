@@ -8,37 +8,38 @@ import { Button } from "@/components/ui/button";
 
 const ShopMain = () => {
   const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-device-width: 1224px)",
+    query: "(min-width: 1024px)", // Adjust breakpoint for desktop screens
   });
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1023px)" }); // Adjust breakpoint for mobile screens
 
   return (
-    <div
-      className={`w-full flex gap-6 ${
-        isDesktopOrLaptop ? "lg:flex-row" : "sm:flex-col"
-      } justify-between p-10`}
-    >
-      <ScrollArea
-        className={`${
-          isDesktopOrLaptop ? "w-2/6" : "w-full"
-        } h-auto rounded-md`}
-      >
-        <div className="bg-gray-50 h-auto ">
+    <div className="flex flex-col lg:flex-row justify-between lg:p-10 p-2 gap-8">
+      {/* Sidebar */}
+      <ScrollArea className="w-full lg:w-2/6 h-[600px] rounded-md mb-6 lg:mb-0">
+        <div className="bg-gray-50 h-auto">
           <ProfileInfo />
         </div>
       </ScrollArea>
-      <div
-        className={`${
-          isDesktopOrLaptop ? "w-full" : "w-full"
-        } h-full flex gap-6 flex-wrap`}
-      >
+
+      {/* Main Content */}
+      <div className="w-full lg:w-4/6 h-full flex flex-col gap-6">
+        {/* Banner */}
         <Banner />
-        <div className="w-full flex flex-wrap gap-6 justify-between items-center mx-auto">
-          {Array.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).map((_, i) => (
-            <ProductCard key={i} />
-          ))}
+
+        {/* Product Cards */}
+        <div className="w-full py-8">
+          <div
+            className={`grid grid-cols-[repeat(auto-fill,minmax(250px,2fr))] gap-3 `}
+          >
+            {/* Render Product Cards */}
+            {Array.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).map((_, i) => (
+              <ProductCard key={i} />
+            ))}
+          </div>
         </div>
-        <div className="flex justify-between items-center mx-auto">
+
+        {/* Load More Button */}
+        <div className="flex justify-center">
           <Button className="bg-green-600 text-white text-center p-3 hover:bg-green-700 rounded-sm">
             Load More
           </Button>
