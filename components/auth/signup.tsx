@@ -21,28 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-
-const formSchema = z.object({
-  firstname: z.string().min(2, {
-    message: "First name can not be empty.",
-  }),
-  lastname: z.string().min(2, { message: "Last Name can not be empty" }),
-  email: z
-    .string()
-    .email({ message: "Password must be at least 8 characters." }),
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters." }),
-  confirmPassword: z
-    .string()
-    .min(8, { message: "Passwords do not match" })
-    .refine((data) => data !== formSchema.password, {
-      message: "Passwords do not match",
-    }),
-  role: z.boolean().default(false).optional(),
-  shop: z.boolean().default(false).optional(),
-  avatar: z.string().optional(), // Add file field to the schema
-});
+import { signupSchema } from "@/app/schemas";
 
 export default function Signup() {
   const supabase = createClientComponentClient();
@@ -52,8 +31,8 @@ export default function Signup() {
   const router = useRouter();
   //   const supabase = createClient();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof signupSchema>>({
+    resolver: zodResolver(signupSchema),
     defaultValues: {
       firstname: "",
       lastname: "",
@@ -66,7 +45,7 @@ export default function Signup() {
     },
   });
 
-  const onSubmit = async (d: z.infer<typeof formSchema>) => {
+  const onSubmit = async (d: z.infer<typeof signupSchema>) => {
     //first check if a user with the same email already exists
 
     // Retrieve the file uploaded by the user

@@ -24,15 +24,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "../ui/use-toast";
-
-const formSchema = z.object({
-  email: z.string().min(2, {
-    message: "email must be at least 2 characters.",
-  }),
-  password: z.string().min(2, {
-    message: "password must be at least 2 characters.",
-  }),
-});
+import { loginSchema } from "@/app/schemas";
 
 export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
@@ -41,19 +33,19 @@ export default function Login() {
   // const toast = useToast();
   const { toast } = useToast();
 
-  async function signIn(formData: User) {
-    const { error } = await supabase.auth.signInWithPassword({
-      email: formData.email,
-      password: formData.password ?? "",
-    });
+  // async function signIn(formData: User) {
+  //   const { error } = await supabase.auth.signInWithPassword({
+  //     email: formData.email,
+  //     password: formData.password ?? "",
+  //   });
 
-    if (error) {
-      setErrorMsg(error.message);
-    }
-  }
+  //   if (error) {
+  //     setErrorMsg(error.message);
+  //   }
+  // }
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -61,7 +53,7 @@ export default function Login() {
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
