@@ -20,8 +20,10 @@ async function getSession() {
     props: { session }, // will be passed to the page component as props
   };
 }
-export default function Page({ session }: { session: any }) {
-  if (session) {
+export default async function Page() {
+  const supabase = createServerComponentClient({ cookies });
+  const { data } = await supabase.auth.getSession();
+  if (data?.session) {
     return redirect("/dashboard");
   }
 
