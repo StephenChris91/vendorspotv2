@@ -11,7 +11,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import ProductCartTray from "./product-cart-tray";
+// import ProductCartTray from "./product-cart-tray";
 import {
   Sheet,
   SheetClose,
@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/sheet";
 import CloseIcon from "../icons/close-icon";
 
-const ProductCart = ({ isOpen }: any) => {
+const ProductCart = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -38,13 +38,13 @@ const ProductCart = ({ isOpen }: any) => {
           </span>
         </button>
       </SheetTrigger>
-      <SheetContent>
-        <div className="absolute inset-y-0 flex min-w-full outline-none ltr:right-0 rtl:right-0 ">
-          <div className="h-full w-screen max-w-full">
-            <div className="drawer flex h-full flex-col bg-white text-base shadow-xl">
+      <SheetContent className="p-0 max-w-96">
+        <div className="absolute inset-y-0 outline-none ltr:right-0 rtl:right-0 ">
+          <div className="h-full w-96 max-w-full">
+            <div className="flex h-full flex-col bg-white text-base shadow-xl">
               <div
                 data-overlayscrollbars-initialize=""
-                className="h-full w-full"
+                className="h-full w-full flex justify-between items-center mx-auto "
                 data-overlayscrollbars="host"
               >
                 <div className="os-size-observer">
@@ -56,7 +56,7 @@ const ProductCart = ({ isOpen }: any) => {
                   className="mr-0 mb-0 ml-0 top-0 left-0 w-full p-0"
                 >
                   <section className="relative flex h-full flex-col">
-                    <header className="fixed top-0 z-10 flex w-full max-w-md items-center justify-between border-b border-border-200 border-opacity-75 bg-light px-6 py-4">
+                    <header className="fixed top-0 z-10 flex w-96 max-w-md items-center justify-between border-b border-border-200 border-opacity-75 bg-light px-6 py-4">
                       <div className="flex font-semibold text-green-500">
                         <EmptyShoppingBagIcon />
                         <span className="flex ltr:ml-2 rtl:mr-2">0 Item</span>
@@ -66,45 +66,46 @@ const ProductCart = ({ isOpen }: any) => {
                         <CloseIcon />
                       </button>
                     </header>
-                    <div className="grow pt-16 pb-20">
+                    <div className="grow pt-16 pb-20 mx-auto">
+                      <EmptyCartIcon />
                       <div
                         className="flex h-full flex-col items-center justify-center"
-                        style={{ opacity: "1" }}
+                        // style={{ opacity: "1" }}
                       >
-                        <EmptyCartIcon />
+                        {/* <EmptyCartIcon /> */}
                         <h4 className="mt-6 text-base font-semibold">
                           No products found
                         </h4>
                       </div>
                     </div>
-                    <footer className="fixed bottom-0 z-10 w-full max-w-md bg-white px-6 py-5">
+                    <footer className="fixed bottom-0 z-10 w-96 max-w-full bg-white px-6 py-5">
                       <button className="flex h-12 w-full justify-between rounded-full bg-green-500 p-1 text-sm font-bold shadow-700 transition-colors hover:bg-green-600 focus:bg-green-600 focus:outline-0 md:h-14">
                         <span className="flex h-full flex-1 items-center px-5 text-white">
                           Checkout
                         </span>
-                        <span className="flex h-full shrink-0 items-center rounded-full bg-white px-5 text-gray-50">
+                        <span className="flex h-full shrink-0 items-center rounded-full bg-white px-5 text-green-500">
                           $0.00
                         </span>
                       </button>
                     </footer>
                   </section>
                 </div>
-                <div className="os-scrollbar os-scrollbar-horizontal os-theme-dark os-scrollbar-auto-hide os-scrollbar-auto-hide-hidden os-scrollbar-handle-interactive os-scrollbar-cornerless os-scrollbar-unusable">
+                {/* <div className="os-scrollbar os-scrollbar-horizontal os-theme-dark os-scrollbar-auto-hide os-scrollbar-auto-hide-hidden os-scrollbar-handle-interactive os-scrollbar-cornerless os-scrollbar-unusable">
                   <div className="os-scrollbar-track">
                     <div
                       className="os-scrollbar-handle"
                       style={{ width: "100%" }}
                     ></div>
                   </div>
-                </div>
-                <div className="os-scrollbar os-scrollbar-vertical os-theme-dark os-scrollbar-auto-hide os-scrollbar-auto-hide-hidden os-scrollbar-handle-interactive os-scrollbar-cornerless os-scrollbar-unusable">
+                </div> */}
+                {/* <div className="os-scrollbar os-scrollbar-vertical os-theme-dark os-scrollbar-auto-hide os-scrollbar-auto-hide-hidden os-scrollbar-handle-interactive os-scrollbar-cornerless os-scrollbar-unusable">
                   <div className="os-scrollbar-track">
                     <div
                       className="os-scrollbar-handle"
                       style={{ height: "100%" }}
                     ></div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
