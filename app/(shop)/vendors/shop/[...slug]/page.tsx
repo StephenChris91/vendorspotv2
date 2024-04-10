@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ShopMain from "./shop-main";
-import ProductCartTray from "@/components/cart/product-cart-tray";
+// import ProductCartTray from "@/components/cart/product-cart-tray";
 import {
   Drawer,
   DrawerClose,
@@ -16,7 +16,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import ProductCart from "@/components/cart/product-cart";
-import CartDialog from "@/components/cart/cart-dialog";
+// import CartDialog from "@/components/cart/cart-dialog";
 
 const Shop = () => {
   return (

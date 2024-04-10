@@ -11,6 +11,9 @@ import { useRouter } from "next/navigation";
 import { Toaster } from "@/components/ui/toaster";
 import Navigation from "@/components/shop/shop-navbar";
 // import { ShopNavbar } from "@/components/shop/shop-navbar";
+import "@mantine/core/styles.css";
+
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -44,15 +47,20 @@ export default function Layout(
 
   return (
     <html lang="en" className={cn(GeistSans.className)}>
-      <body className={cn(fontSans.variable)}>
+      <head>
+        <ColorSchemeScript />
+      </head>
+      <div className={cn(fontSans.variable)}>
         <main className="flex flex-col items-center md:p-0 ">
           <AuthProvider accessToken={session?.access_token}>
             <Navigation />
-            <div className="w-full">{children}</div>
+            <MantineProvider>
+              <div className="w-full">{children}</div>
+            </MantineProvider>
             <Toaster />
           </AuthProvider>
         </main>
-      </body>
+      </div>
     </html>
   );
 }

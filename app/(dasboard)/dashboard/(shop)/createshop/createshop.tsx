@@ -21,6 +21,7 @@ const CreateShop = () => {
   const { formData, updateFormData } = formContext;
 
   const onSubmit = () => {
+    // "use server";
     console.log(formData);
   };
 

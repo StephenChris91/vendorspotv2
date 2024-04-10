@@ -9,7 +9,9 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import AdminSideBar from "@/components/dasboard/admin-sidebar";
 import AdminMainSection from "@/components/dasboard/admin-main";
+import "@mantine/core/styles.css";
 
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -40,11 +42,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <html lang="en" className={cn(GeistSans.className)}>
+      <head>
+        <ColorSchemeScript />
+      </head>
       <body className={cn(fontSans.variable)}>
         <main className="md:p-0 w-full p-20">
           <div className="container flex items-start justify-start p-20">
             <AdminSideBar />
-            <AdminMainSection>{children}</AdminMainSection>
+            <MantineProvider>
+              <AdminMainSection>{children}</AdminMainSection>
+            </MantineProvider>
           </div>
           {/* <Footer showSubscribe={false} /> */}
         </main>

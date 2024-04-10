@@ -7,9 +7,9 @@ import Navbar from "@/components/navbar";
 import { SubNav } from "@/components/sub-nav";
 import Footer from "@/components/footer";
 import AuthProvider from "@/components/authprovider";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import { useRouter } from "next/navigation";
+import "@mantine/core/styles.css";
+
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -44,12 +44,18 @@ export default function Layout({
 }) {
   return (
     <html lang="en" className={cn(GeistSans.className)}>
+      <head>
+        {" "}
+        <ColorSchemeScript />
+      </head>
       <body className={cn(fontSans.variable)}>
         <main className="min-h-screen flex flex-col items-center md:p-0 ">
           <AuthProvider accessToken={session?.access_token}>
             <Navbar />
             <SubNav />
-            <div className="wrapper">{children}</div>
+            <div className="wrapper">
+              <MantineProvider>{children}</MantineProvider>
+            </div>
             <Footer />
           </AuthProvider>
         </main>
