@@ -1,23 +1,28 @@
 import { createContext, useState } from "react";
 import { ReactNode } from "react";
 
-interface FormDataType<T> {
-  formData: T;
+// Define a generic type for form data
+type FormData = Record<string, any>;
+
+// Define the shape of the form context
+interface FormContextType {
+  formData: FormData;
+  updateFormData: (newData: Partial<FormData>) => void;
 }
 
-interface FormContextType<T> {
-  formData: FormDataType<T>;
-  updateFormData: (newData: FormDataType<T>) => void;
-}
+// Create the initial form data object
+const initialFormData: FormData = {};
 
-const FormContext = createContext<FormContextType<any> | null>(null);
+// Create the form context
+const FormContext = createContext<FormContextType | null>(null);
 
+// Define the form provider component
 const FormProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [currentFormData, setCurrentFormData] = useState<FormDataType<any>>({
-    formData: {},
-  });
+  const [currentFormData, setCurrentFormData] =
+    useState<FormData>(initialFormData);
 
-  const updateFormData = (newData: FormDataType<any>) => {
+  // Function to update form data
+  const updateFormData = (newData: Partial<FormData>) => {
     setCurrentFormData((prevData) => ({ ...prevData, ...newData }));
   };
 

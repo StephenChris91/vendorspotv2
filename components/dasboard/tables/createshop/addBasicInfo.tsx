@@ -19,6 +19,7 @@ import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import { useContext, useEffect } from "react";
 import { FormContext } from "@/app/context/FormContext/formcontext";
+import { createShopSchema } from "@/app/schemas";
 
 const AddBasicInfo = () => {
   const context = useContext(FormContext);
@@ -29,25 +30,8 @@ const AddBasicInfo = () => {
 
   const { formData, updateFormData } = context;
 
-  const formSchema = z.object({
-    name: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
-    slug: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
-    description: z
-      .string()
-      .min(10, {
-        message: "Bio must be at least 10 characters.",
-      })
-      .max(160, {
-        message: "Bio must not be longer than 30 characters.",
-      }),
-  });
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof createShopSchema>>({
+    resolver: zodResolver(createShopSchema),
     defaultValues: {
       name: "",
       slug: "",
@@ -69,7 +53,7 @@ const AddBasicInfo = () => {
     });
   }, [watchedName, watchedSlug, watchedDesc]);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof createShopSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
