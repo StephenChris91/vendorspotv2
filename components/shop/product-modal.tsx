@@ -2,7 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import ProductDetails from "./product-details";
 
-export default function ProductModal({ isOpen, onClose }) {
+export default function ProductModal({ isOpen, onClose }: any) {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>

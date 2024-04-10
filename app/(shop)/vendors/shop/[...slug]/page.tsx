@@ -5,17 +5,24 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ShopMain from "./shop-main";
 import ProductCartTray from "@/components/cart/product-cart-tray";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import ProductCart from "@/components/cart/product-cart";
+import CartDialog from "@/components/cart/cart-dialog";
 
 const Shop = () => {
   return (
     <div className="">
-      <Link href="/">
-        <Button className="bg-black text-white text-center p-4 rounded-sm">
-          Go to Home
-        </Button>
-      </Link>
       <ShopMain />
-      <ProductCartTray />
+      <ProductCart />
     </div>
   );
 };
