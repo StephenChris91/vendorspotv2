@@ -8,7 +8,7 @@ import RecommendedProducts from "@/components/recommended";
 import { Button } from "@/components/ui/button";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import Layout from "./layout";
+import Layout from "../layout";
 
 async function getSession() {
   const supabase = createServerComponentClient({ cookies });
