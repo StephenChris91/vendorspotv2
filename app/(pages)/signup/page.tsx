@@ -5,12 +5,12 @@ import { redirect } from "next/navigation";
 import SignUp from "@/components/auth/signup";
 
 export default async function SignUpPage() {
-  const supabase = createServerComponentClient({ cookies });
-  const { data } = await supabase.auth.getSession();
+  // const supabase = createServerComponentClient({ cookies });
+  // const { data } = await supabase.auth.getSession();
 
-  if (data?.session) {
-    redirect("/");
-  }
+  // if (data?.session) {
+  //   redirect("/");
+  // }
 
   return <SignUp />;
 }

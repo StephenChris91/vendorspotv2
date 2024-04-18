@@ -5,12 +5,5 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import Login from "@/components/auth/signin";
 
 export default async function SignInPage() {
-  const supabase = createServerComponentClient({ cookies });
-  const { data } = await supabase.auth.getSession();
-
-  if (data?.session) {
-    redirect("/");
-  }
-
   return <Login />;
 }

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { SyncLoader } from "react-spinners";
-import { createClient } from "@/utils/supabase/client";
+// import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 import { User } from "@/app/types/types";
 import { SubmitButton } from "@/app/(pages)/login/submit-button";
@@ -24,25 +24,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "../ui/use-toast";
-import { loginSchema } from "@/app/schemas";
+import { loginSchema } from "@/app/(shop)/schemas";
 
 export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
 
-  const supabase = createClient();
+  // const supabase = createClient();
   // const toast = useToast();
   const { toast } = useToast();
-
-  // async function signIn(formData: User) {
-  //   const { error } = await supabase.auth.signInWithPassword({
-  //     email: formData.email,
-  //     password: formData.password ?? "",
-  //   });
-
-  //   if (error) {
-  //     setErrorMsg(error.message);
-  //   }
-  // }
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -55,30 +44,29 @@ export default function Login() {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof loginSchema>) {
     // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: values.email,
-      password: values.password,
-    });
-    if (data.user) {
-      // console.log(data);
-      toast({
-        variant: "default",
-        title: "Signed in!",
-        description: "You are now signed in!",
-        duration: 9000,
-      });
-      // redirect("/");
-    } else {
-      console.error(error);
-      toast({
-        variant: "default",
-        title: "An error occurred",
-        description: "An error occurred while signing in",
-        // isClosable: true,
-      });
-    }
+    // const { data, error } = await supabase.auth.signInWithPassword({
+    //   email: values.email,
+    //   password: values.password,
+    // });
+    // if (data.user) {
+    //   // console.log(data);
+    //   toast({
+    //     variant: "default",
+    //     title: "Signed in!",
+    //     description: "You are now signed in!",
+    //     duration: 9000,
+    //   });
+    //   // redirect("/");
+    // } else {
+    //   console.error(error);
+    //   toast({
+    //     variant: "default",
+    //     title: "An error occurred",
+    //     description: "An error occurred while signing in",
+    //     // isClosable: true,
+    //   });
+    // }
   }
 
   return (

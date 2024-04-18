@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import Navbar from "@/components/navbar";
 import { SubNav } from "@/components/sub-nav";
 import Footer from "@/components/footer";
-import AuthProvider from "@/components/authprovider";
+// import AuthProvider from "@/components/authprovider";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { useRouter } from "next/navigation";
@@ -38,23 +38,19 @@ export default function Layout(
   { children }: { children: React.ReactNode },
   session: any
 ) {
-  const supabase = createServerComponentClient({ cookies });
-
   // <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>;
 
   return (
     <html lang="en" className={cn(GeistSans.className)}>
-      <body className={cn(fontSans.variable)}>
+      <div className={cn(fontSans.variable)}>
         <main className="min-h-screen flex flex-col items-center md:p-0 ">
-          <AuthProvider accessToken={session?.access_token}>
-            <Navbar />
-            <SubNav />
-            <div className="wrapper">{children}</div>
-            <Footer />
-            <Toaster />
-          </AuthProvider>
+          <Navbar />
+          <SubNav />
+          <div className="wrapper">{children}</div>
+          <Footer />
+          <Toaster />
         </main>
-      </body>
+      </div>
     </html>
   );
 }

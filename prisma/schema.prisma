@@ -28,7 +28,32 @@ enum userRole {
   Admin
 }
 
-model profiles {
+model avatar {
+  id        Int      @id @default(autoincrement())
+  original  String
+  thumbnail String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  user      user     @relation(fields: [userId], references: [id])
+  userId    Int      @unique
+}
+
+model user {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String
+  firstname String
+  lastname  String
+  role      userRole? @default(Customer)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  deletedAt DateTime  @default(now())
+  profile   profile?
+  profileId Int?      @unique @default(autoincrement())
+  avatar    avatar?
+}
+
+model profile {
   id        Int       @id @default(autoincrement())
   email     String    @unique
   password  String
@@ -39,25 +64,25 @@ model profiles {
   deletedAt DateTime  @default(now())
   shopId    Int
   shop      shop?
-
-  // @@map("auth.users")
+  user      user?     @relation(fields: [userId], references: [id])
+  userId    Int       @unique
 }
 
 model shop {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String
-  address     String
-  phone       String
-  email       String
-  logo        String
-  banner      String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @default(now())
-  deletedAt   DateTime  @default(now())
-  profile     profiles? @relation(fields: [profileId], references: [id])
-  profileId   Int       @unique
-  products    product[]
+  id          Int      @id @default(autoincrement())
+  name        String?
+  description String?
+  address     String?
+  phone       String?
+  email       String?
+  logo        String?
+  banner      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  deletedAt   DateTime @default(now())
+  profile     profile? @relation(fields: [profileId], references: [id])
+  profileId   Int?     @unique
+  products    product?
 }
 
 model product {
@@ -95,13 +120,13 @@ model product {
   external_product_url         String?
   external_product_button_next String?
   ratings                      Float
-  total_reviews                Int
+  total_reviews                Int?
   rating_count                 Int?
   my_review                    String?
   in_wishlist                  Boolean?
   categories                   String
   shop                         shop?         @relation(fields: [shop_id], references: [id])
-  shop_id                      Int
+  shop_id                      Int?          @unique
   type                         String?
   // Shop                      Shop          @relation(fields: [shop_id], references: [id])
   // images                    Image[]

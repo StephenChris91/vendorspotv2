@@ -1,12 +1,10 @@
 "use client";
-// import { createClient } from '@supabase/supabase-js';
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ControllerRenderProps, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { signUp } from "@/app/hooks/useSignup";
-import { createClient } from "@/utils/supabase/client";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,16 +18,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { signupSchema } from "@/app/schemas";
+import { signupSchema } from "@/app/(shop)/schemas";
+import { db } from "@/prisma/prisma";
+import { useToast } from "../ui/use-toast";
+import { CheckedState } from "@radix-ui/react-checkbox";
 
 export default function Signup() {
-  const supabase = createClientComponentClient();
-
-  // ...
-
   const router = useRouter();
-  //   const supabase = createClient();
+  const { toast } = useToast();
+
+  const [isVendor, setIsVendor] = useState(false);
 
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
@@ -39,68 +37,103 @@ export default function Signup() {
       email: "",
       password: "",
       confirmPassword: "",
-      role: false,
-      shop: false,
-      avatar: "",
+      role: isVendor ? "Vendor" : "Customer", // Use the isVendor state to set the role field
     },
   });
 
-  const onSubmit = async (d: z.infer<typeof signupSchema>) => {
-    //first check if a user with the same email already exists
-
+  const onSubmit = async (
+    formData: Omit<z.infer<typeof signupSchema>, "data">
+  ) => {
     // Retrieve the file uploaded by the user
-    const fileInput = (await document.getElementById(
-      "picture"
-    )) as HTMLInputElement;
+    // const fileInput = (await document.getElementById(
+    //   "picture"
+    // )) as HTMLInputElement;
 
-    if (!fileInput.files || fileInput.files.length === 0) {
-      console.log(fileInput.files);
-      console.error("No file selected");
-      return;
-    }
+    // if (!fileInput.files || fileInput.files.length === 0) {
+    //   console.log(fileInput.files);
+    //   console.error("No file selected");
+    //   return;
+    // }
 
-    const file = fileInput.files[0];
+    // const file = fileInput.files[0];
 
-    // Upload the file to the user's folder in the 'vendors' bucket
-    const filePath = `vendors/${d.firstname}/${file.name}`;
-    const { error: uploadError } = await supabase.storage
-      .from("vendors")
-      .upload(filePath, file);
+    // // Upload the file to the user's folder in the 'vendors' bucket
+    // const filePath = `vendors/${d.firstname}/${file.name}`;
+    // const { error: uploadError } = await supabase.storage
+    //   .from("vendors")
+    //   .upload(filePath, file);
 
-    if (uploadError) {
-      console.error(uploadError);
-      return;
-    }
+    // if (uploadError) {
+    //   console.error(uploadError);
+    //   return;
+    // }
 
-    // Retrieve the URL of the uploaded file
-    const { data: urlData } = supabase.storage
-      .from("vendors")
-      .getPublicUrl(filePath);
+    // // Retrieve the URL of the uploaded file
+    // const { data: urlData } = supabase.storage
+    //   .from("vendors")
+    //   .getPublicUrl(filePath);
 
-    if (!urlData || !urlData.publicUrl) {
-      console.error("Error retrieving URL");
-      return;
-    }
+    // if (!urlData || !urlData.publicUrl) {
+    //   console.error("Error retrieving URL");
+    //   return;
+    // }
 
     // Add the URL as the user's avatar in the additional data sent to the database
-    const { data, error } = await supabase.auth.signUp({
-      email: d.email,
-      password: d.password ?? "",
-      options: {
-        // emailRedirectTo: `${window.location.origin}/auth/callback`,
-        data: {
-          avatar: urlData.publicUrl,
-          confirmPassword: d.confirmPassword ?? "",
-          firstname: d.firstname,
-          lastname: d.lastname,
-          role: d.role,
-          shop: d.shop,
-        },
+    // const { data, error } = await supabase.auth.signUp({
+    //   email: d.email,
+    //   password: d.password ?? "",
+    //   options: {
+    //     // emailRedirectTo: `${window.location.origin}/auth/callback`,
+    //     data: {
+    //       // avatar: urlData.publicUrl,
+    //       confirmPassword: d.confirmPassword ?? "",
+    //       firstname: d.firstname,
+    //       lastname: d.lastname,
+    //       role: d.role,
+    //       shop: d.shop,
+    //     },
+    //   },
+    // });
+
+    // console.log(d, data);
+    // supabase.from("users").insert([data]);
+    const role = isVendor ? "Vendor" : "Customer";
+    const response = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        firstname: formData.firstname,
+        lastname: formData.lastname,
+        email: formData.email,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+        role: role,
+      }),
     });
 
-    console.log(d, data);
-    // supabase.from("users").insert([data]);
+    const responseData = await response.json();
+
+    if (responseData.error) {
+      toast({
+        variant: "default",
+        title: "Error",
+        description: responseData.error,
+        duration: 5000,
+      });
+      return;
+    } else {
+      toast({
+        variant: "default",
+        title: "Success",
+        description: responseData.message,
+        duration: 5000,
+      });
+      router.refresh();
+      router.push("/login");
+    }
+    console.log(response);
   };
 
   return (
@@ -191,7 +224,7 @@ export default function Signup() {
             render={({ field }) => (
               <>
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Confirm Password"
@@ -204,7 +237,7 @@ export default function Signup() {
               </>
             )}
           />
-          <FormField
+          {/* <FormField
             control={form.control}
             name="avatar"
             render={({
@@ -227,12 +260,12 @@ export default function Signup() {
               <FormItem className="flex flex-col items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
                 <FormControl>
                   {/* <Label htmlFor="picture">Picture</Label> */}
-                  <Input id="picture" type="file" />
-                </FormControl>
-                <div className="space-y-1 leading-none"></div>
-              </FormItem>
-            )}
-          />
+          {/* <Input id="picture" type="file" /> */}
+          {/* </FormControl> */}
+          {/* <div className="space-y-1 leading-none"></div> */}
+          {/* </FormItem> */}
+          {/* )} */}
+          {/* /> */}
           <FormField
             control={form.control}
             name="role"
@@ -240,8 +273,12 @@ export default function Signup() {
               <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md  p-4 ">
                 <FormControl>
                   <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
+                    checked={isVendor}
+                    onCheckedChange={(checkedState: CheckedState) => {
+                      if (typeof checkedState === "boolean") {
+                        setIsVendor(checkedState);
+                      }
+                    }}
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
@@ -254,7 +291,6 @@ export default function Signup() {
               </FormItem>
             )}
           />
-
           <Button
             type="submit"
             className="min-w-full bg-blue-600 rounded-sm p-5"

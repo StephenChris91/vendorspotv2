@@ -4,16 +4,12 @@ import { Inter as FontSans } from "next/font/google";
 // import "@/styles/globals.css"
 import { cn } from "@/lib/utils";
 
-import AuthProvider from "@/components/authprovider";
+// import AuthProvider from "@/components/authprovider";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { useRouter } from "next/navigation";
 import { Toaster } from "@/components/ui/toaster";
 import Navigation from "@/components/shop/shop-navbar";
 // import { ShopNavbar } from "@/components/shop/shop-navbar";
-import "@mantine/core/styles.css";
-
-import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -30,13 +26,6 @@ const metadata = {
   description: "Buy Anything, Anywhere, Anytime",
 };
 
-type LayoutProps = {
-  children: React.ReactNode;
-  isDashboard?: boolean;
-  // session?: any;
-};
-const revalidate = 0;
-
 export default function Layout(
   { children }: { children: React.ReactNode },
   session: any
@@ -46,21 +35,14 @@ export default function Layout(
   // <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>;
 
   return (
-    <html lang="en" className={cn(GeistSans.className)}>
-      <head>
-        <ColorSchemeScript />
-      </head>
+    <div lang="en" className={cn(GeistSans.className)}>
       <div className={cn(fontSans.variable)}>
         <main className="flex flex-col items-center md:p-0 ">
-          <AuthProvider accessToken={session?.access_token}>
-            <Navigation />
-            <MantineProvider>
-              <div className="w-full">{children}</div>
-            </MantineProvider>
-            <Toaster />
-          </AuthProvider>
+          <Navigation />
+          <div className="w-full">{children}</div>
+          <Toaster />
         </main>
       </div>
-    </html>
+    </div>
   );
 }

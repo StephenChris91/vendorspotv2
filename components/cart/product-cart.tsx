@@ -1,16 +1,6 @@
-import { Dialog } from "@headlessui/react";
 import EmptyCartIcon from "../icons/empt-cart-icon";
 import EmptyShoppingBagIcon from "../icons/empty-shopping-bag-icon";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+
 // import ProductCartTray from "./product-cart-tray";
 import {
   Sheet,

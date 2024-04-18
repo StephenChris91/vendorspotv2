@@ -8,24 +8,23 @@ import RecommendedProducts from "@/components/recommended";
 import { Button } from "@/components/ui/button";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import Layout from "../layout";
+import Layout from "./layout";
 
-async function getSession() {
-  const supabase = createServerComponentClient({ cookies });
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+// async function getSession() {
+//   const supabase = createServerComponentClient({ cookies });
+//   const {
+//     data: { session },
+//   } = await supabase.auth.getSession();
 
-  return {
-    props: { session }, // will be passed to the page component as props
-  };
-}
+//   return {
+//     props: { session }, // will be passed to the page component as props
+//   };
+// }
 export default async function Page() {
-  const supabase = createServerComponentClient({ cookies });
-  const { data } = await supabase.auth.getSession();
-  if (data?.session) {
-    return redirect("/dashboard");
-  }
+  // const { props } = await getSession();
+  // if (props.session) {
+  //   return redirect("/");
+  // }
 
   // ...
 

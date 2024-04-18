@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import Navbar from "@/components/navbar";
 import { SubNav } from "@/components/sub-nav";
 import Footer from "@/components/footer";
-// import AuthProvider from "@/components/authprovider";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import type { Metadata } from "next";
@@ -36,11 +35,17 @@ export default async function Layout({
   // session: any;
 }) {
   // const { data: sessionData } = useSession();
-
+  const supabase = createServerComponentClient({ cookies });
+  const { data } = await supabase.auth.getSession();
   return (
     <html lang="en" className={cn(GeistSans.className)}>
       <body className={cn(fontSans.variable)}>
-        <div>{children}</div>
+        <main className="min-h-screen flex flex-col items-center md:p-0 ">
+          <Navbar />
+          <SubNav />
+          <div className="wrapper">{children}</div>
+          <Footer />
+        </main>
       </body>
     </html>
   );

@@ -4,7 +4,7 @@ import { Inter as FontSans } from "next/font/google";
 // import "@/styles/globals.css"
 import { cn } from "@/lib/utils";
 
-import AuthProvider from "@/components/authprovider";
+// import AuthProvider from "@/components/authprovider";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { useRouter } from "next/navigation";
@@ -25,32 +25,28 @@ const metadata = {
   description: "Buy Anything, Anywhere, Anytime",
 };
 
-type LayoutProps = {
-  children: React.ReactNode;
-  isDashboard?: boolean;
-  // session?: any;
-};
-const revalidate = 0;
+// type LayoutProps = {
+//   children: React.ReactNode;
+//   isDashboard?: boolean;
+//   // session?: any;
+// };
+// const revalidate = 0;
 
 export default function Layout(
   { children }: { children: React.ReactNode },
   session: any
 ) {
-  const supabase = createServerComponentClient({ cookies });
-
   // <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>;
 
   return (
-    <html lang="en" className={cn(GeistSans.className)}>
-      <body className={cn(fontSans.variable)}>
+    <div lang="en" className={cn(GeistSans.className)}>
+      <div className={cn(fontSans.variable)}>
         <main className="flex flex-col items-center md:p-0 ">
-          <AuthProvider accessToken={session?.access_token}>
-            <div className="">{children}</div>
-            <Toaster />
-          </AuthProvider>
+          <div className="">{children}</div>
+          <Toaster />
         </main>
-      </body>
-    </html>
+      </div>
+    </div>
   );
 }
 
