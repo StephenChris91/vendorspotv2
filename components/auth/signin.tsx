@@ -2,15 +2,11 @@
 
 import Link from "next/link";
 import { SyncLoader } from "react-spinners";
-// import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
-import { User } from "@/app/types/types";
-import { SubmitButton } from "@/app/(pages)/login/submit-button";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-// import { useToast } from "@/components/ui/use-toast";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -25,12 +21,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "../ui/use-toast";
 import { loginSchema } from "@/app/(shop)/schemas";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
-
-  // const supabase = createClient();
-  // const toast = useToast();
+  const router = useRouter();
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -45,28 +41,27 @@ export default function Login() {
   async function onSubmit(values: z.infer<typeof loginSchema>) {
     // Do something with the form values.
     console.log(values);
-    // const { data, error } = await supabase.auth.signInWithPassword({
-    //   email: values.email,
-    //   password: values.password,
-    // });
-    // if (data.user) {
-    //   // console.log(data);
-    //   toast({
-    //     variant: "default",
-    //     title: "Signed in!",
-    //     description: "You are now signed in!",
-    //     duration: 9000,
-    //   });
-    //   // redirect("/");
-    // } else {
-    //   console.error(error);
-    //   toast({
-    //     variant: "default",
-    //     title: "An error occurred",
-    //     description: "An error occurred while signing in",
-    //     // isClosable: true,
-    //   });
-    // }
+    const signInData = await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: false,
+    });
+
+    if (signInData?.error) {
+      toast({
+        variant: "destructive",
+        title: "Error 😞",
+        description: "Invalid Email or Password",
+      });
+    } else {
+      toast({
+        variant: "default",
+        title: "Signed in! 😄",
+        description: "You are now signed in!",
+        duration: 9000,
+      });
+      router.push("/");
+    }
   }
 
   return (
