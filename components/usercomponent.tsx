@@ -1,24 +1,24 @@
-"use client";
+// "use client";
 
 // import { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
-
-import { useRouter } from "next/navigation";
-import { useUser } from "@/app/hooks/useUser";
 import SignOut from "./auth/signout";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
-export default function UserComponent() {
+export default async function UserComponent() {
   // const router = useRouter();
+  const session = await getServerSession(authOptions);
+  console.log(session);
+  let user = session?.user;
+  console.log(user?.role);
+  const firstInit = session?.user.firstname.charAt(0);
+  const lastInit = session?.user.lastname.charAt(0);
 
-  const user = useUser();
-  console.log(user);
-
-  const abbvName =
-    user?.user_metadata.firstname.split(" ")[0].charAt(0) +
-    user?.user_metadata.lastname.split(" ")[0].charAt(0);
+  const abbvName = firstInit + "." + lastInit;
 
   return (
     <>
@@ -27,18 +27,20 @@ export default function UserComponent() {
           <div className="flex gap-2">
             {user ? (
               <Avatar>
-                <AvatarImage src={user?.user_metadata.avatar} alt="@shadcn" />
-                <AvatarFallback>{abbvName}</AvatarFallback>
+                <AvatarImage src="" alt="@shadcn" />
+                <AvatarFallback className="p-2 rounded-full bg-blue-600 text-white">
+                  {abbvName}
+                </AvatarFallback>
               </Avatar>
             ) : // <Image src={avatar} alt="avatar" width={50} height={50} />
             null}
             {user ? (
-              <p>Hi! {user.user_metadata.firstname} Welcome to Vendorspot</p>
+              <p>Hi! {user.firstname} Welcome to Vendorspot</p>
             ) : (
               <p>Hi!, Please sign in to enjoy all our benefits</p>
             )}
           </div>
-          {user && user.user_metadata.role ? (
+          {user && user.role == "Vendor" ? (
             <Button
               className="bg-blue-600 hover:bg-blue-700 w-[90%] shadow-none"
               // onClick={() => router.push("/dashboard")}

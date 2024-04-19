@@ -1,3 +1,5 @@
+// "use client";
+
 import { GeistSans } from "geist/font/sans";
 import "../../globals.css";
 import { Inter as FontSans } from "next/font/google";
@@ -9,6 +11,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import AdminSideBar from "@/components/dasboard/admin-sidebar";
 import AdminMainSection from "@/components/dasboard/admin-main";
+import Provider from "@/lib/context/provider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -25,11 +28,11 @@ const metadata = {
   description: "Buy Anything, Anywhere, Anytime",
 };
 
-type LayoutProps = {
-  // children: React.ReactNode;
-  isDashboard?: boolean;
-  session?: any;
-};
+// type LayoutProps = {
+//   // children: React.ReactNode;
+//   isDashboard?: boolean;
+//   session?: any;
+// };
 const revalidate = 0;
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -41,13 +44,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div lang="en" className={cn(GeistSans.className)}>
       <div className={cn(fontSans.variable)}>
-        <main className="md:p-0 w-full p-20">
-          <div className="container flex items-start justify-start p-20">
-            <AdminSideBar />
-            <AdminMainSection>{children}</AdminMainSection>
-          </div>
-          {/* <Footer showSubscribe={false} /> */}
-        </main>
+        <Provider>
+          <main className="md:p-0 w-full p-20">
+            <div className="container flex items-start justify-start p-20">
+              <AdminSideBar />
+              <AdminMainSection>{children}</AdminMainSection>
+            </div>
+            {/* <Footer showSubscribe={false} /> */}
+          </main>
+        </Provider>
       </div>
     </div>
   );

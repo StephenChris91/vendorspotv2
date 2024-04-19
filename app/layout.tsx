@@ -10,6 +10,7 @@ import Footer from "@/components/footer";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import type { Metadata } from "next";
+// import UserContextProvider from "@/app/context/user-context";
 
 const fontSans = FontSans({
   subsets: ["latin"],

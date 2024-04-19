@@ -41,6 +41,7 @@
     "geist": "^1.2.1",
     "gsap": "^3.12.5",
     "heroicons": "^2.1.1",
+    "jotai": "^2.8.0",
     "katex": "^0.16.10",
     "lucide-react": "^0.356.0",
     "next": "latest",

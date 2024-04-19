@@ -3,16 +3,13 @@ import { PiMagnifyingGlassLight, PiStorefront } from "react-icons/pi";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useUser } from "@/app/hooks/useUser";
-import { useRouter } from "next/navigation";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
-
+import { User } from "@/app/context/user-context";
 const AdminTopbar = () => {
-  const user = useUser();
-  const router = useRouter();
-  const abbvName =
-    user?.user_metadata.firstname.split(" ")[0].charAt(0) +
-    user?.user_metadata.lastname.split(" ")[0].charAt(0);
+  // const { firstname } = getUserSession();
+  const user = User();
+
   return (
     <div className="flex bg-white justify-between items-center mx-auto gap-6 border-r-2 fixed top-0 left-0 mb-20 w-[90%] ml-40 z-40">
       <div className="w-3/4 p-6 border-r-2">
@@ -39,22 +36,21 @@ const AdminTopbar = () => {
       <div className="w-1/3 py- px-1">
         <div className="flex justify-center gap-3 items-center mx-auto w-full">
           <div className="h-full">
-            <Button
-              onClick={() => router.push("/")}
-              className="rounded-full text-green-600 hover:bg-green-600 hover:text-white bg-gray-200 flex gap-3"
-            >
-              <PiStorefront className="text-2xl" />
-              Visit Site
-            </Button>
+            <Link href="/">
+              <Button className="rounded-full text-green-600 hover:bg-green-600 hover:text-white bg-gray-200 flex gap-3">
+                <PiStorefront className="text-2xl" />
+                Visit Site
+              </Button>
+            </Link>
           </div>
           <div className="h-full flex gap-3 justify-between items-center mx-auto">
             <Avatar>
-              <AvatarImage src={user?.user_metadata.avatar} alt="user image" />
-              <AvatarFallback>{abbvName}</AvatarFallback>
+              <AvatarImage src="" alt="user image" />
+              <AvatarFallback>{}</AvatarFallback>
             </Avatar>
             <div>
               <h6>
-                {user?.user_metadata.firstname} {user?.user_metadata.lastname}
+                {user?.firstname} {user?.lastname}
               </h6>
               <p className="text-sm text-black">{user?.email}</p>
             </div>
