@@ -31,6 +31,7 @@ export function CategoriesMegaMenu() {
                       <div className="bg-white flex justify-between items-center mx-auto gap-3 p-3 w-[800px] h-auto rounded-sm">
                         <div className="w-1/2">
                           <h3>Featured Products</h3>
+                          //TODO Add featured products
                         </div>
                         <div className="w-1/2 h-auto rounded-sm">
                           <Image
