@@ -65,8 +65,8 @@ export default function Login() {
   }
 
   return (
-    <div className="w-96 p-5 mt-32 flex flex-col m-auto items-start h-auto bg-gray-50 shadow-sm">
-      <h1 className="text-3xl font-semibold mb-5">Login</h1>
+    <div className="w-64 p-5 flex flex-col m-auto items-start h-auto bg-gray-50 shadow-sm">
+      <h1 className="text-lg font-semibold mb-2">Login</h1>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -110,7 +110,7 @@ export default function Login() {
           />
           <Button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-black text-white"
+            className="w-full rounded-sm p-4 bg-blue-600 hover:bg-black text-white"
           >
             Submit
           </Button>

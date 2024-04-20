@@ -44,6 +44,11 @@ h6 {
     @apply px-28;
 }
 
+.small-wrapper {
+    @apply mx-auto;
+    @apply px-44;
+}
+
 .container {
     @apply m-0 min-w-full min-h-full p-0;
 }
@@ -58,4 +63,9 @@ h6 {
 
 .react-tel-input .form-control{
     width: 100% !important;
+}
+
+.small-border {
+   
+    border-bottom:  1px solid #a9a8a8;
 }

@@ -67,3 +67,9 @@ export const signupSchema = z
             message: "Bio must not be longer than 160 characters.",
           }),
       });
+
+      export const searchInputSchema = z.object({
+        search: z.string().min(2, {
+          message: "The input cannot be less than 2 characters",
+        }),
+      })
