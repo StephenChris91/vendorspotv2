@@ -3,13 +3,7 @@ import PromoBanner from "@/components/home2/promo-banner";
 import UpperNav from "@/components/home2/upper-nav";
 
 const HomeTwo = () => {
-  return (
-    <>
-      <PromoBanner />
-      <UpperNav />
-      <MiddleNav />
-    </>
-  );
+  return <></>;
 };
 
 export default HomeTwo;

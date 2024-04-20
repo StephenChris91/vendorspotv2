@@ -4,13 +4,13 @@ import { Inter as FontSans } from "next/font/google";
 // import "@/styles/globals.css"
 import { cn } from "@/lib/utils";
 
-// import AuthProvider from "@/components/authprovider";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import { useRouter } from "next/navigation";
 import { Toaster } from "@/components/ui/toaster";
 import { Metadata } from "next";
 import ProductCart from "@/components/cart/product-cart";
+import PromoBanner from "@/components/home2/promo-banner";
+import UpperNav from "@/components/home2/upper-nav";
+import MiddleNav from "@/components/home2/middle-nav";
+import LowerNav from "@/components/home2/lower-nav";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -32,6 +32,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div lang="en" className={cn(GeistSans.className)}>
       <div className={cn(fontSans.variable)}>
         <main className="">
+          <PromoBanner />
+          <UpperNav />
+          <MiddleNav />
+          <LowerNav />
           <ProductCart />
           <div className="">{children}</div>
           <Toaster />
