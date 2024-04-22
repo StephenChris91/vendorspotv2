@@ -7,7 +7,7 @@ import { Separator } from "../ui/separator";
 const Features = () => {
   return (
     <section
-      className={`w-full rounded-sm border border-gray-200 p-4 flex justify-between items-center mx-auto gap-3`}
+      className={`w-full rounded-sm border border-gray-200 p-4 flex justify-between items-center mx-auto gap-3 mb-12`}
     >
       <div className="flex justify-between items-center mx-auto space-x-3">
         <PiPackageDuotone className="w-10 h-10 text-gray-500" />

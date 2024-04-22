@@ -18,13 +18,13 @@ export default function Footer({ showSubscribe = true }) {
   return (
     <>
       {showSubscribe && <Subscribe />}
-      <footer className="bg-gray-50 flex justify-between items-center mx-auto w-full px-28 py-12">
+      <footer className="bg-gray-800 flex justify-between items-center mx-auto w-full px-28 py-12">
         <div className="flex flex-col space-y-2 w-96">
           <Image src={logo} alt="footer logo" width={120} height={undefined} />
-          <p>
+          <p className="text-gray-400">
             Best information about the company gies here but now lorem ipsum is
           </p>
-          <div className="flex justify-start items-start gap-2 text-gray-600">
+          <div className="flex justify-start items-start gap-2 text-gray-50">
             <Link href="/" target="_blank" rel="noreferrer">
               <AiFillFacebook className="text-3xl text-gray-400 hover:text-blue-500" />
             </Link>
@@ -43,75 +43,75 @@ export default function Footer({ showSubscribe = true }) {
           </div>
         </div>
         <div className="flex flex-col space-y-2">
-          <h3 className="text-gray-700">About</h3>
+          <h3 className="text-gray-50">About</h3>
           <div className="flex flex-col space-y-2">
             <Link href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700 hover:text-blue-500">About Us</p>
+              <p className="text-gray-500 hover:text-blue-500">About Us</p>
             </Link>
             <Link href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700 hover:text-blue-500">Find Stores</p>
+              <p className="text-gray-500 hover:text-blue-500">Find Stores</p>
             </Link>
             <Link href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700 hover:text-blue-500">Categories</p>
+              <p className="text-gray-500 hover:text-blue-500">Categories</p>
             </Link>
             <Link href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700 hover:text-blue-500">Blogs</p>
+              <p className="text-gray-500 hover:text-blue-500">Blogs</p>
             </Link>
           </div>
         </div>
         <div className="flex flex-col space-y-2">
-          <h3 className="text-gray-700">Partnership</h3>
+          <h3 className="text-gray-50">Partnership</h3>
           <div className="flex flex-col space-y-2">
             <Link href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700 hover:text-blue-500">About Us</p>
+              <p className="text-gray-500 hover:text-blue-500">About Us</p>
             </Link>
             <Link href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700 hover:text-blue-500">Find Stores</p>
+              <p className="text-gray-500 hover:text-blue-500">Find Stores</p>
             </Link>
             <Link href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700 hover:text-blue-500">Categories</p>
+              <p className="text-gray-500 hover:text-blue-500">Categories</p>
             </Link>
             <Link href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700 hover:text-blue-500">Blogs</p>
+              <p className="text-gray-500 hover:text-blue-500">Blogs</p>
             </Link>
           </div>
         </div>
         <div className="flex flex-col space-y-2">
-          <h3 className="text-gray-700">Information</h3>
+          <h3 className="text-gray-50">Information</h3>
           <div className="flex flex-col space-y-2">
             <Link href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700 hover:text-blue-500">Help Center</p>
+              <p className="text-gray-500 hover:text-blue-500">Help Center</p>
             </Link>
             <Link href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700 hover:text-blue-500">Money Refund</p>
+              <p className="text-gray-500 hover:text-blue-500">Money Refund</p>
             </Link>
             <Link href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700 hover:text-blue-500">Shipping</p>
+              <p className="text-gray-500 hover:text-blue-500">Shipping</p>
             </Link>
             <Link href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700 hover:text-blue-500">Contact Us</p>
+              <p className="text-gray-500 hover:text-blue-500">Contact Us</p>
             </Link>
           </div>
         </div>
         <div className="flex flex-col space-y-2">
-          <h3 className="text-gray-700">For Users</h3>
+          <h3 className="text-gray-50">For Users</h3>
           <div className="flex flex-col space-y-2">
             <Link href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700 hover:text-blue-500">Login</p>
+              <p className="text-gray-500 hover:text-blue-500">Login</p>
             </Link>
             <Link href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700 hover:text-blue-500">Register</p>
+              <p className="text-gray-500 hover:text-blue-500">Register</p>
             </Link>
             <Link href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700 hover:text-blue-500">Settings</p>
+              <p className="text-gray-500 hover:text-blue-500">Settings</p>
             </Link>
             <Link href="/" target="_blank" rel="noreferrer">
-              <p className="text-gray-700 hover:text-blue-500">My Orders</p>
+              <p className="text-gray-500 hover:text-blue-500">My Orders</p>
             </Link>
           </div>
         </div>
         <div className="flex flex-col space-y-2">
-          <h3 className="text-gray-700">Get App</h3>
+          <h3 className="text-gray-50">Get App</h3>
           <Image src={apple} alt="alt" width={160} height={undefined} />
           <Image src={google} alt="alt" width={160} height={undefined} />
         </div>

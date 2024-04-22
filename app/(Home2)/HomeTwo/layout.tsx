@@ -11,6 +11,7 @@ import PromoBanner from "@/components/home2/promo-banner";
 import UpperNav from "@/components/home2/upper-nav";
 import MiddleNav from "@/components/home2/middle-nav";
 import LowerNav from "@/components/home2/lower-nav";
+import Footer from "@/components/footer";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <LowerNav />
           <ProductCart />
           <div className="">{children}</div>
+          <Footer />
           <Toaster />
         </main>
       </div>
