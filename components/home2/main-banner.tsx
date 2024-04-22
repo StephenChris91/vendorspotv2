@@ -3,11 +3,12 @@ import banner3 from "@/public/shop/banner-3.png";
 import banner2 from "@/public/shop/banner-2.png";
 import banner1 from "@/public/shop/banner-1.png";
 import { MainSlider } from "./main-slider";
+import Features from "./features";
 
 const MainBanner = () => {
   return (
-    <div className="small-wrapper py-7">
-      <div className="flex gap-5 justify-between items-center mx-auto">
+    <div className="small-wrapper py-7 ">
+      <div className="flex gap-5 justify-between items-center mx-auto mb-7">
         <div className="w-2/3">
           <MainSlider />
         </div>
@@ -30,6 +31,7 @@ const MainBanner = () => {
           />
         </div>
       </div>
+      <Features />
     </div>
   );
 };

@@ -22,16 +22,14 @@ export function MainSlider() {
       <CarouselContent>
         {Array.from({ length: 3 }).map((_, index) => (
           <CarouselItem key={index} className="md:basis-1/1 lg:basis-3/3">
-            <div className="w-auto flex flex-col h-full rounded-sm">
-              <Image
-                src={banner1}
-                alt="banner-3"
-                width={0}
-                height={0}
-                sizes="100vw"
-                style={{ width: "100%", height: "100%" }}
-              />
-            </div>
+            <Image
+              src={banner1}
+              alt="banner-3"
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
           </CarouselItem>
         ))}
       </CarouselContent>
