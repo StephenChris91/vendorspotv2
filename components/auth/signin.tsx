@@ -66,7 +66,7 @@ export default function Login() {
 
   return (
     <div className="w-64 p-5 flex flex-col m-auto items-start h-auto bg-gray-50 shadow-sm">
-      <h1 className="text-lg font-semibold mb-2">Login</h1>
+      <h4 className="text-center font-normal mb-2">Sign In to your account</h4>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -117,12 +117,25 @@ export default function Login() {
         </form>
       </Form>
       {errorMsg && <p className="text-red-500">{errorMsg}</p>}
-      <p>
-        Don't have an account?{" "}
-        <Link href="/signup" className="font-bold">
-          Sign Up
-        </Link>
-      </p>
+      <div className="relative w-full mt-2 mb-2">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t" />
+        </div>
+        <div className="relative flex justify-center text-xs">
+          <span className="bg-gray-50 px-2 text-muted-foreground">
+            Or continue with
+          </span>
+        </div>
+      </div>
+      <Link href="/signup" className="w-full">
+        <Button
+          variant="outline"
+          type="submit"
+          className="w-full rounded-sm p-4 text-black uppercase"
+        >
+          Create an account
+        </Button>
+      </Link>
     </div>
   );
 }

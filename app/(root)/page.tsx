@@ -1,43 +1,17 @@
-import { redirect } from "next/navigation";
-import Header from "@/components/Header";
-import Category from "@/components/category";
-import DealsSection from "@/components/deals-section";
-import ExtraServices from "@/components/extra-services";
-import QuoteSection from "@/components/quotesection";
-import RecommendedProducts from "@/components/recommended";
-import { Button } from "@/components/ui/button";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import Layout from "./layout";
+import Banners from "@/components/home2/banners";
+import BestDeals from "@/components/home2/best-deals";
+import MainBanner from "@/components/home2/main-banner";
+import ShopVendors from "@/components/home2/shop-vendors";
 
-// async function getSession() {
-//   const supabase = createServerComponentClient({ cookies });
-//   const {
-//     data: { session },
-//   } = await supabase.auth.getSession();
-
-//   return {
-//     props: { session }, // will be passed to the page component as props
-//   };
-// }
-export default async function Page() {
-  // const { props } = await getSession();
-  // if (props.session) {
-  //   return redirect("/");
-  // }
-
-  // ...
-
+const Page = () => {
   return (
-    <div className="flex-1 w-full flex flex-col gap-5 items-center">
-      <Layout>
-        <Header />
-        <DealsSection />
-        <Category />
-        <QuoteSection />
-        <RecommendedProducts />
-        <ExtraServices />
-      </Layout>
-    </div>
+    <>
+      <MainBanner />
+      <BestDeals />
+      <ShopVendors />
+      <Banners />
+    </>
   );
-}
+};
+
+export default Page;

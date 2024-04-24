@@ -218,3 +218,10 @@ export type QuestionsType = {
     feedbacks: JsxElement,
     date: string,
 }
+export type CartTableType = {
+    id: string, 
+    products: JsxElement,
+    quantity: JsxElement,
+    price: JsxElement,
+    total: JsxElement,
+}
