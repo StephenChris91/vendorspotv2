@@ -31,7 +31,7 @@ const metadata: Metadata = {
   description: "Buy Anything, Anywhere, Anytime",
 };
 
-export function Layout({ children, currentPath }: LayoutProps) {
+export default function Layout({ children, currentPath }: LayoutProps) {
   // const router = useRouter();
   return (
     <div lang="en" className={cn(GeistSans.className)}>
