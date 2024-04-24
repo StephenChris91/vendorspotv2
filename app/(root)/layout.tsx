@@ -28,7 +28,7 @@ const metadata: Metadata = {
   description: "Buy Anything, Anywhere, Anytime",
 };
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div lang="en" className={cn(GeistSans.className)}>
       <div className={cn(fontSans.variable)}>
