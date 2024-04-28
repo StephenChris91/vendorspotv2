@@ -5,8 +5,10 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
+import { useDispatch } from "react-redux";
+import { signUpUser } from "@/store/slices/userSlice";
 import { Button } from "@/components/ui/button";
+
 import {
   Form,
   FormControl,
@@ -27,6 +29,7 @@ export default function Signup() {
   const router = useRouter();
   const { toast } = useToast();
 
+  const dispatch = useDispatch(); // Get the dispatch function
   const [isVendor, setIsVendor] = useState(false);
 
   const form = useForm<z.infer<typeof signupSchema>>({
@@ -41,99 +44,43 @@ export default function Signup() {
     },
   });
 
+  // Import the sign up action
+
+  // ...
+
   const onSubmit = async (
     formData: Omit<z.infer<typeof signupSchema>, "data">
   ) => {
-    // Retrieve the file uploaded by the user
-    // const fileInput = (await document.getElementById(
-    //   "picture"
-    // )) as HTMLInputElement;
-
-    // if (!fileInput.files || fileInput.files.length === 0) {
-    //   console.log(fileInput.files);
-    //   console.error("No file selected");
-    //   return;
-    // }
-
-    // const file = fileInput.files[0];
-
-    // // Upload the file to the user's folder in the 'vendors' bucket
-    // const filePath = `vendors/${d.firstname}/${file.name}`;
-    // const { error: uploadError } = await supabase.storage
-    //   .from("vendors")
-    //   .upload(filePath, file);
-
-    // if (uploadError) {
-    //   console.error(uploadError);
-    //   return;
-    // }
-
-    // // Retrieve the URL of the uploaded file
-    // const { data: urlData } = supabase.storage
-    //   .from("vendors")
-    //   .getPublicUrl(filePath);
-
-    // if (!urlData || !urlData.publicUrl) {
-    //   console.error("Error retrieving URL");
-    //   return;
-    // }
-
-    // Add the URL as the user's avatar in the additional data sent to the database
-    // const { data, error } = await supabase.auth.signUp({
-    //   email: d.email,
-    //   password: d.password ?? "",
-    //   options: {
-    //     // emailRedirectTo: `${window.location.origin}/auth/callback`,
-    //     data: {
-    //       // avatar: urlData.publicUrl,
-    //       confirmPassword: d.confirmPassword ?? "",
-    //       firstname: d.firstname,
-    //       lastname: d.lastname,
-    //       role: d.role,
-    //       shop: d.shop,
-    //     },
-    //   },
-    // });
-
-    // console.log(d, data);
-    // supabase.from("users").insert([data]);
     const role = isVendor ? "Vendor" : "Customer";
-    const response = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstname: formData.firstname,
-        lastname: formData.lastname,
-        email: formData.email,
-        password: formData.password,
-        confirmPassword: formData.confirmPassword,
-        role: role,
-      }),
-    });
+    const userData = {
+      firstname: formData.firstname,
+      lastname: formData.lastname,
+      email: formData.email,
+      password: formData.password,
+      confirmPassword: formData.confirmPassword,
+      role: role,
+    };
 
-    const responseData = await response.json();
-
-    if (responseData.error) {
+    try {
+      const user = await dispatch(signUpUser(userData) as any); // Dispatch the sign up action
+      if (user) {
+        toast({
+          variant: "default",
+          title: "Success",
+          description: "You have successfully signed up",
+          duration: 5000,
+        });
+        router.refresh();
+        router.push("/");
+      }
+    } catch (error) {
       toast({
         variant: "default",
         title: "Error",
-        description: responseData.error,
+        description: (error as Error).message ?? "An error occurred",
         duration: 5000,
       });
-      return;
-    } else {
-      toast({
-        variant: "default",
-        title: "Success",
-        description: responseData.message,
-        duration: 5000,
-      });
-      router.refresh();
-      router.push("/login");
     }
-    console.log(response);
   };
 
   return (
@@ -237,35 +184,6 @@ export default function Signup() {
               </>
             )}
           />
-          {/* <FormField
-            control={form.control}
-            name="avatar"
-            render={({
-              field,
-            }: {
-              field: ControllerRenderProps<
-                {
-                  firstname: string;
-                  lastname: string;
-                  email: string;
-                  password: string;
-                  confirmPassword: string;
-                  role?: boolean | undefined;
-                  shop?: boolean | undefined;
-                  avatar?: string | undefined;
-                },
-                "avatar"
-              >;
-            }) => (
-              <FormItem className="flex flex-col items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
-                <FormControl>
-                  {/* <Label htmlFor="picture">Picture</Label> */}
-          {/* <Input id="picture" type="file" /> */}
-          {/* </FormControl> */}
-          {/* <div className="space-y-1 leading-none"></div> */}
-          {/* </FormItem> */}
-          {/* )} */}
-          {/* /> */}
           <FormField
             control={form.control}
             name="role"

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { hash } from 'bcrypt';
+import { hash } from 'bcrypt-ts';
 import { db } from '@/prisma/prisma';
 import { signupSchema } from '@/app/(shop)/schemas';
 

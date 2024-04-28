@@ -20,7 +20,7 @@ export interface User  {
     firstname?: string;
     lastname?: string;
     confirmPassword?: string;
-    role?: boolean;
+    role?: string;
     shop?: boolean;
     avatar?: HTMLFileInputElement;
 }

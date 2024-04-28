@@ -4,7 +4,8 @@ import * as React from "react";
 import Link from "next/link";
 import { IoIosHeartEmpty } from "react-icons/io";
 import { AiOutlineUser } from "react-icons/ai";
-
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store/store";
 import { cn } from "@/lib/utils";
 // import { Icons } from "@/components/icons"
 import {
@@ -19,6 +20,8 @@ import {
 import Login from "../auth/signin";
 
 export function UserSection() {
+  const user = useSelector((state: RootState) => state.user.user);
+
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -27,17 +30,6 @@ export function UserSection() {
             <AiOutlineUser />
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            {/* <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul> */}
             <Login />
           </NavigationMenuContent>
         </NavigationMenuItem>
@@ -47,14 +39,6 @@ export function UserSection() {
           </NavigationMenuTrigger>
           <NavigationMenuContent></NavigationMenuContent>
         </NavigationMenuItem>
-
-        {/* <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Documentation
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem> */}
       </NavigationMenuList>
     </NavigationMenu>
   );

@@ -2,7 +2,8 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { NextAuthOptions, User } from 'next-auth';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { db } from '@/prisma/prisma';
-import { compare } from 'bcrypt';
+import { compareSync } from 'bcrypt-ts';
+// import { compare } from 'bcrypt';
 
 export const authOptions: NextAuthOptions = {
     // secret: 'secret',
@@ -36,7 +37,7 @@ export const authOptions: NextAuthOptions = {
                     return null;
                 }
             
-                const passwordMatch = await compare(credentials?.password, existingUser?.password);
+                const passwordMatch = await compareSync(credentials?.password, existingUser?.password);
                 if(!passwordMatch){
                     return null;
                 }
@@ -89,4 +90,59 @@ export const authOptions: NextAuthOptions = {
         },
       },
 }
+
+
+// Retrieve the file uploaded by the user
+    // const fileInput = (await document.getElementById(
+    //   "picture"
+    // )) as HTMLInputElement;
+
+    // if (!fileInput.files || fileInput.files.length === 0) {
+    //   console.log(fileInput.files);
+    //   console.error("No file selected");
+    //   return;
+    // }
+
+    // const file = fileInput.files[0];
+
+    // // Upload the file to the user's folder in the 'vendors' bucket
+    // const filePath = `vendors/${d.firstname}/${file.name}`;
+    // const { error: uploadError } = await supabase.storage
+    //   .from("vendors")
+    //   .upload(filePath, file);
+
+    // if (uploadError) {
+    //   console.error(uploadError);
+    //   return;
+    // }
+
+    // // Retrieve the URL of the uploaded file
+    // const { data: urlData } = supabase.storage
+    //   .from("vendors")
+    //   .getPublicUrl(filePath);
+
+    // if (!urlData || !urlData.publicUrl) {
+    //   console.error("Error retrieving URL");
+    //   return;
+    // }
+
+    // Add the URL as the user's avatar in the additional data sent to the database
+    // const { data, error } = await supabase.auth.signUp({
+    //   email: d.email,
+    //   password: d.password ?? "",
+    //   options: {
+    //     // emailRedirectTo: `${window.location.origin}/auth/callback`,
+    //     data: {
+    //       // avatar: urlData.publicUrl,
+    //       confirmPassword: d.confirmPassword ?? "",
+    //       firstname: d.firstname,
+    //       lastname: d.lastname,
+    //       role: d.role,
+    //       shop: d.shop,
+    //     },
+    //   },
+    // });
+
+    // console.log(d, data);
+    // supabase.from("users").insert([data]);
 

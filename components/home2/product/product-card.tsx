@@ -1,5 +1,5 @@
 "use client";
-
+import { gsap } from "gsap";
 import laptop from "@/public/shop/Laptop-3.webp";
 import { Button } from "@/components/ui/button";
 import Image, { StaticImageData } from "next/image";
@@ -11,9 +11,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useState, FC } from "react";
+import { useState, useEffect, useRef, FC } from "react";
 import { PiHeart } from "react-icons/pi";
 import { PiEye } from "react-icons/pi";
+import { PiShoppingCartSimple } from "react-icons/pi";
 import ProductModal from "@/components/shop/product-modal";
 
 interface ProductCardProps {
@@ -46,6 +47,16 @@ export const ProductCard: FC<ProductCardProps> = ({
   //   const [isSingle, setIsSingle] = useState(single);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const overlayRef = useRef(null);
+
+  useEffect(() => {
+    gsap.from(overlayRef?.current, {
+      autoAlpha: 0,
+      duration: 1,
+      ease: "power3.out",
+    });
+  }, []);
+
   function openModal() {
     setIsModalOpen(true);
   }
@@ -54,9 +65,9 @@ export const ProductCard: FC<ProductCardProps> = ({
       <Card className="w-auto max-w-xs border rounded-none h-auto border-gray-400">
         <div className="grid  p-4">
           <div
-            className={`${
+            className={`relative ${
               single ? "aspect-[4/5]" : ""
-            } w-full overflow-hidden rounded-xl`}
+            } w-full overflow-hidden rounded-sm`}
           >
             <Image
               src={image ?? laptop}
@@ -71,6 +82,20 @@ export const ProductCard: FC<ProductCardProps> = ({
               }}
               className={`${single ? "aspect-[4/5]" : ""}`}
             />
+
+            {!single ? (
+              <div
+                ref={overlayRef}
+                className="absolute top-0 left-0 w-full h-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black bg-opacity-50"
+              >
+                <PiHeart className="text-white h-7 w-7 p-1 mx-2 cursor-pointer" />
+                <PiShoppingCartSimple className=" text-white h-7 w-7 p-1 mx-2 cursor-pointer" />
+                <PiEye
+                  className=" text-white h-7 w-7 p-1 mx-2 cursor-pointer"
+                  onClick={openModal}
+                />
+              </div>
+            ) : null}
           </div>
           <div className="grid gap-1.5 mb-5">
             <h3 className="font-semibold text-sm md:text-base">{title}</h3>

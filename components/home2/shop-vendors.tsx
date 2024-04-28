@@ -1,6 +1,7 @@
 import { Card } from "../ui/card";
 import Image from "next/image";
 import shopLogo from "@/public/shop/shop-logo.png";
+
 const ShopVendors = () => {
   return (
     <section className="small-wrapper flex-col flex justify-between items-center mx-auto gap-5 w-full mb-12">
