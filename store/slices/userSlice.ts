@@ -36,6 +36,17 @@ export const signUpUser = createAsyncThunk('user/signUp', async (userData: User)
   
 })
 
+export const signInUser = createAsyncThunk('user/signIn', async (userData: User) => {
+  const response = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userData),
+  });
+  return await response.json();
+});
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -71,6 +82,17 @@ export const userSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(signUpUser.rejected, (state, action: PayloadAction<unknown, string, { arg: User; requestId: string; requestStatus: "rejected"; aborted: boolean; condition: boolean; } & ({ rejectedWithValue: true; } | ({ rejectedWithValue: false; } & {})), SerializedError>) => {
+        state.status = 'failed';
+        state.error = action.error.message ?? null;
+    })
+     .addCase(signInUser.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(signInUser.fulfilled, (state, action: PayloadAction<any>) => {
+        state.status ='succeeded';
+        state.user = action.payload;
+      })
+      .addCase(signInUser.rejected, (state, action: PayloadAction<unknown, string, { arg: User; requestId: string; requestStatus: "rejected"; aborted: boolean; condition: boolean; } & ({ rejectedWithValue: true; } | ({ rejectedWithValue: false; } & {})), SerializedError>) => {
         state.status = 'failed';
         state.error = action.error.message ?? null;
     })

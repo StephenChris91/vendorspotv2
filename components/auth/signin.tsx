@@ -3,11 +3,10 @@
 import Link from "next/link";
 import { SyncLoader } from "react-spinners";
 import { useState } from "react";
-
+import { useDispatch } from "react-redux";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -23,12 +22,13 @@ import { useToast } from "../ui/use-toast";
 import { loginSchema } from "@/app/(shop)/schemas";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { signInUser } from "@/store/slices/userSlice";
 
 export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
   const { toast } = useToast();
-
+  const dispatch = useDispatch();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -39,15 +39,9 @@ export default function Login() {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    // Do something with the form values.
-    console.log(values);
-    const signInData = await signIn("credentials", {
-      email: values.email,
-      password: values.password,
-      redirect: false,
-    });
+    const signInData = dispatch(signInUser(values) as any);
 
-    if (signInData?.error) {
+    if (signInData.error) {
       toast({
         variant: "destructive",
         title: "Error 😞",
@@ -60,6 +54,7 @@ export default function Login() {
         description: "You are now signed in!",
         duration: 9000,
       });
+      router.refresh();
       router.push("/");
     }
   }

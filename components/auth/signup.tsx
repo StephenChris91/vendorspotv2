@@ -5,10 +5,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { signUpUser } from "@/store/slices/userSlice";
-import { Button } from "@/components/ui/button";
 
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -24,12 +22,13 @@ import { signupSchema } from "@/app/(shop)/schemas";
 import { db } from "@/prisma/prisma";
 import { useToast } from "../ui/use-toast";
 import { CheckedState } from "@radix-ui/react-checkbox";
+import { useDispatch } from "react-redux";
+import { signUpUser } from "@/store/slices/userSlice";
 
 export default function Signup() {
   const router = useRouter();
   const { toast } = useToast();
-
-  const dispatch = useDispatch(); // Get the dispatch function
+  const dispatch = useDispatch();
   const [isVendor, setIsVendor] = useState(false);
 
   const form = useForm<z.infer<typeof signupSchema>>({
@@ -44,43 +43,48 @@ export default function Signup() {
     },
   });
 
-  // Import the sign up action
-
-  // ...
-
   const onSubmit = async (
     formData: Omit<z.infer<typeof signupSchema>, "data">
   ) => {
     const role = isVendor ? "Vendor" : "Customer";
-    const userData = {
-      firstname: formData.firstname,
-      lastname: formData.lastname,
-      email: formData.email,
-      password: formData.password,
-      confirmPassword: formData.confirmPassword,
-      role: role,
-    };
+    // const response = await fetch("/api/auth/register", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     firstname: formData.firstname,
+    //     lastname: formData.lastname,
+    //     email: formData.email,
+    //     password: formData.password,
+    //     confirmPassword: formData.confirmPassword,
+    //     role: role,
+    //   }),
+    // });
 
-    try {
-      const user = await dispatch(signUpUser(userData) as any); // Dispatch the sign up action
-      if (user) {
-        toast({
-          variant: "default",
-          title: "Success",
-          description: "You have successfully signed up",
-          duration: 5000,
-        });
-        router.refresh();
-        router.push("/");
-      }
-    } catch (error) {
+    const responseData = dispatch(signUpUser(formData) as any);
+
+    // const responseData = await response.json();
+
+    if (responseData.error) {
       toast({
-        variant: "default",
+        variant: "destructive",
         title: "Error",
-        description: (error as Error).message ?? "An error occurred",
+        description: responseData.error,
         duration: 5000,
       });
+      return;
+    } else {
+      toast({
+        variant: "default",
+        title: "Success",
+        description: responseData.message,
+        duration: 5000,
+      });
+      router.refresh();
+      router.push("/");
     }
+    // console.log(response);
   };
 
   return (

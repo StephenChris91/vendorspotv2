@@ -1,71 +1,66 @@
-"use client";
-
-import * as React from "react";
-import Link from "next/link";
-import { IoIosHeartEmpty } from "react-icons/io";
-import { AiOutlineUser } from "react-icons/ai";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/store/store";
-import { cn } from "@/lib/utils";
-// import { Icons } from "@/components/icons"
+import { Button } from "@/components/ui/button";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { FaRegUser } from "react-icons/fa";
+
 import Login from "../auth/signin";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import Link from "next/link";
 
-export function UserSection() {
+export default function UserDropdown() {
   const user = useSelector((state: RootState) => state.user.user);
-
+  console.log(user);
   return (
-    <NavigationMenu>
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-transparent text-lg text-white">
-            <AiOutlineUser />
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <Login />
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-transparent text-lg text-white hover:bg-transparent">
-            <IoIosHeartEmpty />
-          </NavigationMenuTrigger>
-          <NavigationMenuContent></NavigationMenuContent>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button className="bg-transparent text-lg shadow-none hover:bg-transparent">
+          <FaRegUser />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-72">
+        {user?.user.role === "Vendor" || user?.user.role === "Admin" ? (
+          <div className="p-2">
+            <Link href="dashboard">
+              <Button className="w-full rounded-sm">Dashboard</Button>
+              <div className="relative w-full mt-2 mb-2">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t" />
+                </div>
+                <div className="relative flex justify-center text-xs">
+                  <span className="bg-gray-50 px-2 text-muted-foreground">
+                    Or
+                  </span>
+                </div>
+              </div>
+              <Link href="/signup" className="w-full">
+                <Button
+                  variant="outline"
+                  type="submit"
+                  className="w-full rounded-sm p-4 text-black uppercase"
+                >
+                  Logout
+                </Button>
+              </Link>
+            </Link>
+          </div>
+        ) : (
+          <Login />
+        )}
+        {/* <Login /> */}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
-
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  );
-});
-ListItem.displayName = "ListItem";

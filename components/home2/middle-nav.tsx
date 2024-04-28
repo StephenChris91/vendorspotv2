@@ -4,7 +4,7 @@ import Image from "next/image";
 import Logo from "@/public/shop/Logo-12.png";
 import Link from "next/link";
 import { MiddleBarForm } from "./middlebar-form";
-import { UserSection } from "./user-section";
+import UserDropdown from "./user-section";
 import { useMediaQuery } from "react-responsive";
 
 const MiddleNav = () => {
@@ -25,7 +25,7 @@ const MiddleNav = () => {
         <MiddleBarForm />
       </div>
       <div>
-        <UserSection />
+        <UserDropdown />
       </div>
     </div>
   );
