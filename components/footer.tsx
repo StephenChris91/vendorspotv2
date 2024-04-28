@@ -1,5 +1,5 @@
 import Subscribe from "./subscribe-section";
-import logo from "@/app/v-logo.png";
+import logo from "@/public/shop/Logo-12.png";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,7 +20,7 @@ export default function Footer({ showSubscribe = true }) {
       {showSubscribe && <Subscribe />}
       <footer className="bg-gray-800 flex justify-between items-center mx-auto w-full px-28 py-12">
         <div className="flex flex-col space-y-2 w-96">
-          <Image src={logo} alt="footer logo" width={120} height={undefined} />
+          <Image src={logo} alt="footer logo" width={200} height={undefined} />
           <p className="text-gray-400">
             Best information about the company gies here but now lorem ipsum is
           </p>

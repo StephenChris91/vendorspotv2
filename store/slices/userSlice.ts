@@ -3,7 +3,7 @@ import { signupSchema } from './../../app/(shop)/schemas/index';
 import { authOptions } from '@/lib/auth';
 import { createSlice, createAsyncThunk, PayloadAction, SerializedError } from '@reduxjs/toolkit';
 import { getServerSession } from 'next-auth'; // Import the NextAuth function
-
+import { signOut as signOutNextAuth } from 'next-auth/react';
 // Define a type for the user state
 interface UserState {
   user: any;
@@ -19,9 +19,8 @@ const initialState: UserState = {
 };
 
 // Async thunk for fetching the current user
-export const fetchCurrentUser = createAsyncThunk('user/fetchCurrentUser', async () => {
-  const session = await getServerSession(authOptions);
-  return session?.user;
+export const signOutUser = createAsyncThunk('user/signOut', async () => {
+  await signOutNextAuth();
 });
 
 export const signUpUser = createAsyncThunk('user/signUp', async (userData: User) => {
@@ -63,17 +62,6 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCurrentUser.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(fetchCurrentUser.fulfilled, (state, action: PayloadAction<any>) => {
-        state.status = 'succeeded';
-        state.user = action.payload;
-      })
-      .addCase(fetchCurrentUser.rejected, (state, action: PayloadAction<unknown, string, { arg: void; requestId: string; requestStatus: "rejected"; aborted: boolean; condition: boolean; } & ({ rejectedWithValue: true; } | ({ rejectedWithValue: false; } & {})), SerializedError>) => {
-        state.status = 'failed';
-        state.error = action.error.message ?? null;
-    })
      .addCase(signUpUser.pending, (state) => {
         state.status = 'loading';
       })
@@ -96,6 +84,17 @@ export const userSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message ?? null;
     })
+     .addCase(signOutUser.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(signOutUser.fulfilled, (state) => {
+        state.status ='idle';
+        state.user = null;
+      })
+      .addCase(signOutUser.rejected, (state, action: PayloadAction<unknown, string, { arg: void; requestId: string; requestStatus: "rejected"; aborted: boolean; condition: boolean; } & ({ rejectedWithValue: true; } | ({ rejectedWithValue: false; } & {})), SerializedError>) => {
+        state.status = 'failed';
+        state.error = action.error.message ?? null;
+      });
   },
 });
 

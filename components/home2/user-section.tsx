@@ -14,14 +14,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { FaRegUser } from "react-icons/fa";
-
+import { useRouter } from "next/navigation";
 import Login from "../auth/signin";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import Link from "next/link";
+import { signOutUser } from "@/store/slices/userSlice";
 
 export default function UserDropdown() {
   const user = useSelector((state: RootState) => state.user.user);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const handleSignOut = () => {
+    dispatch(signOutUser() as any);
+    router.refresh();
+  };
+
   console.log(user);
   return (
     <DropdownMenu>
@@ -50,6 +58,7 @@ export default function UserDropdown() {
                   variant="outline"
                   type="submit"
                   className="w-full rounded-sm p-4 text-black uppercase"
+                  onClick={handleSignOut}
                 >
                   Logout
                 </Button>
