@@ -25,7 +25,6 @@ import { useRouter } from "next/navigation";
 import { signInUser } from "@/store/slices/userSlice";
 import { AppDispatch } from "@/store/store";
 import { login } from "@/actions/login";
-import { SignUpModal } from "@/app/(pages)/_authComponents/sign-up-modal";
 
 export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
@@ -126,7 +125,15 @@ export default function Login() {
           </span>
         </div>
       </div>
-      <SignUpModal />
+      <Link href="/signup" className="w-full">
+        <Button
+          variant="outline"
+          type="submit"
+          className="w-full rounded-sm p-4 text-black uppercase"
+        >
+          Create an account
+        </Button>
+      </Link>
     </div>
   );
 }

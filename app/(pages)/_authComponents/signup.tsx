@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { signupSchema } from "@/app/(shop)/schemas";
 import { db } from "@/prisma/prisma";
-import { useToast } from "../ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { useDispatch } from "react-redux";
 import { signUpUser } from "@/store/slices/userSlice";
@@ -67,11 +67,10 @@ export default function Signup() {
       router.refresh();
       router.push("/");
     }
-    // console.log(response);
   };
 
   return (
-    <div className="w-96 p-5 mt-32 flex flex-col m-auto items-start h-auto bg-gray-50 shadow-sm">
+    <div className="w-auto p-5 flex flex-col m-auto items-start h-auto shadow-sm">
       <h1 className="text-3xl font-semibold mb-5">Sign Up</h1>
       <Form {...form}>
         <form
@@ -204,7 +203,7 @@ export default function Signup() {
           </Button>
         </form>
       </Form>
-      <p className="mt-3">
+      {/* <p className="mt-3">
         Already have an account?{" "}
         <span
           className="font-bold cursor-pointer"
@@ -212,7 +211,7 @@ export default function Signup() {
         >
           Login
         </span>
-      </p>
+      </p> */}
     </div>
   );
 }

@@ -32,7 +32,7 @@ export async function POST(req: Request) {
 
         const { password: newUserPassword, ...rest} = newUser;
 
-        return NextResponse.json({ message: `${role ? 'Signed Up Successfully! Welcome Vendor 😇' : 'Signed Up Successful! Happy Shopping'}`, user: rest}, {status: 201})
+        return NextResponse.json({ message: `${role === 'Vendor' ? 'Signed Up Successfully! Welcome Vendor 😇' : 'Signed Up Successful! Happy Shopping'}`, user: rest}, {status: 201})
         
         // return NextResponse.json(body)
     } catch (error) {

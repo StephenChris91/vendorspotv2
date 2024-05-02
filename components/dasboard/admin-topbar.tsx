@@ -12,9 +12,9 @@ import { useEffect } from "react";
 const AdminTopbar = () => {
   // const { firstname } = getUserSession();
   // const user = User();
-  const user = useSelector((state: RootState) => state.user.user);
-  const abbvName =
-    user?.user.firstname.charAt(0) + user?.user.lastname.charAt(0);
+  const user = useSelector((state: RootState) => state.user?.user);
+  const abbvName = "";
+  // user?.user.firstname.charAt(0) + user?.user.lastname.charAt(0);
   console.log(user);
   useEffect(() => {
     console.log(user);
@@ -57,7 +57,7 @@ const AdminTopbar = () => {
           <div className="h-full flex gap-3 justify-between items-center mx-auto">
             <Avatar>
               <AvatarImage src="" alt="user image" />
-              <AvatarFallback>{abbvName}</AvatarFallback>
+              <AvatarFallback>{}</AvatarFallback>
             </Avatar>
             <div>
               <h6>

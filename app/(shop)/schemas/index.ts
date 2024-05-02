@@ -1,26 +1,4 @@
 import { z } from "zod";
-
-// export const signupSchema: any = z.object({
-//         firstname: z.string().min(2, {
-//             message: "First name can not be empty.",
-//         }),
-//         lastname: z.string().min(2, { message: "Last Name can not be empty" }),
-//         email: z
-//             .string()
-//             .email({ message: "Password must be at least 8 characters." }),
-//         password: z
-//             .string()
-//             .min(8, { message: "Password must be at least 8 characters." }),
-//         confirmPassword: z
-//             .string()
-//             .min(8, { message: "Passwords do not match" })
-//             .refine((data) => data !== signupSchema.password, {
-//                 message: "Passwords do not match",
-//             }),
-//         role: z.boolean().default(false).optional(),
-//         shop: z.boolean().default(false).optional(),
-//         avatar: z.string().optional(), // Add file field to the schema
-//     });
 export const signupSchema = z
   .object({
     firstname: z.string().min(1, 'Username is required').max(100),
@@ -31,7 +9,7 @@ export const signupSchema = z
       .min(1, 'Password is required')
       .min(8, 'Password must have than 8 characters'),
     confirmPassword: z.string().min(1, 'Password confirmation is required'),
-    role: z.literal('Vendor').or(z.literal('Customer')).optional(),
+    role: z.literal('Vendor').or(z.literal('Customer')).or(z.literal('Admin')).optional(),
 
     // shop: z.boolean().default(false).optional(),
     // avatar: z.string().optional(), // Add file field to the schema

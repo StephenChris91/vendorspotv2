@@ -2,35 +2,17 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { FaRegUser } from "react-icons/fa";
-import { useRouter } from "next/navigation";
 import Login from "../auth/signin";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store/store";
 import Link from "next/link";
-import { signOutUser } from "@/store/slices/userSlice";
+import { useCurrentUser } from "@/lib/use-session-client";
+import { signOut } from "next-auth/react";
 
-export default function UserDropdown() {
-  const user = useSelector((state: RootState) => state.user.user);
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const handleSignOut = () => {
-    dispatch(signOutUser() as any);
-    router.refresh();
-  };
+const UserDropdown = () => {
+  const user = useCurrentUser();
 
-  console.log(user);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -39,31 +21,67 @@ export default function UserDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-72">
-        {user?.user.role === "Vendor" || user?.user.role === "Admin" ? (
+        {user?.role === "Vendor" || user?.role === "Admin" ? (
           <div className="p-2">
-            <Link href="dashboard">
+            <Link href="/dashboard">
               <Button className="w-full rounded-sm">Dashboard</Button>
-              <div className="relative w-full mt-2 mb-2">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t" />
-                </div>
-                <div className="relative flex justify-center text-xs">
-                  <span className="bg-gray-50 px-2 text-muted-foreground">
-                    Or
-                  </span>
-                </div>
-              </div>
-              <Link href="/signup" className="w-full">
-                <Button
-                  variant="outline"
-                  type="submit"
-                  className="w-full rounded-sm p-4 text-black uppercase"
-                  onClick={handleSignOut}
-                >
-                  Logout
-                </Button>
-              </Link>
             </Link>
+            <div className="relative w-full mt-2 mb-2">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs">
+                <span className="bg-gray-50 px-2 text-muted-foreground">
+                  Or
+                </span>
+              </div>
+            </div>
+            <Button
+              variant="outline"
+              type="submit"
+              className="w-full rounded-sm p-4 text-black uppercase"
+              onClick={() => signOut()}
+            >
+              Logout
+            </Button>
+          </div>
+        ) : user?.role === "Customer" ? (
+          <div className="flex flex-col gap-2 p-2">
+            <p>My Account</p>
+            <Link href="/auth/profile">
+              <Button
+                variant="outline"
+                className="w-full bg-transparent shadow-none rounded-sm"
+              >
+                Profile
+              </Button>
+            </Link>
+            <Link href="/orders">
+              <Button
+                variant="outline"
+                className="w-full bg-transparent shadow-none rounded-sm"
+              >
+                Orders
+              </Button>
+            </Link>
+            <div className="relative w-full mt-2 mb-2">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs">
+                <span className="bg-gray-50 px-2 text-muted-foreground">
+                  Or
+                </span>
+              </div>
+            </div>
+            <Button
+              variant="outline"
+              type="submit"
+              className="w-full rounded-sm p-4 text-black uppercase"
+              onClick={() => signOut()}
+            >
+              Logout
+            </Button>
           </div>
         ) : (
           <Login />
@@ -72,4 +90,6 @@ export default function UserDropdown() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
+
+export default UserDropdown;

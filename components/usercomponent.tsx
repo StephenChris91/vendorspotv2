@@ -7,7 +7,7 @@ import SignOut from "./auth/signout";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/auth";
 
 export default async function UserComponent() {
   // const router = useRouter();

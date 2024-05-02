@@ -1,8 +1,9 @@
 import { db } from "@/prisma/prisma";
+import { userRole } from "@prisma/client";
 import NextAuth from "next-auth/next";
 
 
-export type userRole = 'Admin' | 'Vendor' | 'Customer' | null;
+// export type userRole = 'Admin' | 'Vendor' | 'Customer' | null;
 
 
 declare module 'next-auth' {

@@ -1,20 +1,43 @@
-import { type NextRequest } from "next/server";
-// import { updateSession } from "@/utils/supabase/middleware";
+import NextAuth from 'next-auth'
+import authConfig from '@/auth.config';
 
-export async function middleware(request: NextRequest) {
-  // return await updateSession(request);
+const { auth } = NextAuth(authConfig);
+import { DEFAULT_LOGIN_REDIRECT, publicRoutes, authRoutes, apiAuthPrefix, adminRoutes} from '@/routes'
+import { useCurrentUser } from './lib/use-session-client';
+
+
+
+export default auth((req) => {
+   const { nextUrl } = req;
+   const isLoggedIn = !!req.auth;
+   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+   const isAuthenticatedRoute = authRoutes.includes(nextUrl.pathname);
+const isAdminRoutes = adminRoutes.includes(nextUrl.pathname);
+
+
+   if(isApiAuthRoute) {
+    // return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    return null
 }
 
+   if(isAuthenticatedRoute) {
+
+    if(isLoggedIn) {
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    }
+    // return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    return null
+}
+
+    if(!isLoggedIn && !isPublicRoute){
+        return Response.redirect(new URL('/', nextUrl));
+    }
+
+    return null
+});
+ 
+// See "Matching Paths" below to learn more
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - images - .svg, .png, .jpg, .jpeg, .gif, .webp
-     * Feel free to modify this pattern to include more paths.
-     */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
-  ],
+    matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)',],
 };

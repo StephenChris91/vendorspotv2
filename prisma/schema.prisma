@@ -29,17 +29,17 @@ enum userRole {
 }
 
 model avatar {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   original  String
   thumbnail String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   user      user     @relation(fields: [userId], references: [id])
-  userId    Int      @unique
+  userId    String   @unique
 }
 
 model user {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @default(uuid()) // Remove the `uid()` function from the `@default` directive
   email     String    @unique
   password  String
   firstname String
@@ -54,7 +54,7 @@ model user {
 }
 
 model profile {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @default(uuid())
   email     String    @unique
   password  String
   name      String
@@ -65,11 +65,11 @@ model profile {
   shopId    Int
   shop      shop?
   user      user?     @relation(fields: [userId], references: [id])
-  userId    Int       @unique
+  userId    String    @unique
 }
 
 model shop {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(uuid())
   name        String?
   description String?
   address     String?
@@ -81,12 +81,12 @@ model shop {
   updatedAt   DateTime @default(now())
   deletedAt   DateTime @default(now())
   profile     profile? @relation(fields: [profileId], references: [id])
-  profileId   Int?     @unique
+  profileId   String?  @unique
   products    product?
 }
 
 model product {
-  id                           Int           @id @default(autoincrement())
+  id                           String        @id @default(uuid())
   name                         String
   slug                         String?
   description                  String?
@@ -126,7 +126,7 @@ model product {
   in_wishlist                  Boolean?
   categories                   String
   shop                         shop?         @relation(fields: [shop_id], references: [id])
-  shop_id                      Int?          @unique
+  shop_id                      String?       @unique
   type                         String?
   // Shop                      Shop          @relation(fields: [shop_id], references: [id])
   // images                    Image[]
@@ -135,22 +135,22 @@ model product {
 }
 
 model image {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   original  String
   thumbnail String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   product   product  @relation(fields: [productId], references: [id])
-  productId Int      @unique
+  productId String   @unique
   gallery   gallery? @relation(fields: [galleryId], references: [id])
-  galleryId Int      @unique
+  galleryId String   @unique
 }
 
 model gallery {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   images    image[]
   product   product  @relation(fields: [productId], references: [id])
-  productId Int      @unique
+  productId String   @unique
 }

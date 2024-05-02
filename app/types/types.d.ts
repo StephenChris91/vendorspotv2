@@ -16,12 +16,11 @@ export interface catTitle {
 
 export interface User  {
     email: string;
-    password: string | undefined;
-    firstname?: string;
-    lastname?: string;
-    confirmPassword?: string;
-    role?: string;
-    shop?: boolean;
+    password: string;
+    firstname: string;
+    lastname: string;
+    confirmPassword: string;
+    role?: "Customer" | "Vendor" | "Admin";
     avatar?: HTMLFileInputElement;
 }
 

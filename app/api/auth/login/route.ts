@@ -1,47 +1,49 @@
 import { loginSchema } from "@/app/(shop)/schemas";
-import { db } from "@/prisma/prisma";
 import { NextResponse } from "next/server";
 import { compareSync } from "bcrypt-ts";
+import { signIn } from "@/auth";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { getUserByEmail } from "@/lib/data/user";
+import { AuthError } from "next-auth";
 
 export async function POST(req: Request) {
-    try {
-        const body = await req.json();
-        const { email, password } = loginSchema.parse(body);
+    const body = await req.json();
+    const validInputFields = loginSchema.safeParse(body)
 
-        const existingUser = await db.user.findUnique({
-            where: {
-                email: email,
-            },
-        });
-
-        if (!existingUser) {
-            return NextResponse.json({
-                status: "error",
-                message: "User does not exist",
-            });
-        }
-
-        const isValidPassword = compareSync(password, existingUser.password);
-
-        if (!isValidPassword) {
-            return NextResponse.json({
-                status: "error",
-                message: "Invalid Credentials",
-            });
-        }
-        
-
-        console.log('You are now logged In');
-        return NextResponse.json({
-            status: "success",
-            message: "Login successful",
-            user: existingUser,
-        });
-    } catch (error) {
-        console.error("Error during login:", error);
-        return NextResponse.json({
-            status: "error",
-            message: "Something went wrong",
-        });
+    if (!validInputFields.success){
+        return {error: 'Your details are incorrect!'}
     }
+
+    const { email, password } = validInputFields.data;
+
+    const existingUser = getUserByEmail(email)
+
+    if(!existingUser) {
+        return {error: 'This user does not exist!'}
+    }
+
+    try {
+        await signIn('credentials', {
+            email,
+            password,
+            redirectTo: DEFAULT_LOGIN_REDIRECT
+        })
+        
+    } catch (error) {
+        if(error instanceof AuthError) {
+            switch(error.type) {
+                case 'CredentialsSignin':
+                    return {error: 'Your details are incorrect!'}
+                default: return {error: 'Something Went Wrong!'}
+            }
+        }
+
+        throw error
+    }
+
+    // return NextResponse.json({
+    //     status: "success",
+    //     message: "Login successful",
+    //     user: existingUser,
+    // });
 }
