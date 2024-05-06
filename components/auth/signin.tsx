@@ -27,6 +27,7 @@ import { AppDispatch } from "@/store/store";
 import { login } from "@/actions/login";
 import { SignUpModal } from "@/app/(pages)/_authComponents/sign-up-modal";
 import SocialLogin from "./social/social-login";
+import FormError from "../form-response/form-error";
 
 export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
@@ -128,12 +129,7 @@ export default function Login() {
           </Button>
         </form>
       </Form>
-      {errorMsg && (
-        <p className="text-red-500 bg-red-100 w-full text-center text-sm p-3 mt-3 rounded-sm flex justify-between items-center mx-auto gap-3">
-          <FiAlertCircle className="text-red-500 text-lg" />
-          {errorMsg}
-        </p>
-      )}
+      {errorMsg && <FormError message={errorMsg} Icon={<FiAlertCircle />} />}
       <div className="relative w-full mt-2 mb-2">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />

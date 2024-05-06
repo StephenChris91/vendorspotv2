@@ -51,7 +51,7 @@ const UserDropdown = () => {
             <Link href="/auth/profile">
               <Button
                 variant="outline"
-                className="w-full bg-transparent shadow-none rounded-sm"
+                className="w-fu`ll bg-transparent shadow-none rounded-sm"
               >
                 Profile
               </Button>

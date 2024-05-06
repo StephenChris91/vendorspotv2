@@ -1,8 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { SyncLoader } from "react-spinners";
-import { useState } from "react";
+import { startTransition, useState } from "react";
 import { useDispatch } from "react-redux";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -20,14 +18,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { loginSchema } from "@/app/(shop)/schemas";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { signInUser } from "@/store/slices/userSlice";
 import { AppDispatch } from "@/store/store";
 import { login } from "@/actions/login";
+import { SignUpModal } from "@/app/(pages)/_authComponents/sign-up-modal";
+import SocialLogin from "@/components/auth/social/social-login";
+import FormError from "@/components/form-response/form-error";
+import { AlertOctagonIcon, CheckCircle } from "lucide-react";
+import FormSuccess from "@/components/form-response/form-success";
 
 export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
+  const [success, setSuccess] = useState("");
+
   const router = useRouter();
   const { toast } = useToast();
   const dispatch: AppDispatch = useDispatch();
@@ -41,23 +44,33 @@ export default function Login() {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    // const signInData = await dispatch(signInUser(values));
-    const signInData = await login(values);
+    setErrorMsg("");
+    setSuccess("");
 
-    if (!signInData) {
+    startTransition(() => {
+      login(values).then((res: any) => {
+        if (res?.error) {
+          setErrorMsg(res?.error || "");
+        } else {
+          setSuccess(res?.success || "");
+        }
+      });
+    });
+
+    if (errorMsg) {
       toast({
         variant: "destructive",
         title: "Error 😞",
-        description: "An Error has occured, please try again",
+        description: errorMsg,
       });
     } else {
       toast({
         variant: "default",
         title: "Signed in! 😄",
-        description: "",
+        description: success,
         duration: 9000,
       });
-      router.refresh();
+      // router.refresh();
       // router.push("/");
     }
   }
@@ -114,7 +127,8 @@ export default function Login() {
           </Button>
         </form>
       </Form>
-      {errorMsg && <p className="text-red-500">{errorMsg}</p>}
+      {errorMsg && <FormError message={errorMsg} Icon={<AlertOctagonIcon />} />}
+      {success && <FormSuccess message={success} Icon={<CheckCircle />} />}
       <div className="relative w-full mt-2 mb-2">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
@@ -125,15 +139,8 @@ export default function Login() {
           </span>
         </div>
       </div>
-      <Link href="/signup" className="w-full">
-        <Button
-          variant="outline"
-          type="submit"
-          className="w-full rounded-sm p-4 text-black uppercase"
-        >
-          Create an account
-        </Button>
-      </Link>
+      {/* <SocialLogin /> */}
+      <SignUpModal />
     </div>
   );
 }

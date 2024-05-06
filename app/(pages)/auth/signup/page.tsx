@@ -2,7 +2,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import SignUp from "@/components/auth/signup";
+import Signup from "../../_authComponents/signup";
 
 export default async function SignUpPage() {
   // const supabase = createServerComponentClient({ cookies });
@@ -12,5 +12,5 @@ export default async function SignUpPage() {
   //   redirect("/");
   // }
 
-  return <SignUp />;
+  return <Signup />;
 }
