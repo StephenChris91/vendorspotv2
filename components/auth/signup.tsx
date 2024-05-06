@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { startTransition, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,12 +24,16 @@ import { useToast } from "../ui/use-toast";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { useDispatch } from "react-redux";
 import { signUpUser } from "@/store/slices/userSlice";
+import { register } from "@/actions/register";
+import { FiAlertCircle } from "react-icons/fi";
 
-export default function Signup() {
+export default function Signup({ open }: any) {
   const router = useRouter();
   const { toast } = useToast();
   const dispatch = useDispatch();
   const [isVendor, setIsVendor] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
 
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
@@ -47,26 +51,56 @@ export default function Signup() {
     formData: Omit<z.infer<typeof signupSchema>, "data">
   ) => {
     // const role = isVendor ? "Vendor" : "Customer";
-    const responseData = dispatch(signUpUser(formData) as any);
+    // const responseData = dispatch(signUpUser(formData) as any);
 
-    if (responseData.error) {
+    // if (responseData.error) {
+    //   toast({
+    //     variant: "destructive",
+    //     title: "Error",
+    //     description: responseData.error,
+    //     duration: 5000,
+    //   });
+    //   return;
+    // } else {
+    //   toast({
+    //     variant: "default",
+    //     title: "Success",
+    //     description: responseData.message,
+    //     duration: 5000,
+    //   });
+    //   router.refresh();
+    // }
+    // router.push("/profile");
+    setErrorMsg("");
+    setSuccessMsg("");
+
+    startTransition(() => {
+      register(formData).then((res: any) => {
+        if (res?.error) {
+          setErrorMsg(res?.error || "");
+        } else {
+          setSuccessMsg(res?.success || "");
+          open(false);
+        }
+      });
+    });
+
+    if (errorMsg) {
       toast({
         variant: "destructive",
-        title: "Error",
-        description: responseData.error,
-        duration: 5000,
+        title: "Error 😞",
+        description: errorMsg,
       });
-      return;
     } else {
       toast({
         variant: "default",
-        title: "Success",
-        description: responseData.message,
-        duration: 5000,
+        title: "Signed in! 😄",
+        description: successMsg,
+        duration: 9000,
       });
-      router.refresh();
+      // router.refresh();
+      // router.push("/");
     }
-    router.push("/profile");
   };
 
   return (
@@ -203,6 +237,12 @@ export default function Signup() {
           </Button>
         </form>
       </Form>
+      {errorMsg && (
+        <p className="text-red-500 bg-red-100 w-full text-center text-sm p-3 mt-3 rounded-sm flex justify-between items-center mx-auto gap-3">
+          <FiAlertCircle className="text-red-500 text-lg" />
+          {errorMsg}
+        </p>
+      )}
       <p className="mt-3">
         Already have an account?{" "}
         <span

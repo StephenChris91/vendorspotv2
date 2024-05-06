@@ -12,16 +12,36 @@ export const {
     auth,
     signIn,
     signOut
-} = NextAuth({ 
+} = NextAuth({
+    pages: {
+        signIn: '/app/auth/login',
+        error: '/app/auth/error',
+        verifyRequest: '/app/auth/verify-request',
+        newUser: '/app/auth/new-user',
+    } ,
+    events: {
+        async linkAccount({ user }) {
+            await db.user.update({
+                where: {id: user.id},
+                data: {
+                    emailVerified: new Date()
+                }
+            })
+        }
+    },
     callbacks: {
-        // async signIn( { user }) {
-        //     const existingUser = await getUserById(user?.id ?? '');
+        async signIn( { user, account }) {
+            //allow oauth access without email verification
+            if(account && account.provider !== 'credentials') return true;
+            
+            const existingUser = await getUserById(user?.id ?? '');
 
-        //     if(!existingUser || !existingUser.emailVerified){
-        //         return false;
-        //     }
-        //     return true;
-        // },
+            if(!existingUser || !existingUser.emailVerified) return false;
+
+            //TODO add 2fa check
+            
+            return true;
+        },
         async session({ token, session}){
             // console.log({sessionToken: token})
             if(token.sub && session.user) {
@@ -41,6 +61,7 @@ export const {
             if(!existingUser) return token;
 
             token.role = existingUser.role
+            // token.emailVerified = existingUser.emailVerified
             return token
         }
     },

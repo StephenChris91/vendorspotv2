@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import Signup from "./signup";
+import Signup from "@/components/auth/signup";
 import { useState } from "react";
 
 export function SignUpModal() {

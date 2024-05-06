@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import { FiAlertCircle } from "react-icons/fi";
 import { SyncLoader } from "react-spinners";
-import { useState } from "react";
+import { startTransition, useState } from "react";
 import { useDispatch } from "react-redux";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -26,9 +26,12 @@ import { signInUser } from "@/store/slices/userSlice";
 import { AppDispatch } from "@/store/store";
 import { login } from "@/actions/login";
 import { SignUpModal } from "@/app/(pages)/_authComponents/sign-up-modal";
+import SocialLogin from "./social/social-login";
 
 export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
+  const [success, setSuccess] = useState("");
+
   const router = useRouter();
   const { toast } = useToast();
   const dispatch: AppDispatch = useDispatch();
@@ -42,14 +45,24 @@ export default function Login() {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    // const signInData = await dispatch(signInUser(values));
-    const signInData = login(values);
+    setErrorMsg("");
+    setSuccess("");
 
-    if (!signInData) {
+    startTransition(() => {
+      login(values).then((res: any) => {
+        if (res?.error) {
+          setErrorMsg(res?.error || "");
+        } else {
+          setSuccess(res?.success || "");
+        }
+      });
+    });
+
+    if (errorMsg) {
       toast({
         variant: "destructive",
         title: "Error 😞",
-        description: "An Error has occured, please try again",
+        description: errorMsg,
       });
     } else {
       toast({
@@ -58,7 +71,7 @@ export default function Login() {
         description: "",
         duration: 9000,
       });
-      router.refresh();
+      // router.refresh();
       // router.push("/");
     }
   }
@@ -115,7 +128,12 @@ export default function Login() {
           </Button>
         </form>
       </Form>
-      {errorMsg && <p className="text-red-500">{errorMsg}</p>}
+      {errorMsg && (
+        <p className="text-red-500 bg-red-100 w-full text-center text-sm p-3 mt-3 rounded-sm flex justify-between items-center mx-auto gap-3">
+          <FiAlertCircle className="text-red-500 text-lg" />
+          {errorMsg}
+        </p>
+      )}
       <div className="relative w-full mt-2 mb-2">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
@@ -126,6 +144,7 @@ export default function Login() {
           </span>
         </div>
       </div>
+      {/* <SocialLogin /> */}
       <SignUpModal />
     </div>
   );

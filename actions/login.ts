@@ -6,6 +6,8 @@ import { loginSchema } from '@/app/(shop)/schemas';
 import { signIn } from '@/auth';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { AuthError } from 'next-auth';
+import { getUserByEmail } from '@/lib/data/user';
+import { generateVerificationToken } from '@/lib/data/tokens';
 
 export const login = async (values: z.infer<typeof loginSchema>) => {
     const validInput = loginSchema.safeParse(values)
@@ -15,6 +17,20 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
     }
 
     const {email, password } = validInput.data;
+
+    const existingUser = await getUserByEmail(email);
+
+    if(!existingUser || !existingUser.email || !existingUser.password) {
+        return {error: 'This user does not exist!'}
+    }
+
+    if(!existingUser.emailVerified) {
+        const verificationToken = await generateVerificationToken(existingUser.email);
+
+        return {
+            success: 'Confirmation email sent'
+        }
+    }
 
         try {
             await signIn('credentials', {

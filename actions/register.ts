@@ -9,6 +9,7 @@ import { AuthError } from 'next-auth';
 import { getUserByEmail } from '@/lib/data/user';
 import { db } from '@/prisma/prisma';
 import { generateVerificationToken } from '@/lib/data/tokens';
+import { sendVerificationEmail } from '@/lib/mail';
 
 export const register = async (values: z.infer<typeof signupSchema>) => {
     const validInput = signupSchema.safeParse(values)
@@ -26,9 +27,10 @@ export const register = async (values: z.infer<typeof signupSchema>) => {
         if(!password || password !== confirmPassword) {
             return { error: 'Passwords do not match'}
         }
+        return {error: 'User already exists'}
     }
 
-        
+        try {
            await db.user.create({
             data: {
                 email,
@@ -38,8 +40,17 @@ export const register = async (values: z.infer<typeof signupSchema>) => {
                 role,
             }
            })
-        
-           const verificationToken = await generateVerificationToken(email)
+        } catch (error) {
+            console.log(error)
 
+            throw error
+        }
+
+        const verificationToken = await generateVerificationToken(email);
+
+        await sendVerificationEmail(
+            verificationToken.email,
+            verificationToken.token
+        )
         return { success: 'Confirmation email sent'}
 }

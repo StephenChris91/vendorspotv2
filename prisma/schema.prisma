@@ -38,20 +38,55 @@ model avatar {
   userId    String   @unique
 }
 
+// model user {
+//   id            String    @id @default(uuid()) // Remove the `uid()` function from the `@default` directive
+//   email         String    @unique
+//   password      String
+//   firstname     String
+//   lastname      String
+//   role          userRole? @default(Customer)
+//   createdAt     DateTime  @default(now())
+//   updatedAt     DateTime  @default(now())
+//   deletedAt     DateTime  @default(now())
+//   profile       profile?
+//   profileId     Int?      @unique @default(autoincrement())
+//   avatar        avatar?
+//   emailVerified DateTime?
+// }
+
 model user {
   id            String    @id @default(uuid()) // Remove the `uid()` function from the `@default` directive
   email         String    @unique
-  password      String
-  firstname     String
-  lastname      String
+  password      String?
+  firstname     String?
+  lastname      String?
   role          userRole? @default(Customer)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @default(now())
-  deletedAt     DateTime  @default(now())
   profile       profile?
-  profileId     Int?      @unique @default(autoincrement())
-  avatar        avatar?
+  profileId     String?
   emailVerified DateTime?
+  image         String?
+  accounts      account[]
+  avatar        avatar?
+  name          String?
+}
+
+model account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
 }
 
 model profile {
