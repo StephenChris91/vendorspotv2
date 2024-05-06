@@ -12,8 +12,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Signup from "./signup";
+import { useState } from "react";
 
 export function SignUpModal() {
+  const [isOpen, setIsOpen] = useState(true);
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -25,9 +27,13 @@ export function SignUpModal() {
           Create an account
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md w-full">
-        <Signup />
-      </DialogContent>
+      {isOpen ? (
+        <div>
+          <DialogContent className="sm:max-w-full w-full">
+            <Signup open={setIsOpen} />
+          </DialogContent>
+        </div>
+      ) : null}
     </Dialog>
   );
 }

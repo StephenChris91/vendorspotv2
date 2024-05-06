@@ -25,7 +25,7 @@ import { CheckedState } from "@radix-ui/react-checkbox";
 import { useDispatch } from "react-redux";
 import { signUpUser } from "@/store/slices/userSlice";
 
-export default function Signup() {
+export default function Signup({ open }: any) {
   const router = useRouter();
   const { toast } = useToast();
   const dispatch = useDispatch();
@@ -66,6 +66,7 @@ export default function Signup() {
       });
       router.refresh();
       router.push("/");
+      open(false);
     }
   };
 

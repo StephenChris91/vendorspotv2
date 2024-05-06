@@ -11,7 +11,7 @@ declare module 'next-auth' {
         firstname: string,
         lastname: string
         email: string,
-        role: userRole,
+        role: userRole | null,
     }
 
     interface Session {
@@ -19,12 +19,12 @@ declare module 'next-auth' {
             firstname: string,
             lastname: string
             email: string,
-            role: userRole,        }
+            role: userRole | null,        }
 
         token: {
             firstname: string,
             lastname: string
             email: string,
-            role: userRole,        }
+            role: userRole | null,        }
     }
 }

@@ -23,9 +23,9 @@ enum ProductType {
 }
 
 enum userRole {
-  Customer
-  Vendor
   Admin
+  Vendor
+  Customer
 }
 
 model avatar {
@@ -39,18 +39,19 @@ model avatar {
 }
 
 model user {
-  id        String    @id @default(uuid()) // Remove the `uid()` function from the `@default` directive
-  email     String    @unique
-  password  String
-  firstname String
-  lastname  String
-  role      userRole? @default(Customer)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now())
-  deletedAt DateTime  @default(now())
-  profile   profile?
-  profileId Int?      @unique @default(autoincrement())
-  avatar    avatar?
+  id            String    @id @default(uuid()) // Remove the `uid()` function from the `@default` directive
+  email         String    @unique
+  password      String
+  firstname     String
+  lastname      String
+  role          userRole? @default(Customer)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now())
+  deletedAt     DateTime  @default(now())
+  profile       profile?
+  profileId     Int?      @unique @default(autoincrement())
+  avatar        avatar?
+  emailVerified DateTime?
 }
 
 model profile {
@@ -153,4 +154,13 @@ model gallery {
   images    image[]
   product   product  @relation(fields: [productId], references: [id])
   productId String   @unique
+}
+
+model verificationToken {
+  id      String   @id @default(uuid())
+  token   String   @unique
+  email   String
+  expires DateTime
+
+  @@unique([email, token])
 }

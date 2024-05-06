@@ -8,6 +8,7 @@ import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { AuthError } from 'next-auth';
 import { getUserByEmail } from '@/lib/data/user';
 import { db } from '@/prisma/prisma';
+import { generateVerificationToken } from '@/lib/data/tokens';
 
 export const register = async (values: z.infer<typeof signupSchema>) => {
     const validInput = signupSchema.safeParse(values)
@@ -27,7 +28,7 @@ export const register = async (values: z.infer<typeof signupSchema>) => {
         }
     }
 
-        try {
+        
            await db.user.create({
             data: {
                 email,
@@ -37,9 +38,8 @@ export const register = async (values: z.infer<typeof signupSchema>) => {
                 role,
             }
            })
-        } catch (error) {
-            console.log(error)
+        
+           const verificationToken = await generateVerificationToken(email)
 
-            throw error
-        }
+        return { success: 'Confirmation email sent'}
 }

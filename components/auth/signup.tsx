@@ -65,9 +65,8 @@ export default function Signup() {
         duration: 5000,
       });
       router.refresh();
-      router.push("/");
     }
-    // console.log(response);
+    router.push("/profile");
   };
 
   return (
