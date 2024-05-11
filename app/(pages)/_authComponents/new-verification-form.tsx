@@ -4,6 +4,8 @@ import { newVerification } from "@/actions/new-verification";
 import CardWrapper from "@/components/auth/card-Wrapper";
 import FormError from "@/components/form-response/form-error";
 import FormSuccess from "@/components/form-response/form-success";
+import { useCurrentRole } from "@/lib/auth";
+import { useCurrentUser } from "@/lib/use-session-client";
 import { AlertOctagonIcon, AlertTriangle, CheckCircleIcon } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -15,6 +17,7 @@ const NewVerificationForm = () => {
   const [success, setSuccess] = useState<string | undefined>();
 
   const token = searchParams.get("token");
+  const user = useCurrentUser();
 
   const onSubmit = useCallback(() => {
     if (!token) {
@@ -38,8 +41,12 @@ const NewVerificationForm = () => {
     <div className="flex mx-auto justify-center items-center">
       <CardWrapper
         title="Verifying your account"
-        backButtonLabel="Go Back"
-        backButtonLink="/"
+        backButtonLabel={
+          user?.role === "Vendor" ? "Complete Your Signup" : "Go to Profile"
+        }
+        backButtonLink={
+          user?.role === "Vendor" ? "/dashboard" : "/auth/profile"
+        }
       >
         <div className="flex flex-col items-center justify-center w-full h-full text-center mb-3">
           <p>

@@ -28,6 +28,7 @@ import { login } from "@/actions/login";
 import { SignUpModal } from "@/app/(pages)/_authComponents/sign-up-modal";
 import SocialLogin from "./social/social-login";
 import FormError from "../form-response/form-error";
+import Link from "next/link";
 
 export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
@@ -117,6 +118,9 @@ export default function Login() {
                     />
                   </FormControl>
                   <FormMessage />
+                  <FormDescription>
+                    <Link href="/auth/forgot-password">Forgot password?</Link>
+                  </FormDescription>
                 </FormItem>
               </>
             )}

@@ -115,6 +115,9 @@ export default function Login() {
                     />
                   </FormControl>
                   <FormMessage />
+                  <FormDescription>
+                    This is your public display name.
+                  </FormDescription>
                 </FormItem>
               </>
             )}

@@ -3,6 +3,8 @@ import { Card } from "../ui/card";
 
 import { ReactNode } from "react"; // Add the missing import
 import { Button } from "../ui/button";
+import { useCurrentRole } from "@/lib/auth";
+import { useCurrentUser } from "@/lib/use-session-client";
 
 interface CardProps {
   title?: string;
@@ -17,12 +19,14 @@ export default function CardWrapper({
   backButtonLink,
   children,
 }: CardProps) {
+  //   const role = await useCurrentRole();
+  const user = useCurrentUser();
   return (
     <div
       className="flex flex-col items-center justify-center w-auto h-auto bg-blue-50 mt-32 mb-10 p-10"
       style={{ maxWidth: "500px" }}
     >
-      <h1 className="text-blue-600">{title}</h1>
+      <h1 className="text-blue-600 mb-5 text-left">{title}</h1>
 
       {children}
 

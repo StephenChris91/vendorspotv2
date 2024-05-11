@@ -8,6 +8,7 @@ import AdminSideBar from "@/components/dasboard/admin-sidebar";
 import AdminMainSection from "@/components/dasboard/admin-main";
 import StoreProvider from "@/store/store-provider";
 import { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -29,13 +30,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div lang="en" className={cn(GeistSans.className)}>
       <div className={cn(fontSans.variable)}>
         <StoreProvider>
-          <main className="md:p-0 w-full p-20">
-            <div className="container flex items-start justify-start p-20">
-              <AdminSideBar />
-              <AdminMainSection>{children}</AdminMainSection>
-            </div>
-            {/* <Footer showSubscribe={false} /> */}
-          </main>
+          <SessionProvider>
+            <main className="md:p-0 w-full p-20">
+              <div className="container flex items-start justify-start p-20">
+                <AdminSideBar />
+                <AdminMainSection>{children}</AdminMainSection>
+              </div>
+              {/* <Footer showSubscribe={false} /> */}
+            </main>
+          </SessionProvider>
         </StoreProvider>
       </div>
     </div>

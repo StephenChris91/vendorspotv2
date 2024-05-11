@@ -51,6 +51,7 @@ export const {
             if(token.role && session.user) {
                 session.user.role = token.role as userRole
             }
+            
             return session
         },
         async jwt({ token }) {
@@ -61,6 +62,7 @@ export const {
             if(!existingUser) return token;
 
             token.role = existingUser.role
+            token.emailVerified = existingUser.emailVerified
             // token.emailVerified = existingUser.emailVerified
             return token
         }

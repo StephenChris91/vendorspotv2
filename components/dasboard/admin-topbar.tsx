@@ -3,22 +3,15 @@ import { PiMagnifyingGlassLight, PiStorefront } from "react-icons/pi";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { User } from "@/app/context/user-context";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useEffect } from "react";
+import { useCurrentUser } from "@/lib/use-session-client";
 const AdminTopbar = () => {
-  // const { firstname } = getUserSession();
-  // const user = User();
-  const user = useSelector((state: RootState) => state.user?.user);
-  const abbvName = "";
-  // user?.user.firstname.charAt(0) + user?.user.lastname.charAt(0);
-  console.log(user);
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  let user = undefined;
+
+  //TODO  Get the current user from the session client
 
   return (
     <div className="flex bg-white justify-between items-center mx-auto gap-6 border-r-2 fixed top-0 left-0 mb-20 w-[90%] ml-40 z-40">
@@ -60,10 +53,12 @@ const AdminTopbar = () => {
               <AvatarFallback>{}</AvatarFallback>
             </Avatar>
             <div>
+              {user}
               <h6>
-                {user?.user.firstname} {user?.user.lastname}
+                {user}
+                {user}
               </h6>
-              <p className="text-sm text-black">{user?.user.email}</p>
+              <p className="text-sm text-black">{user}</p>
             </div>
           </div>
         </div>

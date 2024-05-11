@@ -7,7 +7,7 @@ interface FormErrorProps {
 
 const FormError = ({ message, Icon }: FormErrorProps) => {
   return (
-    <div className="mt-5 bg-red-200 w-lg p-4 rounded-sm text-red-600 flex justify-center gap-4 items-center mx-auto">
+    <div className="mt-5 bg-red-200 w-full p-2 rounded-sm text-red-600 flex justify-center gap-4 items-center mx-auto">
       {Icon}
       <p>{message}</p>
     </div>

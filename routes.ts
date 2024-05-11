@@ -3,7 +3,7 @@
  * An array of routes accessible to all users who visit the site.
  * @type {string[]}
  */
-export const publicRoutes = ['/', '/auth/new-verification']
+export const publicRoutes = ['/', '/auth/new-verification', '/auth/forgot-password']
 
 
 /**
@@ -11,7 +11,7 @@ export const publicRoutes = ['/', '/auth/new-verification']
  * An array of routes accessible to only authenticated users who visit the site.
  * @type {string[]}
  */
-export const authRoutes = ['/auth/login', '/auth/signup']
+export const authRoutes = ['/auth/login', '/auth/signup', '/auth/profile', '/auth/new-password']
 
 // '/auth/forgot-password', '/auth/reset-password', '/dashboard', '/auth/profile', '/settings', '/checkout'
 

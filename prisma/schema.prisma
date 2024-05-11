@@ -199,3 +199,12 @@ model verificationToken {
 
   @@unique([email, token])
 }
+
+model passwordResetToken {
+  id      String   @id @default(uuid())
+  token   String   @unique
+  email   String
+  expires DateTime
+
+  @@unique([email, token])
+}

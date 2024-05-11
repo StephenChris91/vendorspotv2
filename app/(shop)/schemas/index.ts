@@ -28,6 +28,19 @@ export const signupSchema = z
         }),
       });
 
+    export const ResetSchema: any = z.object({
+        email: z.string().min(2, {
+          message: "email must be at least 2 characters.",
+        }),
+      });
+
+    export const NewPasswordSchema: any = z.object({
+        password: z.string().min(6, {
+          message: "This password does not exist",
+        }),
+      });
+      
+
 
       export const createShopSchema = z.object({
         name: z.string().min(2, {
