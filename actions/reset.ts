@@ -2,7 +2,7 @@
 
 import * as z from 'zod';
 
-import { ResetSchema } from '@/app/(shop)/schemas';
+import { ResetSchema } from '@/app/schemas';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { AuthError } from 'next-auth';
 import { getUserByEmail } from '@/lib/data/user';

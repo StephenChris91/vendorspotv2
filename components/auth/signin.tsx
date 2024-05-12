@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "../ui/use-toast";
-import { loginSchema } from "@/app/(shop)/schemas";
+import { loginSchema } from "@/app/schemas";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { signInUser } from "@/store/slices/userSlice";

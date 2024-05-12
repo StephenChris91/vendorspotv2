@@ -1,15 +1,15 @@
 'use server'
 import { getPasswordResetTokenByToken } from '@/lib/data/verification-token';
-import { NewPasswordSchema } from './../app/(shop)/schemas/index';
+import { NewPasswordSchema } from '../app/schemas/index';
 
 import { z } from "zod"
 import { getUserByEmail } from '@/lib/data/user';
 import { db } from '@/prisma/prisma';
-import { hash } from 'bcrypt-ts';
+import { compare, compareSync, hash } from 'bcrypt-ts';
 
 export const NewPassword = async (
-    values: z.infer<typeof NewPasswordSchema>, 
-    token?: string | null) => {
+    values: z.infer<typeof NewPasswordSchema>,
+    token: string | null) => {
 
     if(!token) { 
         return { error: 'Missing token'}
@@ -43,6 +43,12 @@ export const NewPassword = async (
     }
 
     const hashedPassword = await hash(password, 10)
+
+    const isFormerPassword = hashedPassword === existingUser.password
+
+    if(isFormerPassword) {
+        return { error: 'This password has already been used'}
+    }
 
     
     await db.user.update({

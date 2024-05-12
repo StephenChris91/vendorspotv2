@@ -1,19 +1,14 @@
-"use client";
-
-import { Button } from "../ui/button";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import AdminTopbar from "./admin-topbar";
-import { ScrollArea } from "../ui/scroll-area";
+// "use client";
+import React from "react";
+import { AdminTopbar } from "@/components/dasboard/admin-topbar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import Footer from "@/app/(dasboard)/dashboard/adminFooter";
 
 type AdminMainSectionProps = {
   children?: React.ReactNode;
 };
 
-const AdminMainSection: React.FC<AdminMainSectionProps> = ({ children }) => {
-  // const router = useRouter();
-  // ...
+const AdminMainSection = ({ children }: AdminMainSectionProps) => {
   return (
     <ScrollArea className="w-full h-screen">
       <AdminTopbar />

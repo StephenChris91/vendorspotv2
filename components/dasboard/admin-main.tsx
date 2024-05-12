@@ -3,7 +3,7 @@
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import AdminTopbar from "./admin-topbar";
+import { AdminTopbar } from "./admin-topbar";
 import { ScrollArea } from "../ui/scroll-area";
 import Footer from "@/app/(dasboard)/dashboard/adminFooter";
 

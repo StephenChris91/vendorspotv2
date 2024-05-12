@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { signupSchema } from "@/app/(shop)/schemas";
+import { signupSchema } from "@/app/schemas";
 import { db } from "@/prisma/prisma";
 import { useToast } from "@/components/ui/use-toast";
 import { CheckedState } from "@radix-ui/react-checkbox";

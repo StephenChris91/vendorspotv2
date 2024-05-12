@@ -1,17 +1,15 @@
+"use server";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { PiMagnifyingGlassLight, PiStorefront } from "react-icons/pi";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
-import { useEffect } from "react";
-import { useCurrentUser } from "@/lib/use-session-client";
-const AdminTopbar = () => {
-  let user = undefined;
+import { auth } from "@/auth";
 
-  //TODO  Get the current user from the session client
+export const AdminTopbar = async () => {
+  const session = await auth();
+  let user = session?.user;
 
   return (
     <div className="flex bg-white justify-between items-center mx-auto gap-6 border-r-2 fixed top-0 left-0 mb-20 w-[90%] ml-40 z-40">
@@ -27,12 +25,11 @@ const AdminTopbar = () => {
             />
           </div>
           <div className="border-none">
-            <Button
-              className="rounded-full border-none bg-green-600"
-              // onClick={() => router.push("/dashboard/createshop")}
-            >
-              <Link href="/dashboard/createshop">Create Shop</Link>
-            </Button>
+            <Link href="/dashboard/createshop">
+              <Button className="rounded-full border-none bg-green-600">
+                Create Shop
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
@@ -53,12 +50,10 @@ const AdminTopbar = () => {
               <AvatarFallback>{}</AvatarFallback>
             </Avatar>
             <div>
-              {user}
               <h6>
-                {user}
-                {user}
+                {user?.firstname} {user?.lastname}
               </h6>
-              <p className="text-sm text-black">{user}</p>
+              <p className="text-sm text-black">{user?.email}</p>
             </div>
           </div>
         </div>
@@ -67,4 +62,4 @@ const AdminTopbar = () => {
   );
 };
 
-export default AdminTopbar;
+// export default AdminTopbar;

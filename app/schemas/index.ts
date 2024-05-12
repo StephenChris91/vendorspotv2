@@ -10,9 +10,6 @@ export const signupSchema = z
       .min(8, 'Password must have than 8 characters'),
     confirmPassword: z.string().min(1, 'Password confirmation is required'),
     role: z.literal('Vendor').or(z.literal('Customer')).or(z.literal('Admin')).optional(),
-
-    // shop: z.boolean().default(false).optional(),
-    // avatar: z.string().optional(), // Add file field to the schema
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ['confirmPassword'],
@@ -29,8 +26,8 @@ export const signupSchema = z
       });
 
     export const ResetSchema: any = z.object({
-        email: z.string().min(2, {
-          message: "email must be at least 2 characters.",
+        email: z.string().email({
+          message: "email must be a valid email.",
         }),
       });
 

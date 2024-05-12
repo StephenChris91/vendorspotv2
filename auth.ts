@@ -44,12 +44,24 @@ export const {
         },
         async session({ token, session}){
             // console.log({sessionToken: token})
-            if(token.sub && session.user) {
+            if (token.sub && session.user) {
                 session.user.id = token.sub;
             }
 
-            if(token.role && session.user) {
-                session.user.role = token.role as userRole
+            if (token.role && session.user) {
+                session.user.role = token.role as userRole;
+            }
+
+            if (token.emailVerified && session.user) {
+                session.user.emailVerified = new Date(token.emailVerified as string)
+            }
+
+            if (token.firstname && session.user) {
+                session.user.firstname = token.firstname as string;
+            }
+
+            if (token.lastname && session.user) {
+                session.user.lastname = token.lastname as string;;
             }
             
             return session
@@ -63,7 +75,8 @@ export const {
 
             token.role = existingUser.role
             token.emailVerified = existingUser.emailVerified
-            // token.emailVerified = existingUser.emailVerified
+            token.firstname = existingUser.firstname
+            token.lastname = existingUser.lastname
             return token
         }
     },

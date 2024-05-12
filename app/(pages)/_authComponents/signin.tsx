@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { loginSchema } from "@/app/(shop)/schemas";
+import { loginSchema } from "@/app/schemas";
 import { useRouter } from "next/navigation";
 import { AppDispatch } from "@/store/store";
 import { login } from "@/actions/login";

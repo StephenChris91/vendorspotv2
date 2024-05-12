@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast, useToast } from "@/components/ui/use-toast";
-import { NewPasswordSchema } from "@/app/(shop)/schemas";
+import { NewPasswordSchema } from "@/app/schemas";
 
 import FormError from "@/components/form-response/form-error";
 import Link from "next/link";
@@ -39,7 +39,7 @@ export default function NewPasswordForm() {
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
-      email: "",
+      password: "",
     },
   });
 
@@ -50,7 +50,7 @@ export default function NewPasswordForm() {
     console.log(values);
 
     startTransition(() => {
-      NewPassword(values).then((res: any) => {
+      NewPassword(values, token).then((res: any) => {
         if (res?.error) {
           setErrorMsg(res?.error || "");
         } else {
@@ -83,7 +83,7 @@ export default function NewPasswordForm() {
           >
             <FormField
               control={form.control}
-              name="email"
+              name="password"
               render={({ field }) => (
                 <FormItem>
                   {/* <FormLabel>Email</FormLabel> */}
@@ -91,8 +91,8 @@ export default function NewPasswordForm() {
                     <Input
                       placeholder="Enter your email address..."
                       {...field}
-                      className="w-full p-6 rounded-sm"
-                      type="password"
+                      className="w-full p-6 rounded-sm bg-white"
+                      // type="password"
                     />
                   </FormControl>
                   <FormMessage />

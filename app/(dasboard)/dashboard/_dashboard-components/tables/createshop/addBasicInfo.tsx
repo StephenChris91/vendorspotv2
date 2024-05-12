@@ -19,7 +19,7 @@ import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import { useContext, useEffect } from "react";
 import { FormContext } from "@/app/context/FormContext/formcontext";
-import { createShopSchema } from "@/app/(shop)/schemas";
+import { createShopSchema } from "@/app/schemas";
 
 const AddBasicInfo = () => {
   const context = useContext(FormContext);

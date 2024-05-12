@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { searchInputSchema } from "@/app/(shop)/schemas";
+import { searchInputSchema } from "@/app/schemas";
 
 export function MiddleBarForm() {
   const form = useForm<z.infer<typeof searchInputSchema>>({

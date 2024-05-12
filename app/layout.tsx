@@ -1,16 +1,10 @@
 import { GeistSans } from "geist/font/sans";
 import "@/app/globals.css";
 import { Inter as FontSans } from "next/font/google";
-// import "@/styles/globals.css"
 import { cn } from "@/lib/utils";
-import Navbar from "@/components/navbar";
-import { SubNav } from "@/components/sub-nav";
-import Footer from "@/components/footer";
-// import AuthProvider from "@/components/authprovider";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 import type { Metadata } from "next";
-// import UserContextProvider from "@/app/context/user-context";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -27,22 +21,20 @@ export const metadata: Metadata = {
   description: "Buy Anything, Anywhere, Anytime",
 };
 
-// <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>;
-
 export default async function Layout({
   children,
-}: // session,
-{
+}: {
   children: React.ReactNode;
-  // session: any;
 }) {
-  // const { data: sessionData } = useSession();
+  const session = await auth();
 
   return (
-    <html lang="en" className={cn(GeistSans.className)}>
-      <body className={cn(fontSans.variable)}>
-        <div>{children}</div>
-      </body>
-    </html>
+    <SessionProvider session={session}>
+      <html lang="en" className={cn(GeistSans.className)}>
+        <body className={cn(fontSans.variable)}>
+          <div>{children}</div>
+        </body>
+      </html>
+    </SessionProvider>
   );
 }

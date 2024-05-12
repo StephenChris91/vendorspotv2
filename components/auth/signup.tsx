@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { startTransition, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { signupSchema } from "@/app/(shop)/schemas";
+import { signupSchema } from "@/app/schemas";
 import { db } from "@/prisma/prisma";
 import { useToast } from "../ui/use-toast";
 import { CheckedState } from "@radix-ui/react-checkbox";
@@ -47,30 +47,17 @@ export default function Signup({ open }: any) {
     },
   });
 
+  // Watch the isVendor state
+  // const updateRole = form.watch("role");
+
+  useEffect(() => {
+    // Update the role field when the checkbox is checked or unchecked
+    form.setValue("role", isVendor ? "Vendor" : "Customer");
+  }, [isVendor]); // Only re-run the effect if isVendor changes
+
   const onSubmit = async (
     formData: Omit<z.infer<typeof signupSchema>, "data">
   ) => {
-    // const role = isVendor ? "Vendor" : "Customer";
-    // const responseData = dispatch(signUpUser(formData) as any);
-
-    // if (responseData.error) {
-    //   toast({
-    //     variant: "destructive",
-    //     title: "Error",
-    //     description: responseData.error,
-    //     duration: 5000,
-    //   });
-    //   return;
-    // } else {
-    //   toast({
-    //     variant: "default",
-    //     title: "Success",
-    //     description: responseData.message,
-    //     duration: 5000,
-    //   });
-    //   router.refresh();
-    // }
-    // router.push("/profile");
     setErrorMsg("");
     setSuccessMsg("");
 

@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import { GeistSans } from "geist/font/sans";
 import "@/app/globals.css";
@@ -13,7 +13,6 @@ import MiddleNav from "@/components/home2/middle-nav";
 import LowerNav from "@/components/home2/lower-nav";
 import Footer from "@/components/footer";
 import StoreProvider from "@/store/store-provider";
-import { SessionProvider } from "next-auth/react";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -26,7 +25,7 @@ const defaultUrl = process.env.VERCEL_URL
 
 const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "VendorSpot | Home Two",
+  title: "VendorSpot | Home",
   description: "Buy Anything, Anywhere, Anytime",
 };
 
@@ -34,20 +33,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div lang="en" className={cn(GeistSans.className)}>
       <div className={cn(fontSans.variable)}>
-        <SessionProvider>
-          <StoreProvider>
-            <main className="">
-              <PromoBanner />
-              <UpperNav />
-              <MiddleNav />
-              <LowerNav />
-              <ProductCart />
-              <div className="">{children}</div>
-              <Footer />
-              <Toaster />
-            </main>
-          </StoreProvider>
-        </SessionProvider>
+        <StoreProvider>
+          <main className="">
+            <PromoBanner />
+            <UpperNav />
+            <MiddleNav />
+            <LowerNav />
+            <ProductCart />
+            <div className="">{children}</div>
+            <Footer />
+            <Toaster />
+          </main>
+        </StoreProvider>
       </div>
     </div>
   );

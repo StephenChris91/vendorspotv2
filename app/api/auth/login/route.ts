@@ -1,4 +1,4 @@
-import { loginSchema } from "@/app/(shop)/schemas";
+import { loginSchema } from "@/app/schemas";
 import { NextResponse } from "next/server";
 import { compareSync } from "bcrypt-ts";
 import { signIn } from "@/auth";

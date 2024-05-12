@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast, useToast } from "@/components/ui/use-toast";
-import { ResetSchema } from "@/app/(shop)/schemas";
+import { ResetSchema } from "@/app/schemas";
 
 import FormError from "@/components/form-response/form-error";
 import Link from "next/link";
@@ -93,7 +93,7 @@ export default function ResetPasswordForm() {
                     <Input
                       placeholder="Enter your email address..."
                       {...field}
-                      className="w-full p-6 rounded-sm"
+                      className="w-full p-6 rounded-sm bg-white "
                     />
                   </FormControl>
                   <FormMessage />
