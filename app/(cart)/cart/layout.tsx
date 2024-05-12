@@ -31,7 +31,7 @@ const metadata: Metadata = {
   description: "Buy Anything, Anywhere, Anytime",
 };
 
-export default function Layout({ children, currentPath }: LayoutProps) {
+export default function Layout({ children }: {children: React.ReactNode}) {
   // const router = useRouter();
   return (
     <div lang="en" className={cn(GeistSans.className)}>
@@ -41,7 +41,7 @@ export default function Layout({ children, currentPath }: LayoutProps) {
           <UpperNav />
           <MiddleNav />
           <LowerNav />
-          {currentPath && <ProductCart />}
+          <ProductCart />
           <div className="py-10">{children}</div>
           <Footer />
           <Toaster />
