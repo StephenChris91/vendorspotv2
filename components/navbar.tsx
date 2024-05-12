@@ -14,14 +14,13 @@ import { FaCartShopping } from "react-icons/fa6";
 import { MdMessage } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
 import { Button } from "./ui/button";
-import { useUser } from "@/app/hooks/useUser";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const cartRef = useRef<HTMLDivElement>(null);
 
-  const user = useUser();
+  const user = "";
 
   const toggleDropdown = () => {
     setIsCartOpen(!isCartOpen);
