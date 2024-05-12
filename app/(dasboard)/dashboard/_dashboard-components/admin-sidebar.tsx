@@ -6,7 +6,7 @@ import { FiShoppingCart, FiEdit, FiUser, FiUserPlus } from "react-icons/fi";
 import { LuLayoutGrid } from "react-icons/lu";
 import { useState, useCallback } from "react";
 import { BsBoxSeam } from "react-icons/bs";
-import { ScrollArea } from "../ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 import {
   PiStackDuotone,
