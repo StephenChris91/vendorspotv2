@@ -16,8 +16,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useCallback, useMemo, useRef } from "react";
-import Separator from "../separator";
-import Editor from "../editor";
+import Separator from "@/components/separator";
+import Editor from "@/components/editor";
 
 const formSchema = z.object({
   title: z.string().min(2, {
