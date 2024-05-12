@@ -1,4 +1,4 @@
-import { useUser } from "@/app/hooks/useUser";
+// import { useUser } from "@/app/hooks/useUser";
 import Image from "next/image";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
