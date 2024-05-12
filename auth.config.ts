@@ -19,7 +19,7 @@ export default {
             clientSecret: process.env.NEXT_PUBLIC_GITHUB_CLIENT_SECRET,
         }),
         Credentials({
-            async authorize(credentials, request) {
+            async authorize(credentials) {
                 const validInputFields = loginSchema.safeParse(credentials);
 
                 if(validInputFields.success) {
