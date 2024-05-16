@@ -1,15 +1,17 @@
-"use server";
+"use client";
+
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { PiMagnifyingGlassLight, PiStorefront } from "react-icons/pi";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
-import { auth } from "@/auth";
+import { useCurrentUser } from "@/lib/use-session-client";
 
-export const AdminTopbar = async () => {
-  const session = await auth();
-  let user = session?.user;
+export const AdminTopbar = () => {
+  const user = useCurrentUser();
+
+  const abbvName = `${user?.firstname?.charAt(0)}${user?.lastname?.charAt(0)}`;
 
   return (
     <div className="flex bg-white justify-between items-center mx-auto gap-6 border-r-2 fixed top-0 left-0 mb-20 w-[90%] ml-40 z-40">
@@ -47,7 +49,7 @@ export const AdminTopbar = async () => {
           <div className="h-full flex gap-3 justify-between items-center mx-auto">
             <Avatar>
               <AvatarImage src="" alt="user image" />
-              <AvatarFallback>{}</AvatarFallback>
+              <AvatarFallback>{abbvName}</AvatarFallback>
             </Avatar>
             <div>
               <h6>

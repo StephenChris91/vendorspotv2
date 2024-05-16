@@ -13,6 +13,8 @@ import { signOut } from "next-auth/react";
 const UserDropdown = () => {
   const user = useCurrentUser();
 
+  console.log(user);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

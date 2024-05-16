@@ -13,6 +13,8 @@ import MiddleNav from "@/components/home2/middle-nav";
 import LowerNav from "@/components/home2/lower-nav";
 import Footer from "@/components/footer";
 import StoreProvider from "@/store/store-provider";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -23,13 +25,18 @@ const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
   title: "VendorSpot | Home",
   description: "Buy Anything, Anywhere, Anytime",
 };
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await auth();
   return (
     <div lang="en" className={cn(GeistSans.className)}>
       <div className={cn(fontSans.variable)}>

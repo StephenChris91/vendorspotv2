@@ -33,17 +33,15 @@ export default async function Layout({
   return (
     <div lang="en" className={cn(GeistSans.className)}>
       <div className={cn(fontSans.variable)}>
-        <SessionProvider session={session}>
-          <StoreProvider>
-            <main className="md:p-0 w-full p-20">
-              <div className="container flex items-start justify-start p-20">
-                <AdminSideBar />
-                <AdminMainSection>{children}</AdminMainSection>
-              </div>
-              {/* <Footer showSubscribe={false} /> */}
-            </main>
-          </StoreProvider>
-        </SessionProvider>
+        <StoreProvider>
+          <main className="md:p-0 w-full p-20">
+            <div className="container flex items-start justify-start p-20">
+              <AdminSideBar />
+              <AdminMainSection>{children}</AdminMainSection>
+            </div>
+            {/* <Footer showSubscribe={false} /> */}
+          </main>
+        </StoreProvider>
       </div>
     </div>
   );

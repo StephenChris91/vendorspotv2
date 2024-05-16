@@ -11,18 +11,22 @@ const LowerNav = () => {
     {
       title: "Track Order",
       icon: <IoLocationOutline />,
+      href: "/track",
     },
     {
       title: "Compare",
       icon: <PiArrowsCounterClockwise />,
+      href: "/compare",
     },
     {
       title: "Customer Support",
       icon: <PiHeadphonesLight />,
+      href: "/support",
     },
     {
       title: "Need Info",
       icon: <AiOutlineInfoCircle />,
+      href: "/faq",
     },
   ];
   return (
@@ -34,7 +38,7 @@ const LowerNav = () => {
           <CategoriesMegaMenu />
           <div className={`flex gap-4 items-center justify-between mx-auto`}>
             {menus.map((menu) => (
-              <Link href="/" key={menu.title}>
+              <Link href={menu.href} key={menu.title}>
                 <p
                   className={`flex mx-auto items-center gap-2 hover:text-blue-700`}
                 >

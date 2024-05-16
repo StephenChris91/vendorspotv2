@@ -2,7 +2,7 @@ import NextAuth from 'next-auth'
 import authConfig from '@/auth.config';
 
 const { auth } = NextAuth(authConfig);
-import { DEFAULT_LOGIN_REDIRECT, publicRoutes, authRoutes, apiAuthPrefix, adminRoutes} from '@/routes'
+import { DEFAULT_LOGIN_REDIRECT, publicRoutes, authRoutes, apiAuthPrefix, adminRoutes, DEFAULT_ADMIN_REDIRECT} from '@/routes'
 
 
 
@@ -24,7 +24,7 @@ export default auth((req, res) => {
 
     if (isAuthenticatedRoute) {
         if (!isLoggedIn) {
-            return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+            return NextResponse.redirect(new URL(DEFAULT_ADMIN_REDIRECT, nextUrl));
         }
     }
 

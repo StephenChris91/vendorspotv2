@@ -13,7 +13,9 @@ const SettingsPage = async () => {
       <div className="w-full bg-white rounded-sm p-5 ">
         <h1>Settings Page</h1>
         {JSON.stringify(session)}
-        <p>{user?.role}</p>
+        <p>{user?.role === "Vendor" ? "I am a Vendor" : "I am not a Vendor"}</p>
+        <p>{user?.firstname}</p>
+        <p>{user?.lastname}</p>
         <form
           action={async () => {
             "use server";

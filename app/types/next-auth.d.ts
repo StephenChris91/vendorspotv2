@@ -1,4 +1,5 @@
-import { db } from "@/prisma/prisma";
+import NextAuth, { type DefaultSession } from "next-auth"
+// import { db } from "@/prisma/prisma";
 import { userRole } from "@prisma/client";
 import NextAuth from "next-auth/next";
 
@@ -8,48 +9,75 @@ import NextAuth from "next-auth/next";
 
 // declare module 'next-auth' {
 //     interface User {
-//         firstname: string,
-//         lastname: string
-//         email: string,
-//         role: userRole | null,
-//         name: string,
-//         emailVerified: Date,
+//       firstname: string | null,
+//           lastname: string | null,
+//           email: string | null,
+//           role: userRole | null,
+//           name: string | null,
+//           emailVerified: Date | null
 //     }
 
 //     interface Session {
 //         user: User & {
-//             firstname: string,
-//             lastname: string
-//             email: string,
-//             role: userRole | null, 
-//             name: string,
-//             emailVerified: Date,}
+//           firstname: string | null,
+//           lastname: string | null,
+//           email: string | null,
+//           role: userRole | null,
+//           name: string | null,
+//           emailVerified: Date | null
+//           }
 
 //         token: {
-//             firstname: string,
-//             lastname: string
-//             email: string,
-//             role: userRole | null, 
-//             name: string,
-//             emailVerified: Date,
+//           firstname: string | null,
+//           lastname: string | null,
+//           email: string | null,
+//           role: userRole | null,
+//           name: string | null,
+//           emailVerified: Date | null
 //         }       
 //     }
-// }
+// } 
 
-import NextAuth, { type DefaultSession } from "next-auth"
+
+export type ExtendedUser = DefaultSession['user'] & {
+  firstname: string,
+  lastname: string,
+  email: string,
+  role: userRole,
+}
  
 declare module "next-auth" {
-  /**
-   * Returned by `auth`, `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
-   */
+  // interface User {
+  //   firstname: string | null,
+  //   lastname: string | null,
+  //   email: string | null,
+  //   role: userRole | null,
+  //   name: string | null,
+  //   emailVerified: Date | null
+  // } 
+
   interface Session {
-    user: {
-        firstname: string,
-        lastname: string
-        email: string,
-        role: userRole | null,
-        name: string,
-        emailVerified: Date,
-    } & DefaultSession["user"]
+    user: ExtendedUser
+
+    token: {
+      firstname: string | null,
+      lastname: string | null,
+      email: string | null,
+      role: userRole | null,
+      name: string | null,
+      emailVerified: Date | null,
+    } & DefaultSession["token"]
   }
 }
+
+  /**
+   * Returned by `useUser`, and received as a prop on the `UserProvider` React Context
+   */
+  // interface User {
+  //   firstname: string,
+  //   lastname: string,
+  //   email: string,
+  //   role: userRole | null,
+  //   name: string,
+  //   emailVerified: Date
+  // } 
