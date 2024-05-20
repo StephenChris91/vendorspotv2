@@ -21,68 +21,42 @@ import {
   FormContext,
   FormProvider,
 } from "@/app/context/FormContext/formcontext";
+import { addPaymentSchema } from "@/app/schemas";
 
-const AddPaymentInfo = () => {
-  const context = useContext(FormContext);
+type AddPaymentInfoType = {
+  name: string;
+  bankName: string;
+  accountNo: number;
+};
 
-  if (!context) {
-    throw new Error("AddShopAddress must be used within a FormProvider");
-  }
+type AddCoverImageProps = AddPaymentInfoType & {
+  updateFields: (fields: Partial<AddPaymentInfoType>) => void;
+};
 
-  const { formData, updateFormData } = context;
+const AddPaymentInfo = ({
+  name,
+  bankName,
+  accountNo,
+  updateFields,
+}: AddCoverImageProps) => {
+  // const context = useContext(FormContext);
 
-  const formSchema = z.object({
-    name: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
-    email: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
-    bank: z.string().min(10, {
-      message: "Please provide your bank name.",
-    }),
-    number: z
-      .number()
-      .min(2, {
-        message: "Provided accound number is not a valid account number.",
-      })
-      .max(12, {
-        message: "Provided account number exceeds the maximum length.",
-      }),
-  });
+  // if (!context) {
+  //   throw new Error("AddShopAddress must be used within a FormProvider");
+  // }
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof addPaymentSchema>>({
+    resolver: zodResolver(addPaymentSchema),
     defaultValues: {
       name: "",
-      email: "",
-      bank: "",
-      number: 0,
+      bankName: "",
+      accountNo: 0,
     },
   });
 
-  const { control, watch } = form;
-  const watchedName = watch("name");
-  const watchedEmail = watch("email");
-  const watchedBank = watch("bank");
-  const watchedNumber = watch("number");
-
-  useEffect(() => {
-    updateFormData({
-      ...formData,
-      name: watchedName,
-      email: watchedEmail,
-      bank: watchedBank,
-      number: watchedNumber,
-    });
-  }, [watchedName, watchedEmail, watchedBank, watchedNumber]);
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  function onSubmit(values: z.infer<typeof addPaymentSchema>) {
     console.log(values);
   }
-  // const form = useForm()
   return (
     <Separator>
       <div className="w-full flex">
@@ -102,7 +76,7 @@ const AddPaymentInfo = () => {
                   <FormItem>
                     <FormLabel>Account Holder Name</FormLabel>
                     <FormControl>
-                      <Input {...field} className="p-6" />
+                      <Input {...field} className="p-6" value={name} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -110,25 +84,12 @@ const AddPaymentInfo = () => {
               />
               <FormField
                 control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Account Holder Email</FormLabel>
-                    <FormControl>
-                      <Input {...field} className="p-6" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="bank"
+                name="bankName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Bank Name</FormLabel>
                     <FormControl>
-                      <Input {...field} className="p-6" />
+                      <Input {...field} className="p-6" value={bankName} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -136,7 +97,7 @@ const AddPaymentInfo = () => {
               />
               <FormField
                 control={form.control}
-                name="number"
+                name="accountNo"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Account Number</FormLabel>
@@ -148,6 +109,7 @@ const AddPaymentInfo = () => {
                         aria-describedby="helper-text-explanation"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-6 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required
+                        value={accountNo}
                       />
                     </FormControl>
                     <FormMessage />

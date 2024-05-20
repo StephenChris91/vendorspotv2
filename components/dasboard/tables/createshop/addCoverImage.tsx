@@ -1,7 +1,14 @@
 import Separator from "@/components/separator";
 import { Input } from "@/components/ui/input";
 
-const AddCoverImage = () => {
+type AddCoverImageType = {
+  banner: string;
+};
+
+type AddCoverImageProps = AddCoverImageType & {
+  updateFields: (fields: Partial<AddCoverImageType>) => void;
+};
+const AddCoverImage = ({ banner, updateFields }: AddCoverImageProps) => {
   return (
     <Separator>
       <div className="w-full flex">
@@ -42,7 +49,14 @@ const AddCoverImage = () => {
                   SVG, PNG, JPG or GIF (MAX. 800x400px)
                 </p>
               </div>
-              <Input id="dropzone-file" type="file" className="hidden" />
+              <Input
+                id="dropzone-file"
+                type="file"
+                className="hidden"
+                onChange={(e) => {
+                  updateFields({ banner: e.target.value });
+                }}
+              />
             </label>
           </div>
         </div>

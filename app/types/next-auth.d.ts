@@ -44,6 +44,7 @@ export type ExtendedUser = DefaultSession['user'] & {
   lastname: string,
   email: string,
   role: userRole,
+  isOnboardedVendor: boolean | null,
 }
  
 declare module "next-auth" {
@@ -54,6 +55,7 @@ declare module "next-auth" {
     role: userRole | null,
     name: string | null,
     emailVerified: Date | null
+    isOnboardedVendor: boolean | null,
   } 
 
   interface Session {

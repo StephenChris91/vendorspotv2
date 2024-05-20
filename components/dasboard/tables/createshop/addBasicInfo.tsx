@@ -21,14 +21,29 @@ import { useContext, useEffect } from "react";
 import { FormContext } from "@/app/context/FormContext/formcontext";
 import { createShopSchema } from "@/app/schemas";
 
-const AddBasicInfo = () => {
-  const context = useContext(FormContext);
+type AddBasicInfoType = {
+  name: string;
+  slug: string;
+  description: string;
+};
 
-  if (!context) {
-    throw new Error("AddShopAddress must be used within a FormProvider");
-  }
+type AddBasicInfoProps = AddBasicInfoType & {
+  updateFields: (fields: Partial<AddBasicInfoType>) => void;
+};
 
-  const { formData, updateFormData } = context;
+const AddBasicInfo = ({
+  name,
+  slug,
+  description,
+  updateFields,
+}: AddBasicInfoProps) => {
+  // const context = useContext(FormContext);
+
+  // if (!context) {
+  //   throw new Error("AddShopAddress must be used within a FormProvider");
+  // }
+
+  // const { formData, updateFormData } = context;
 
   const form = useForm<z.infer<typeof createShopSchema>>({
     resolver: zodResolver(createShopSchema),
@@ -39,36 +54,33 @@ const AddBasicInfo = () => {
     },
   });
 
-  const { control, watch } = form;
-  const watchedName = watch("name");
-  const watchedSlug = watch("slug");
-  const watchedDesc = watch("description");
+  // const { control, watch } = form;
+  // const watchedName = watch("name");
+  // const watchedSlug = watch("slug");
+  // const watchedDesc = watch("description");
 
-  useEffect(() => {
-    updateFormData({
-      ...formData,
-      name: watchedName,
-      slug: watchedSlug,
-      description: watchedDesc,
-    });
-  }, [watchedName, watchedSlug, watchedDesc]);
+  // useEffect(() => {
+  //   updateFormData({
+  //     ...formData,
+  //     name: watchedName,
+  //     slug: watchedSlug,
+  //     description: watchedDesc,
+  //   });
+  // }, [watchedName, watchedSlug, watchedDesc]);
 
   function onSubmit(values: z.infer<typeof createShopSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
   }
-  // const form = useForm()
   return (
     <Separator>
       <div className="w-full flex">
-        <div className="px-2 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5">
+        <div className="px-2 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5">
           <h1 className="font-semibold mb-2 heading-color">Basic Info</h1>
           <p className="text-sm text-gray-500">
             Add some basic info about your shop from here
           </p>
         </div>
-        <div className="rounded bg-white p-5 shadow md:p-8 w-full sm:w-8/12 md:w-2/3">
+        <div className="rounded bg-white p-5 shadow w-full sm:w-8/12 md:w-2/3">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
               <FormField
@@ -81,7 +93,9 @@ const AddBasicInfo = () => {
                       <Input
                         placeholder="Your business name..."
                         {...field}
+                        value={name}
                         className="p-6"
+                        onChange={(e) => updateFields({ name: e.target.value })}
                       />
                     </FormControl>
                     <FormMessage />
@@ -98,7 +112,9 @@ const AddBasicInfo = () => {
                       <Input
                         placeholder="Set a tagline for your business"
                         {...field}
+                        value={slug}
                         className="p-6"
+                        onChange={(e) => updateFields({ slug: e.target.value })}
                       />
                     </FormControl>
                     <FormMessage />
@@ -116,6 +132,10 @@ const AddBasicInfo = () => {
                         placeholder="Tell us a little bit about your business"
                         className="resize p-2 h-32 w-full rounded-md border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#266235] focus:border-transparent"
                         {...field}
+                        value={description}
+                        onChange={(e) =>
+                          updateFields({ description: e.target.value })
+                        }
                       />
                     </FormControl>
                     <FormMessage />

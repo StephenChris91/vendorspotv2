@@ -69,3 +69,26 @@ h6 {
    
     border-bottom:  1px solid #a9a8a8;
 }
+
+.progress-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 34px;
+  }
+  
+  .step {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: rgb(34, 81, 209);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .step.completed {
+    background-color: green;
+    color: white;
+  }
+  

@@ -63,6 +63,10 @@ export const {
             if (token.lastname && session.user) {
                 session.user.lastname = token.lastname as string;;
             }
+
+            if(token.isOnboardedVendor && session.user) {
+                session.user.isOnboardedVendor = token.isOnboardedVendor as boolean;
+            }
             
             return session
         },
@@ -77,6 +81,7 @@ export const {
             token.emailVerified = existingUser.emailVerified
             token.firstname = existingUser.firstname
             token.lastname = existingUser.lastname
+            token.isOnboardedVendor = existingUser.isOnboardedVendor
             return token
         }
     },

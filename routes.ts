@@ -3,7 +3,7 @@
  * An array of routes accessible to all users who visit the site.
  * @type {string[]}
  */
-export const publicRoutes = ['/', '/auth/new-verification', '/auth/forgot-password', , '/auth/profile', '/auth/onboarding' ]
+export const publicRoutes = ['/', '/auth/new-verification', '/auth/forgot-password', , '/auth/profile', ]
 
 
 /**

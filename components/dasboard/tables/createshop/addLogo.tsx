@@ -1,7 +1,14 @@
 import Separator from "@/components/separator";
 import { Input } from "@/components/ui/input";
 
-const addLogo = () => {
+type AddLogoType = {
+  logo: string;
+};
+
+type AddLogoProps = AddLogoType & {
+  updateFields: (fields: Partial<AddLogoType>) => void;
+};
+const addLogo = ({ logo, updateFields }: AddLogoProps) => {
   return (
     <Separator>
       <div className="w-full flex">
@@ -41,7 +48,13 @@ const addLogo = () => {
                   SVG, PNG, JPG or GIF (MAX. 800x400px)
                 </p>
               </div>
-              <Input id="dropzone-file" type="file" className="hidden" />
+              <Input
+                id="dropzone-file"
+                type="file"
+                className="hidden"
+                value={logo}
+                onChange={(e) => updateFields({ logo: e.target.value })}
+              />
             </label>
           </div>
         </div>

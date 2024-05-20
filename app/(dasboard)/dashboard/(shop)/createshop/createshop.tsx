@@ -30,12 +30,6 @@ const CreateShop = () => {
       <Separator>
         <h1 className="font-semibold">Create Shop</h1>
       </Separator>
-      <AddLogo />
-      <AddCoverImage />
-      <AddBasicInfo />
-      <AddPaymentInfo />
-      <AddShopAddress />
-      <AddShopSettings />
 
       <div className="sticky bottom-0 -mx-5 bg-gray-100/10 py-3 px-5 backdrop-blur text-end md:py-5 lg:-mx-8 lg:px-8 z-10">
         <div className="text-end">

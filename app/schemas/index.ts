@@ -37,6 +37,58 @@ export const signupSchema = z
         }),
       });
       
+      export const addPaymentSchema = z.object({
+        name: z.string().min(2, {
+          message: "Bank Name cannot be empty",
+        }),
+        email: z.string().min(2, {
+          message: "email must be at least 2 characters.",
+        }),
+        bankName: z.string().min(10, {
+          message: "Please provide your bank name.",
+        }),
+        accountNo: z
+          .number()
+          .min(2, {
+            message: "Provided account number is not a valid account number.",
+          })
+          .max(12, {
+            message: "Provided account number exceeds the maximum length.",
+          }),
+      });
+
+      export const shopSettingsSchema = z.object({
+        phoneNumber: z.string().min(1, {
+          message: "Phone number is required.",
+        }),
+        website: z.string().min(2, {
+          message: "website must be at least 2 characters.",
+        }),
+      });
+      
+      
+export const shopAddressSchema = z.object({
+  country: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  city: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  state: z.string().min(10, {
+    message: "Please provide your bank name.",
+  }),
+  zip: z
+    .string()
+    .min(2, {
+      message: "Provided accound number is not a valid account number.",
+    })
+    .max(6, {
+      message: "Provided account number exceeds the maximum length.",
+    }),
+  address: z.string().min(2, {
+    message: "Please provide your physical address.",
+  }),
+});
 
 
       export const createShopSchema = z.object({

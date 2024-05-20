@@ -30,11 +30,16 @@ const UserDropdown = () => {
   }, []);
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button className="bg-transparent text-lg shadow-none hover:bg-transparent">
-          <FaRegUser />
-        </Button>
-      </DropdownMenuTrigger>
+      {user?.isOnboardedVendor ? (
+        <DropdownMenuTrigger className="flex items-center">
+          <FaRegUser className="text-2xl" />
+          <span className="ml-2 text-sm font-semibold hidden md:block">
+            Welcome {user?.firstname}
+          </span>
+        </DropdownMenuTrigger>
+      ) : (
+        <Button className="w-full rounded-sm">Sign Out</Button>
+      )}
       <DropdownMenuContent className="w-72">
         {user?.role === "Vendor" ? (
           <div className="p-2">

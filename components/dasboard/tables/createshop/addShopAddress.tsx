@@ -16,43 +16,40 @@ import { Input } from "@/components/ui/input";
 import { FormContext } from "@/app/context/FormContext/formcontext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Separator from "@/components/separator";
+import { shopAddressSchema } from "@/app/schemas";
 
-const formSchema = z.object({
-  country: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  city: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  state: z.string().min(10, {
-    message: "Please provide your bank name.",
-  }),
-  zip: z
-    .string()
-    .min(2, {
-      message: "Provided accound number is not a valid account number.",
-    })
-    .max(6, {
-      message: "Provided account number exceeds the maximum length.",
-    }),
-  address: z.string().min(2, {
-    message: "Please provide your physical address.",
-  }),
-});
+type FormValues = z.infer<typeof shopAddressSchema>;
 
-type FormValues = z.infer<typeof formSchema>;
+type AddShopAddressType = {
+  country: string;
+  city: string;
+  state: string;
+  zip: string;
+  address: string;
+};
 
-const AddShopAddress = () => {
-  const context = useContext(FormContext);
+type AddShopAddressProps = AddShopAddressType & {
+  updateFields: (fields: Partial<AddShopAddressType>) => void;
+};
 
-  if (!context) {
-    throw new Error("AddShopAddress must be used within a FormProvider");
-  }
+const AddShopAddress = ({
+  country,
+  city,
+  state,
+  zip,
+  address,
+  updateFields,
+}: AddShopAddressProps) => {
+  // const context = useContext(FormContext);
 
-  const { formData, updateFormData } = context;
+  // if (!context) {
+  //   throw new Error("AddShopAddress must be used within a FormProvider");
+  // }
+
+  // const { formData, updateFormData } = context;
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(shopAddressSchema),
     defaultValues: {
       country: "",
       city: "",
@@ -62,27 +59,25 @@ const AddShopAddress = () => {
     },
   });
 
-  const { control, watch } = form;
-  const watchedCountry = watch("country");
-  const watchedCity = watch("city");
-  const watchedState = watch("state");
-  const watchedZip = watch("zip");
-  const watchedAddress = watch("address");
+  // const { control, watch } = form;
+  // const watchedCountry = watch("country");
+  // const watchedCity = watch("city");
+  // const watchedState = watch("state");
+  // const watchedZip = watch("zip");
+  // const watchedAddress = watch("address");
 
-  useEffect(() => {
-    updateFormData({
-      ...formData,
-      country: watchedCountry,
-      city: watchedCity,
-      state: watchedState,
-      zip: watchedZip,
-      address: watchedAddress,
-    });
-  }, [watchedCountry, watchedCity, watchedState, watchedZip, watchedAddress]);
+  // useEffect(() => {
+  //   updateFormData({
+  //     ...formData,
+  //     country: watchedCountry,
+  //     city: watchedCity,
+  //     state: watchedState,
+  //     zip: watchedZip,
+  //     address: watchedAddress,
+  //   });
+  // }, [watchedCountry, watchedCity, watchedState, watchedZip, watchedAddress]);
 
   function onSubmit(values: FormValues) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
   }
 
@@ -104,7 +99,14 @@ const AddShopAddress = () => {
                 <FormItem>
                   <FormLabel>Country</FormLabel>
                   <FormControl>
-                    <Input {...field} className="p-6" />
+                    <Input
+                      {...field}
+                      className="p-6"
+                      value={country}
+                      onChange={(e) =>
+                        updateFields({ country: e.target.value })
+                      }
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -117,7 +119,12 @@ const AddShopAddress = () => {
                 <FormItem>
                   <FormLabel>City</FormLabel>
                   <FormControl>
-                    <Input {...field} className="p-6" />
+                    <Input
+                      {...field}
+                      className="p-6"
+                      value={city}
+                      onChange={(e) => updateFields({ city: e.target.value })}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -130,7 +137,12 @@ const AddShopAddress = () => {
                 <FormItem>
                   <FormLabel>ZIP</FormLabel>
                   <FormControl>
-                    <Input {...field} className="p-6" />
+                    <Input
+                      {...field}
+                      className="p-6"
+                      value={zip}
+                      onChange={(e) => updateFields({ zip: e.target.value })}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -143,7 +155,14 @@ const AddShopAddress = () => {
                 <FormItem>
                   <FormLabel>Street Address</FormLabel>
                   <FormControl>
-                    <Input {...field} className="p-6" />
+                    <Input
+                      {...field}
+                      className="p-6"
+                      value={address}
+                      onChange={(e) =>
+                        updateFields({ address: e.target.value })
+                      }
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -23,59 +23,54 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEffect, useState, useContext } from "react";
 import { FormContext } from "@/app/context/FormContext/formcontext";
+import { shopSettingsSchema } from "@/app/schemas";
 
-const AddShopSettings = () => {
-  const [countries, setCountries] = useState([]);
-  const context = useContext(FormContext);
+type shopSettingsType = {
+  phoneNumber: string;
+  website: string;
+};
 
-  if (!context) {
-    throw new Error("AddShopAddress must be used within a FormProvider");
-  }
+type AddShopAddressProps = shopSettingsType & {
+  updateFields: (fields: Partial<shopSettingsType>) => void;
+};
 
-  const { formData, updateFormData } = context;
+const AddShopSettings = ({
+  phoneNumber,
+  website,
+  updateFields,
+}: AddShopAddressProps) => {
+  // const [countries, setCountries] = useState([]);
+  // const context = useContext(FormContext);
+
+  // if (!context) {
+  //   throw new Error("AddShopAddress must be used within a FormProvider");
+  // }
+
+  // const { formData, updateFormData } = context;
 
   // const { updateFormData } = formContext;
-  const formSchema = z.object({
-    phoneNumber: z.string().min(1, {
-      message: "Phone number is required.",
-    }),
-    website: z.string().min(2, {
-      message: "website must be at least 2 characters.",
-    }),
-  });
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof shopSettingsSchema>>({
+    resolver: zodResolver(shopSettingsSchema),
     defaultValues: {
       phoneNumber: "",
       website: "",
     },
   });
 
-  const getCountryOptions = () => {
-    axios.get("https://restcountries.com/v2/all").then((response) => {
-      const countriesData = response.data.map((country: any) => ({
-        value: country.alpha2Code,
-        label: `${country.name} (${country.callingCodes[0]})`,
-        flag: country.flags.svg,
-      }));
-      setCountries(countriesData); // Set the state with the new countriesData
-    });
-  };
+  // const { control, watch } = form;
+  // const watchedPhoneNumber = watch("phoneNumber");
+  // const watchedWebsite = watch("website");
 
-  const { control, watch } = form;
-  const watchedPhoneNumber = watch("phoneNumber");
-  const watchedWebsite = watch("website");
+  // useEffect(() => {
+  //   updateFormData({
+  //     ...formData,
+  //     phoneNumber: watchedPhoneNumber,
+  //     website: watchedWebsite,
+  //   });
+  // }, [watchedPhoneNumber, watchedWebsite]);
 
-  useEffect(() => {
-    updateFormData({
-      ...formData,
-      phoneNumber: watchedPhoneNumber,
-      website: watchedWebsite,
-    });
-  }, [watchedPhoneNumber, watchedWebsite]);
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof shopSettingsSchema>) {
     console.log(values);
     // updateFormData({ formData: values });
   }
@@ -108,8 +103,10 @@ const AddShopSettings = () => {
                             <FormControl>
                               <PhoneInput
                                 country={"us"}
-                                value={field.value}
-                                onChange={field.onChange}
+                                value={phoneNumber}
+                                onChange={(e) =>
+                                  field.onChange({ target: { value: e } })
+                                }
                                 inputClass="p-6 rounded-sm w-full"
                                 containerClass="w-full"
                               />
@@ -130,7 +127,14 @@ const AddShopSettings = () => {
                   <FormItem>
                     <FormLabel>Website</FormLabel>
                     <FormControl>
-                      <Input {...field} className="p-6 rounded-sm" />
+                      <Input
+                        {...field}
+                        className="p-6 rounded-sm"
+                        value={website}
+                        onChange={(e) =>
+                          updateFields({ website: e.target.value })
+                        }
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
