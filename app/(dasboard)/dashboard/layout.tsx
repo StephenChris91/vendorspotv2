@@ -24,12 +24,8 @@ export const metadata: Metadata = {
   description: "Buy Anything, Anywhere, Anytime",
 };
 
-export default async function Layout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const session = await auth();
+export default function Layout({ children }: { children: React.ReactNode }) {
+  // const session = await auth();
   return (
     <div lang="en" className={cn(GeistSans.className)}>
       <div className={cn(fontSans.variable)}>

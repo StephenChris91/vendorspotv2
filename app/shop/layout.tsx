@@ -1,5 +1,5 @@
 import { GeistSans } from "geist/font/sans";
-import "../../../app/globals.css";
+import "@/app/globals.css";
 import { Inter as FontSans } from "next/font/google";
 // import "@/styles/globals.css"
 import { cn } from "@/lib/utils";
@@ -24,7 +24,7 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "VendorSpot | Track",
+  title: "VendorSpot | Shop",
   description: "Buy Anything, Anywhere, Anytime",
 };
 

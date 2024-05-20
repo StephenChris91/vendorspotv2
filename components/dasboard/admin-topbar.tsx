@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { PiMagnifyingGlassLight, PiStorefront } from "react-icons/pi";
@@ -6,10 +6,22 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
-import { useCurrentUser } from "@/lib/use-session-client";
-
+import { currentUser } from "@/actions/user";
+import { User } from "next-auth";
+import { useEffect, useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Logout } from "@/actions/logout";
 export const AdminTopbar = () => {
-  const user = useCurrentUser();
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await currentUser();
+      setUser(user);
+    };
+
+    fetchUser();
+  }, []);
 
   const abbvName = `${user?.firstname?.charAt(0)}${user?.lastname?.charAt(0)}`;
 
@@ -26,13 +38,13 @@ export const AdminTopbar = () => {
               className="pl-10 pr-3 py-2 rounded-full w-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#266235] focus:border-transparent" // Add additional styling as needed
             />
           </div>
-          <div className="border-none">
-            <Link href="/dashboard/createshop">
-              <Button className="rounded-full border-none bg-green-600">
-                Create Shop
-              </Button>
-            </Link>
-          </div>
+
+          <Button
+            className="rounded-full border-none bg-green-600"
+            onClick={() => Logout()}
+          >
+            Logout
+          </Button>
         </div>
       </div>
       <div className="w-1/3 py- px-1">
@@ -46,18 +58,28 @@ export const AdminTopbar = () => {
               Visit Site
             </Link>
           </div>
-          <div className="h-full flex gap-3 justify-between items-center mx-auto">
-            <Avatar>
-              <AvatarImage src="" alt="user image" />
-              <AvatarFallback>{abbvName}</AvatarFallback>
-            </Avatar>
-            <div>
-              <h6>
-                {user?.firstname} {user?.lastname}
-              </h6>
-              <p className="text-sm text-black">{user?.email}</p>
+          {user ? (
+            <div className="h-full flex gap-3 justify-between items-center mx-auto">
+              <Avatar>
+                <AvatarImage src="" alt="user image" />
+                <AvatarFallback>{abbvName}</AvatarFallback>
+              </Avatar>
+              <div>
+                <h6>
+                  {user?.firstname} {user?.lastname}
+                </h6>
+                <p className="text-sm text-black">{user?.email}</p>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="flex items-center space-x-4">
+              <Skeleton className="h-12 w-12 rounded-full" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[200px]" />
+                <Skeleton className="h-4 w-[150px]" />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

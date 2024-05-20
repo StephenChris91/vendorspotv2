@@ -45,7 +45,7 @@ const NewVerificationForm = () => {
           user?.role === "Vendor" ? "Complete Your Signup" : "Go to Profile"
         }
         backButtonLink={
-          user?.role === "Vendor" ? "/dashboard" : "/auth/profile"
+          user?.role === "Vendor" ? "/auth/onboarding" : "/auth/profile"
         }
       >
         <div className="flex flex-col items-center justify-center w-full h-full text-center mb-3">

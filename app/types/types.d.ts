@@ -69,10 +69,7 @@ export type InventoryType = {
 export type CategoriesType = {
     id: string,
     name: string,
-    details: string,
-    icon: string,
     slug: string,
-    group: string
 }
 export type TagsType = {
     id: string,
@@ -224,3 +221,4 @@ export type CartTableType = {
     price: JsxElement,
     total: JsxElement,
 }
+

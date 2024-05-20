@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import { GeistSans } from "geist/font/sans";
 import "@/app/globals.css";
@@ -27,7 +27,7 @@ const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
   title: "VendorSpot | Sign Up",
   description: "Buy Anything, Anywhere, Anytime",

@@ -61,3 +61,12 @@ export const signupSchema = z
           message: "The input cannot be less than 2 characters",
         }),
       })
+
+      export const categorySchema = z.object({
+        name: z.string().min(2, {
+          message: "Username must be at least 2 characters.",
+        }),
+        slug: z.string().min(2, {
+          message: "slug must be at least 2 characters.",
+        }),
+      });

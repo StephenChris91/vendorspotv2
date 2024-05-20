@@ -38,36 +38,21 @@ model avatar {
   userId    String   @unique
 }
 
-// model user {
-//   id            String    @id @default(uuid()) // Remove the `uid()` function from the `@default` directive
-//   email         String    @unique
-//   password      String
-//   firstname     String
-//   lastname      String
-//   role          userRole? @default(Customer)
-//   createdAt     DateTime  @default(now())
-//   updatedAt     DateTime  @default(now())
-//   deletedAt     DateTime  @default(now())
-//   profile       profile?
-//   profileId     Int?      @unique @default(autoincrement())
-//   avatar        avatar?
-//   emailVerified DateTime?
-// }
-
 model user {
-  id            String    @id @default(uuid()) // Remove the `uid()` function from the `@default` directive
-  email         String    @unique
-  password      String?
-  firstname     String?
-  lastname      String?
-  role          userRole? @default(Customer)
-  profile       profile?
-  profileId     String?
-  emailVerified DateTime?
-  image         String?
-  accounts      account[]
-  avatar        avatar?
-  name          String?
+  id                String    @id @default(uuid()) // Remove the `uid()` function from the `@default` directive
+  email             String    @unique
+  password          String?
+  firstname         String?
+  lastname          String?
+  role              userRole? @default(Customer)
+  profile           profile?
+  profileId         String?
+  emailVerified     DateTime?
+  image             String?
+  accounts          account[]
+  avatar            avatar?
+  name              String?
+  isOnboardedVendor Boolean?
 }
 
 model account {
@@ -177,7 +162,9 @@ model category {
   slug      String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @default(now())
-  products  product[]
+  products  product[] @relation
+
+  @@unique([name, slug])
 }
 
 model image {

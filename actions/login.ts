@@ -9,6 +9,8 @@ import { AuthError } from 'next-auth';
 import { getUserByEmail } from '@/lib/data/user';
 import { generateVerificationToken } from '@/lib/data/tokens';
 import { sendVerificationEmail } from '@/lib/mail';
+import { redirect } from 'next/navigation';
+import { LogIn } from 'lucide-react';
 
 export const login = async (values: z.infer<typeof loginSchema>) => {
     const validInput = loginSchema.safeParse(values)
@@ -38,11 +40,13 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
         }
     }
 
+    const vendorOnboard = existingUser.role === 'Vendor' || !existingUser.isOnboardedVendor
+
         try {
             await signIn('credentials', {
                 email,
                 password,
-                redirectTo: DEFAULT_LOGIN_REDIRECT
+                redirectTo: vendorOnboard ? '/auth/onboarding' : DEFAULT_LOGIN_REDIRECT
             })
         } catch (error) {
             if (error instanceof AuthError) {

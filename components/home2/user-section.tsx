@@ -7,14 +7,27 @@ import {
 import { FaRegUser } from "react-icons/fa";
 import Login from "../auth/signin";
 import Link from "next/link";
-import { useCurrentUser } from "@/lib/use-session-client";
-import { signOut } from "next-auth/react";
+import { signOut } from "@/auth";
+import { currentUser } from "@/actions/user";
+import { useEffect, useState } from "react";
+import { User } from "next-auth";
+import { Logout } from "@/actions/logout";
 
 const UserDropdown = () => {
-  const user = useCurrentUser();
+  const [user, setUser] = useState<User>();
 
-  console.log(user);
+  const handleSignOut = async () => {
+    await Logout();
+  };
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await currentUser();
+      setUser(user);
+    };
+
+    fetchUser();
+  }, []);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -23,7 +36,7 @@ const UserDropdown = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-72">
-        {user?.role === "Vendor" || user?.role === "Admin" ? (
+        {user?.role === "Vendor" ? (
           <div className="p-2">
             <Link href="/dashboard">
               <Button className="w-full rounded-sm">Dashboard</Button>
@@ -42,7 +55,7 @@ const UserDropdown = () => {
               variant="outline"
               type="submit"
               className="w-full rounded-sm p-4 text-black uppercase"
-              onClick={() => signOut()}
+              onClick={handleSignOut}
             >
               Logout
             </Button>

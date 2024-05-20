@@ -1,10 +1,10 @@
 import NextAuth, { type DefaultSession } from "next-auth"
 // import { db } from "@/prisma/prisma";
-import { userRole } from "@prisma/client";
+// import { userRole } from "@prisma/client";
 import NextAuth from "next-auth/next";
 
 
-// export type userRole = 'Admin' | 'Vendor' | 'Customer' | null;
+export type userRole = 'Admin' | 'Vendor' | 'Customer' | null;
 
 
 // declare module 'next-auth' {
@@ -47,14 +47,14 @@ export type ExtendedUser = DefaultSession['user'] & {
 }
  
 declare module "next-auth" {
-  // interface User {
-  //   firstname: string | null,
-  //   lastname: string | null,
-  //   email: string | null,
-  //   role: userRole | null,
-  //   name: string | null,
-  //   emailVerified: Date | null
-  // } 
+  interface User {
+    firstname: string | null,
+    lastname: string | null,
+    email: string | null,
+    role: userRole | null,
+    name: string | null,
+    emailVerified: Date | null
+  } 
 
   interface Session {
     user: ExtendedUser
