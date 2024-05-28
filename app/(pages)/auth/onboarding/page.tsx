@@ -1,9 +1,13 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "@/store/store";
+import { updateBasicInfo } from "@/store/slices/basicInfoSlice";
+import { updateLogoInfo } from "@/store/slices/logoInfoSlice";
 import AddBasicInfo from "@/components/dasboard/tables/createshop/addBasicInfo";
 import AddCoverImage from "@/components/dasboard/tables/createshop/addCoverImage";
-import AddLogo from "@/components/dasboard/tables/createshop/addLogo";
+import { AddLogo } from "@/components/dasboard/tables/createshop/addLogo";
 import AddPaymentInfo from "@/components/dasboard/tables/createshop/addPaymentInfo";
 import AddShopAddress from "@/components/dasboard/tables/createshop/addShopAddress";
 import AddShopSettings from "@/components/dasboard/tables/createshop/addShopSettings";
@@ -11,6 +15,8 @@ import { useMultistepForm } from "@/lib/useMultistep";
 import { shopType } from "@/app/types/types";
 import { Button } from "@/components/ui/button";
 import ProgressBar from "../../_authComponents/onboarding-progressbar";
+import { useCurrentUser } from "@/lib/use-session-client";
+
 const INITIAL_DATA: shopType = {
   name: "",
   description: "",
@@ -31,20 +37,46 @@ const INITIAL_DATA: shopType = {
 };
 
 function Onboarding() {
-  const [data, setData] = useState(INITIAL_DATA);
+  const dispatch = useDispatch<AppDispatch>();
+  const basicInfo = useSelector((state: RootState) => state.basicInfo);
+  const logoInfo = useSelector((state: RootState) => state.logoInfo);
+  const user = useCurrentUser();
+
+  useEffect(() => {
+    console.log({ basicInfo, logoInfo });
+  }, [basicInfo, logoInfo]);
+
   function updateFields(fields: Partial<shopType>) {
-    setData((prev) => {
-      return { ...prev, ...fields };
-    });
+    if ("name" in fields || "slug" in fields || "description" in fields) {
+      dispatch(
+        updateBasicInfo({
+          ...fields,
+          description: fields.description || "", // Ensure description is always a string
+        })
+      );
+    }
+    if ("logo" in fields) {
+      dispatch(updateLogoInfo(fields));
+    }
   }
+
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm([
-      <AddLogo {...data} updateFields={updateFields} />,
-      <AddBasicInfo {...data} updateFields={updateFields} />,
-      <AddCoverImage {...data} updateFields={updateFields} />,
-      <AddPaymentInfo {...data} updateFields={updateFields} />,
-      <AddShopAddress {...data} updateFields={updateFields} />,
-      <AddShopSettings {...data} updateFields={updateFields} />,
+      <AddLogo
+        userName={user?.firstname ?? ""}
+        logo={logoInfo.logo}
+        updateFields={updateFields}
+      />,
+      <AddBasicInfo
+        name={basicInfo.name}
+        slug={basicInfo.slug}
+        description={basicInfo.description}
+        updateFields={updateFields}
+      />,
+      <AddCoverImage banner={""} {...basicInfo} updateFields={updateFields} />,
+      // <AddPaymentInfo {...basicInfo} updateFields={updateFields} />,
+      // <AddShopAddress {...basicInfo} updateFields={updateFields} />,
+      // <AddShopSettings {...basicInfo} updateFields={updateFields} />,
     ]);
 
   function onSubmit(e: FormEvent) {
@@ -55,8 +87,8 @@ function Onboarding() {
   }
 
   return (
-    <div className="flex items-center justify-center w-full h-full bg-none relative border-none rounded-sm ">
-      <div className="w-full h-screen bg-blue-600">
+    <div className="flex items-center justify-center w-full h-full bg-none relative border-none rounded-sm">
+      <div className="w-full h-screen bg-yellow-400">
         <h1 className="text-7xl mx-auto text-center text-white mt-[40%]">
           Onboarding
         </h1>

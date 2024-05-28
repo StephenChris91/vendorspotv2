@@ -223,22 +223,22 @@ export type CartTableType = {
 }
 
 export type shopType = {
-    name:    string,
-    description: string,
-    address:     string,
-    phone:       string,
-    email:       string,
-    logo:        string,
-    banner:      string,
-    slug: string,
-    bankName: string,
-    accountNo: number,
-    country: string,
-    city: string,
-    state: string,
-    zip: string,
-    phoneNumber: string,
-    website: string,
+    name?:    string,
+    description?:? string,
+    address?:     string,
+    phone?:       string,
+    email?:       string,
+    logo?:        string,
+    banner?:      string,
+    slug?: string,
+    bankName?: string,
+    accountNo?: number,
+    country?: string,
+    city?: string,
+    state?: string,
+    zip?: string,
+    phoneNumber?: string,
+    website?: string,
     // profile?:     profile
     // profileId?:   String  
     // products?:    product

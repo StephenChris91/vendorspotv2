@@ -1,8 +1,8 @@
+// AddBasicInfo.tsx
 "use client";
 
 import { Input } from "@/components/ui/input";
 import Separator from "@/components/separator";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -17,8 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
-import { useContext, useEffect } from "react";
-import { FormContext } from "@/app/context/FormContext/formcontext";
+import { useEffect } from "react";
 import { createShopSchema } from "@/app/schemas";
 
 type AddBasicInfoType = {
@@ -37,14 +36,6 @@ const AddBasicInfo = ({
   description,
   updateFields,
 }: AddBasicInfoProps) => {
-  // const context = useContext(FormContext);
-
-  // if (!context) {
-  //   throw new Error("AddShopAddress must be used within a FormProvider");
-  // }
-
-  // const { formData, updateFormData } = context;
-
   const form = useForm<z.infer<typeof createShopSchema>>({
     resolver: zodResolver(createShopSchema),
     defaultValues: {
@@ -54,23 +45,19 @@ const AddBasicInfo = ({
     },
   });
 
-  // const { control, watch } = form;
-  // const watchedName = watch("name");
-  // const watchedSlug = watch("slug");
-  // const watchedDesc = watch("description");
+  const { control, watch } = form;
+  const watchedName = watch("name");
+  const watchedSlug = watch("slug");
+  const watchedDesc = watch("description");
 
-  // useEffect(() => {
-  //   updateFormData({
-  //     ...formData,
-  //     name: watchedName,
-  //     slug: watchedSlug,
-  //     description: watchedDesc,
-  //   });
-  // }, [watchedName, watchedSlug, watchedDesc]);
+  const handleInputeChange = () => {
+    updateFields({
+      name: watchedName,
+      slug: watchedSlug,
+      description: watchedDesc,
+    });
+  };
 
-  function onSubmit(values: z.infer<typeof createShopSchema>) {
-    console.log(values);
-  }
   return (
     <Separator>
       <div className="w-full flex">
@@ -82,7 +69,7 @@ const AddBasicInfo = ({
         </div>
         <div className="rounded bg-white p-5 shadow w-full sm:w-8/12 md:w-2/3">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+            <form className="space-y-5">
               <FormField
                 control={form.control}
                 name="name"
@@ -95,7 +82,7 @@ const AddBasicInfo = ({
                         {...field}
                         value={name}
                         className="p-6"
-                        onChange={(e) => updateFields({ name: e.target.value })}
+                        onChange={handleInputeChange}
                       />
                     </FormControl>
                     <FormMessage />
@@ -114,7 +101,7 @@ const AddBasicInfo = ({
                         {...field}
                         value={slug}
                         className="p-6"
-                        onChange={(e) => updateFields({ slug: e.target.value })}
+                        onChange={handleInputeChange}
                       />
                     </FormControl>
                     <FormMessage />
@@ -133,16 +120,13 @@ const AddBasicInfo = ({
                         className="resize p-2 h-32 w-full rounded-md border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#266235] focus:border-transparent"
                         {...field}
                         value={description}
-                        onChange={(e) =>
-                          updateFields({ description: e.target.value })
-                        }
+                        onChange={handleInputeChange}
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              {/* <Button type="submit">Submit</Button> */}
             </form>
           </Form>
         </div>

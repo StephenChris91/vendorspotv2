@@ -5,7 +5,9 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
-
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "@/store/store";
+import Providers from "@/provider";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -29,12 +31,14 @@ export default async function Layout({
   const session = await auth();
 
   return (
-    <SessionProvider session={session}>
-      <html lang="en" className={cn(GeistSans.className)}>
-        <body className={cn(fontSans.variable)}>
-          <div>{children}</div>
-        </body>
-      </html>
-    </SessionProvider>
+    <html lang="en" className={cn(GeistSans.className)}>
+      <body className={cn(fontSans.variable)}>
+        <Providers>
+          <SessionProvider session={session}>
+            <div>{children}</div>
+          </SessionProvider>
+        </Providers>
+      </body>
+    </html>
   );
 }

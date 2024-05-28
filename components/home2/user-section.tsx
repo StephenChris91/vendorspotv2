@@ -30,18 +30,32 @@ const UserDropdown = () => {
   }, []);
   return (
     <DropdownMenu>
-      {user?.isOnboardedVendor ? (
-        <DropdownMenuTrigger className="flex items-center">
-          <FaRegUser className="text-2xl" />
-          <span className="ml-2 text-sm font-semibold hidden md:block">
-            Welcome {user?.firstname}
-          </span>
-        </DropdownMenuTrigger>
-      ) : (
-        <Button className="w-full rounded-sm">Sign Out</Button>
-      )}
+      <DropdownMenuTrigger className="flex items-center">
+        {!user ? (
+          <FaRegUser className="text-2xl text-white" />
+        ) : !user?.isOnboardedVendor ? (
+          <>
+            <FaRegUser className="text-2xl text-white" />
+            <span className="ml-2 text-sm font-semibold hidden md:block text-white">
+              Welcome {user?.firstname}
+            </span>
+          </>
+        ) : (
+          <Button className="w-full rounded-sm" onClick={handleSignOut}>
+            Sign Out
+          </Button>
+        )}
+      </DropdownMenuTrigger>
       <DropdownMenuContent className="w-72">
-        {user?.role === "Vendor" ? (
+        {!user ? (
+          <Login />
+        ) : !user?.isOnboardedVendor ? (
+          <>
+            <Button className="w-full rounded-sm" onClick={handleSignOut}>
+              Sign Out
+            </Button>
+          </>
+        ) : user?.role === "Vendor" ? (
           <div className="p-2">
             <Link href="/dashboard">
               <Button className="w-full rounded-sm">Dashboard</Button>
@@ -98,7 +112,7 @@ const UserDropdown = () => {
               variant="outline"
               type="submit"
               className="w-full rounded-sm p-4 text-black uppercase"
-              onClick={() => signOut()}
+              onClick={handleSignOut}
             >
               Logout
             </Button>
@@ -106,7 +120,6 @@ const UserDropdown = () => {
         ) : (
           <Login />
         )}
-        {/* <Login /> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );
