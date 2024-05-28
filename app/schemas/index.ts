@@ -105,7 +105,8 @@ export const shopAddressSchema = z.object({
           })
           .max(160, {
             message: "Bio must not be longer than 160 characters.",
-          }),
+          })
+          .optional(),
       });
 
       export const searchInputSchema = z.object({

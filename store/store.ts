@@ -16,6 +16,7 @@ import cartReducer from './slices/cartSlice';
 import userReducer from './slices/userSlice';
 import basicInfoReducer from "./slices/basicInfoSlice";
 import logoInfoReducer from "./slices/logoInfoSlice";
+import shopReducer from "./slices/shopSlice"
 import storage from '@/lib/storage-persist';
 
 const rootReducer = combineReducers({
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   basicInfo: basicInfoReducer,
   logoInfo: logoInfoReducer,
+  shop: shopReducer,
 });
 
 

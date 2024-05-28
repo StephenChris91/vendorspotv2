@@ -1,10 +1,7 @@
+// Onboarding.tsx
 "use client";
 
-import { FormEvent, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "@/store/store";
-import { updateBasicInfo } from "@/store/slices/basicInfoSlice";
-import { updateLogoInfo } from "@/store/slices/logoInfoSlice";
+import { FormEvent } from "react";
 import AddBasicInfo from "@/components/dasboard/tables/createshop/addBasicInfo";
 import AddCoverImage from "@/components/dasboard/tables/createshop/addCoverImage";
 import { AddLogo } from "@/components/dasboard/tables/createshop/addLogo";
@@ -16,67 +13,33 @@ import { shopType } from "@/app/types/types";
 import { Button } from "@/components/ui/button";
 import ProgressBar from "../../_authComponents/onboarding-progressbar";
 import { useCurrentUser } from "@/lib/use-session-client";
-
-const INITIAL_DATA: shopType = {
-  name: "",
-  description: "",
-  address: "",
-  phone: "",
-  email: "",
-  logo: "",
-  banner: "",
-  slug: "",
-  bankName: "",
-  accountNo: 0,
-  country: "",
-  city: "",
-  state: "",
-  zip: "",
-  phoneNumber: "",
-  website: "",
-};
+import { useDispatch, useSelector } from "react-redux";
+import { updateShopField } from "@/store/slices/shopSlice";
+import { RootState } from "@/store/store";
 
 function Onboarding() {
-  const dispatch = useDispatch<AppDispatch>();
-  const basicInfo = useSelector((state: RootState) => state.basicInfo);
-  const logoInfo = useSelector((state: RootState) => state.logoInfo);
+  const data = useSelector((state: RootState) => state.shop);
   const user = useCurrentUser();
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log({ basicInfo, logoInfo });
-  }, [basicInfo, logoInfo]);
-
-  function updateFields(fields: Partial<shopType>) {
-    if ("name" in fields || "slug" in fields || "description" in fields) {
-      dispatch(
-        updateBasicInfo({
-          ...fields,
-          description: fields.description || "", // Ensure description is always a string
-        })
-      );
+  const updateFields = (fields: Partial<shopType>) => {
+    for (const [key, value] of Object.entries(fields)) {
+      dispatch(updateShopField({ field: key, value }));
     }
-    if ("logo" in fields) {
-      dispatch(updateLogoInfo(fields));
-    }
-  }
+  };
 
   const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm([
       <AddLogo
         userName={user?.firstname ?? ""}
-        logo={logoInfo.logo}
+        logo={data.logo}
         updateFields={updateFields}
       />,
-      <AddBasicInfo
-        name={basicInfo.name}
-        slug={basicInfo.slug}
-        description={basicInfo.description}
-        updateFields={updateFields}
-      />,
-      <AddCoverImage banner={""} {...basicInfo} updateFields={updateFields} />,
-      // <AddPaymentInfo {...basicInfo} updateFields={updateFields} />,
-      // <AddShopAddress {...basicInfo} updateFields={updateFields} />,
-      // <AddShopSettings {...basicInfo} updateFields={updateFields} />,
+      <AddBasicInfo />,
+      <AddCoverImage banner={data.banner} updateFields={updateFields} />,
+      <AddPaymentInfo {...data} updateFields={updateFields} />,
+      <AddShopAddress {...data} updateFields={updateFields} />,
+      <AddShopSettings {...data} updateFields={updateFields} />,
     ]);
 
   function onSubmit(e: FormEvent) {

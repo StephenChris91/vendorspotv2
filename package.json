@@ -85,6 +85,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/jest": "^29.5.12",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "20.11.5",
     "@types/react": "18.2.48",
     "@types/react-dom": "^18.2.18",
@@ -93,6 +94,7 @@
     "encoding": "^0.1.13",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "lodash.debounce": "^4.0.8",
     "postcss": "^8.4.38",
     "postcss-simple-vars": "^7.0.1",
     "ts-jest": "^29.1.2"
