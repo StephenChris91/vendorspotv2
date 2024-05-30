@@ -6,75 +6,63 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
-  FormField,
   FormItem,
   FormLabel,
   FormMessage,
+  FormField,
 } from "@/components/ui/form";
 
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-
-// import "react-phone-number-input/style.css";
-import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useEffect, useState, useContext } from "react";
-import { FormContext } from "@/app/context/FormContext/formcontext";
+import React, { useEffect, useCallback } from "react";
 import { shopSettingsSchema } from "@/app/schemas";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, store } from "@/store/store";
+import debounce from "lodash.debounce";
+import { updateShopField } from "@/store/slices/shopSlice";
+import { useFormContext } from "@/app/context/FormContext/formcontext";
 
-type shopSettingsType = {
+interface AddShopSettingsProps {
   phoneNumber: string;
   website: string;
-};
+  updateFormData: (
+    data: Partial<{
+      phoneNumber: string;
+      website: string;
+    }>
+  ) => void;
+}
 
-type AddShopAddressProps = shopSettingsType & {
-  updateFields: (fields: Partial<shopSettingsType>) => void;
-};
-
-const AddShopSettings = ({
+const AddShopSettings: React.FC<AddShopSettingsProps> = ({
   phoneNumber,
   website,
-  updateFields,
-}: AddShopAddressProps) => {
-  // const [countries, setCountries] = useState([]);
-  // const context = useContext(FormContext);
-
-  // if (!context) {
-  //   throw new Error("AddShopAddress must be used within a FormProvider");
-  // }
-
-  // const { formData, updateFormData } = context;
-
-  // const { updateFormData } = formContext;
-
+  updateFormData,
+}) => {
   const form = useForm<z.infer<typeof shopSettingsSchema>>({
     resolver: zodResolver(shopSettingsSchema),
     defaultValues: {
-      phoneNumber: "",
-      website: "",
+      phoneNumber,
+      website,
     },
   });
 
   // const { control, watch } = form;
-  // const watchedPhoneNumber = watch("phoneNumber");
-  // const watchedWebsite = watch("website");
+  // const watchedFields = watch();
+
+  // const debouncedUpdateFields = useCallback(
+  //   debounce((data: Partial<typeof formData>) => {
+  //     updateFormData(data);
+  //   }, 500),
+  //   [updateFormData]
+  // );
 
   // useEffect(() => {
-  //   updateFormData({
-  //     ...formData,
-  //     phoneNumber: watchedPhoneNumber,
-  //     website: watchedWebsite,
-  //   });
-  // }, [watchedPhoneNumber, watchedWebsite]);
+  //   debouncedUpdateFields(watchedFields);
+  // }, [watchedFields, debouncedUpdateFields]);
 
-  function onSubmit(values: z.infer<typeof shopSettingsSchema>) {
-    console.log(values);
-    // updateFormData({ formData: values });
-  }
-  // const form = useForm()
   return (
     <Separator>
       <div className="w-full flex">
@@ -86,7 +74,7 @@ const AddShopSettings = ({
         </div>
         <div className="rounded bg-white p-5 shadow md:p-8 w-full sm:w-8/12 md:w-2/3">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+            <form className="space-y-5">
               <FormField
                 control={form.control}
                 name="phoneNumber"
@@ -94,26 +82,15 @@ const AddShopSettings = ({
                   <FormItem>
                     <FormLabel>Phone Number</FormLabel>
                     <FormControl>
-                      <FormField
-                        control={form.control}
-                        name="phoneNumber"
-                        render={({ field }) => (
-                          <FormItem>
-                            {/* <FormLabel>Phone Number</FormLabel> */}
-                            <FormControl>
-                              <PhoneInput
-                                country={"us"}
-                                value={phoneNumber}
-                                onChange={(e) =>
-                                  field.onChange({ target: { value: e } })
-                                }
-                                inputClass="p-6 rounded-sm w-full"
-                                containerClass="w-full"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
+                      <PhoneInput
+                        country={"us"}
+                        value={field.value}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          updateFormData({ phoneNumber: e });
+                        }}
+                        inputClass="p-6 rounded-sm w-full"
+                        containerClass="w-full"
                       />
                     </FormControl>
                     <FormMessage />
@@ -130,17 +107,17 @@ const AddShopSettings = ({
                       <Input
                         {...field}
                         className="p-6 rounded-sm"
-                        value={website}
-                        onChange={(e) =>
-                          updateFields({ website: e.target.value })
-                        }
+                        value={field.value}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          updateFormData({ website: e.target.value });
+                        }}
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              {/* <Button type="submit">Submit</Button> */}
             </form>
           </Form>
         </div>

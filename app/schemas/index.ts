@@ -38,17 +38,13 @@ export const signupSchema = z
       });
       
       export const addPaymentSchema = z.object({
-        name: z.string().min(2, {
+        accountName: z.string().min(2, {
           message: "Bank Name cannot be empty",
-        }),
-        email: z.string().min(2, {
-          message: "email must be at least 2 characters.",
         }),
         bankName: z.string().min(10, {
           message: "Please provide your bank name.",
         }),
-        accountNo: z
-          .number()
+        accountNo: z.string()
           .min(2, {
             message: "Provided account number is not a valid account number.",
           })
@@ -91,23 +87,23 @@ export const shopAddressSchema = z.object({
 });
 
 
-      export const createShopSchema = z.object({
-        name: z.string().min(2, {
-          message: "Username must be at least 2 characters.",
-        }),
-        slug: z.string().min(2, {
-          message: "Username must be at least 2 characters.",
-        }),
-        description: z
-          .string()
-          .min(10, {
-            message: "Bio must be at least 10 characters.",
-          })
-          .max(160, {
-            message: "Bio must not be longer than 160 characters.",
-          })
-          .optional(),
-      });
+export const shopSchema = z.object({
+  shopname: z.string(),
+  description: z.string(),
+  address: z.string(),
+  logo: z.string(),
+  banner: z.string(),
+  slug: z.string(),
+  bankName: z.string(),
+  accountNo: z.string(),
+  country: z.string(),
+  city: z.string(),
+  state: z.string(),
+  zip: z.string(),
+  phoneNumber: z.string(),
+  website: z.string(),
+  accountName: z.string(),
+});
 
       export const searchInputSchema = z.object({
         search: z.string().min(2, {

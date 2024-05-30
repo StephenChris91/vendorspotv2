@@ -22,8 +22,6 @@ import storage from '@/lib/storage-persist';
 const rootReducer = combineReducers({
   product: productReducer,
   cart: cartReducer,
-  basicInfo: basicInfoReducer,
-  logoInfo: logoInfoReducer,
   shop: shopReducer,
 });
 

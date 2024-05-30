@@ -1,5 +1,6 @@
 "use client";
 
+import { useFormContext } from "@/app/context/FormContext/formcontext";
 import Separator from "@/components/separator";
 import { Input } from "@/components/ui/input";
 import { useCurrentUser } from "@/lib/use-session-client";
@@ -8,14 +9,15 @@ import { RootState } from "@/store/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-type AddCoverImageType = {
+interface AddBasicInfoProps {
   banner: string;
-};
+  updateFormData: (data: Partial<{ banner: string }>) => void;
+}
 
-type AddCoverImageProps = AddCoverImageType & {
-  updateFields: (fields: Partial<AddCoverImageType>) => void;
-};
-const AddCoverImage = ({ banner, updateFields }: AddCoverImageProps) => {
+const AddCoverImage: React.FC<AddBasicInfoProps> = ({
+  banner,
+  updateFormData,
+}) => {
   const [displayBanner, setDisplayBanner] = useState(banner);
   const user = useCurrentUser();
 
@@ -45,7 +47,7 @@ const AddCoverImage = ({ banner, updateFields }: AddCoverImageProps) => {
           const result = await response.json();
           if (response.ok) {
             setDisplayBanner(result.url);
-            updateFields({ banner: result.url });
+            updateFormData({ banner: result.url });
           } else {
             console.error("Error uploading file:", result.message);
           }
@@ -56,6 +58,7 @@ const AddCoverImage = ({ banner, updateFields }: AddCoverImageProps) => {
       reader.readAsDataURL(file);
     }
   };
+
   return (
     <Separator>
       <div className="w-full flex">
@@ -73,7 +76,11 @@ const AddCoverImage = ({ banner, updateFields }: AddCoverImageProps) => {
             >
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
                 {displayBanner ? (
-                  <img src={displayBanner} alt="Logo" className="h-48 w-auto" />
+                  <img
+                    src={displayBanner}
+                    alt="Banner"
+                    className="h-48 w-auto"
+                  />
                 ) : (
                   <>
                     <svg

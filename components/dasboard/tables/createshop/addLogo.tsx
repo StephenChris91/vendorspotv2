@@ -4,19 +4,22 @@ import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import Separator from "@/components/separator";
 import { useCurrentUser } from "@/lib/use-session-client";
+import { useFormContext } from "@/app/context/FormContext/formcontext";
 
-type AddLogoType = {
+interface AddLogoProps {
   logo: string;
   userName: string;
-};
+  updateFormData: (data: Partial<{ logo: string }>) => void;
+}
 
-type AddLogoProps = AddLogoType & {
-  updateFields: (fields: Partial<AddLogoType>) => void;
-};
-
-export const AddLogo = ({ logo, userName, updateFields }: AddLogoProps) => {
+export const AddLogo: React.FC<AddLogoProps> = ({
+  logo,
+  userName,
+  updateFormData,
+}) => {
   const [localLogo, setLocalLogo] = useState(logo);
   const user = useCurrentUser();
+
   useEffect(() => {
     setLocalLogo(logo);
   }, [logo]);
@@ -43,7 +46,7 @@ export const AddLogo = ({ logo, userName, updateFields }: AddLogoProps) => {
           const result = await response.json();
           if (response.ok) {
             setLocalLogo(result.url);
-            updateFields({ logo: result.url });
+            updateFormData({ logo: result.url });
           } else {
             console.error("Error uploading file:", result.message);
           }

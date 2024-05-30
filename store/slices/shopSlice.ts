@@ -1,38 +1,39 @@
-// shopSlice.js
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { shopType } from '@/app/types/types';
-import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: shopType = {
-  name: "",
-  description: "",
-  address: "",
-  phone: "",
-  email: "",
-  logo: "",
-  banner: "",
-  slug: "",
-  bankName: "",
-  accountNo: 0,
-  country: "",
-  city: "",
-  state: "",
-  zip: "",
-  phoneNumber: "",
-  website: "",
+  
+    shopname: '',
+    description: '',
+    address: '',
+    logo: '',
+    banner: '',
+    slug: '',
+    bankName: '',
+    accountNo: "",
+    country: '',
+    city: '',
+    state: '',
+    zip: '',
+    phoneNumber: '',
+    website: '',
+    accountName: ''
+  
 };
 
 const shopSlice = createSlice({
   name: 'shop',
   initialState,
   reducers: {
-    updateShopField(state: any, action) {
+    updateShopField: (
+      state,
+      action: PayloadAction<{ field: string; value: any }>
+    ) => {
       const { field, value } = action.payload;
-      state[field] = value;
+      (state as any)[field] = value;
     },
-    // other reducers...
   },
 });
 
 export const { updateShopField } = shopSlice.actions;
-
 export default shopSlice.reducer;

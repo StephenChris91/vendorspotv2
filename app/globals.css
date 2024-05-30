@@ -91,4 +91,39 @@ h6 {
     background-color: green;
     color: white;
   }
+
+  .multi-step-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .step-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .step-item {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  .step-item.active {
+    border-bottom: 2px solid #0070f3;
+    font-weight: bold;
+  }
+  
+  .step-content {
+    margin-bottom: 20px;
+  }
+  
+  .step-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
   

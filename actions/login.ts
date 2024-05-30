@@ -9,8 +9,6 @@ import { AuthError } from 'next-auth';
 import { getUserByEmail } from '@/lib/data/user';
 import { generateVerificationToken } from '@/lib/data/tokens';
 import { sendVerificationEmail } from '@/lib/mail';
-import { redirect } from 'next/navigation';
-import { LogIn } from 'lucide-react';
 
 export const login = async (values: z.infer<typeof loginSchema>) => {
     const validInput = loginSchema.safeParse(values)

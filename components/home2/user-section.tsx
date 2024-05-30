@@ -32,7 +32,9 @@ const UserDropdown = () => {
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center">
         {!user ? (
-          <FaRegUser className="text-2xl text-white" />
+          <Button className="w-full rounded-sm" onClick={handleSignOut}>
+            Sign Out
+          </Button>
         ) : !user?.isOnboardedVendor ? (
           <>
             <FaRegUser className="text-2xl text-white" />
@@ -41,9 +43,7 @@ const UserDropdown = () => {
             </span>
           </>
         ) : (
-          <Button className="w-full rounded-sm" onClick={handleSignOut}>
-            Sign Out
-          </Button>
+          <FaRegUser className="text-2xl text-white" />
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-72">

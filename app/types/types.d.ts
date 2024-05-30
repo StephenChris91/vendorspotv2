@@ -222,24 +222,23 @@ export type CartTableType = {
     total: JsxElement,
 }
 
-// types.ts
+
 export type shopType = {
-    name: string;
-    description: string | null;
+    shopname: string;
+    description: string;
     address: string;
-    phone: string;
-    email: string;
     logo: string;
     banner: string;
     slug: string;
     bankName: string;
-    accountNo: number;
+    accountNo: string;
     country: string;
     city: string;
     state: string;
     zip: string;
     phoneNumber: string;
     website: string;
+    accountName: string;
   };
   
 

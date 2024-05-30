@@ -16,47 +16,42 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useContext, useEffect } from "react";
-import {
-  FormContext,
-  FormProvider,
-} from "@/app/context/FormContext/formcontext";
+import { useCallback, useEffect } from "react";
 import { addPaymentSchema } from "@/app/schemas";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import debounce from "lodash.debounce";
+import { updateShopField } from "@/store/slices/shopSlice";
+import { useFormContext } from "@/app/context/FormContext/formcontext";
 
-type AddPaymentInfoType = {
-  name: string;
+interface AddPaymentInfoProps {
+  accountName: string;
   bankName: string;
-  accountNo: number;
-};
+  accountNo: string;
+  updateFormData: (
+    data: Partial<{
+      accountName: string;
+      bankName: string;
+      accountNo: string;
+    }>
+  ) => void;
+}
 
-type AddCoverImageProps = AddPaymentInfoType & {
-  updateFields: (fields: Partial<AddPaymentInfoType>) => void;
-};
-
-const AddPaymentInfo = ({
-  name,
+const AddPaymentInfo: React.FC<AddPaymentInfoProps> = ({
+  accountName,
   bankName,
   accountNo,
-  updateFields,
-}: AddCoverImageProps) => {
-  // const context = useContext(FormContext);
-
-  // if (!context) {
-  //   throw new Error("AddShopAddress must be used within a FormProvider");
-  // }
-
+  updateFormData,
+}) => {
   const form = useForm<z.infer<typeof addPaymentSchema>>({
     resolver: zodResolver(addPaymentSchema),
     defaultValues: {
-      name: "",
-      bankName: "",
-      accountNo: 0,
+      accountName,
+      bankName,
+      accountNo,
     },
   });
 
-  function onSubmit(values: z.infer<typeof addPaymentSchema>) {
-    console.log(values);
-  }
   return (
     <Separator>
       <div className="w-full flex">
@@ -68,15 +63,23 @@ const AddPaymentInfo = ({
         </div>
         <div className="rounded bg-white p-5 shadow md:p-8 w-full sm:w-8/12 md:w-2/3">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+            <form className="space-y-5">
               <FormField
                 control={form.control}
-                name="name"
+                name="accountName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Account Holder Name</FormLabel>
                     <FormControl>
-                      <Input {...field} className="p-6" value={name} />
+                      <Input
+                        {...field}
+                        className="p-6"
+                        // value={accountName}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          updateFormData({ accountName: e.target.value });
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -89,7 +92,15 @@ const AddPaymentInfo = ({
                   <FormItem>
                     <FormLabel>Bank Name</FormLabel>
                     <FormControl>
-                      <Input {...field} className="p-6" value={bankName} />
+                      <Input
+                        {...field}
+                        className="p-6"
+                        // value={bankName}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          updateFormData({ bankName: e.target.value });
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -104,12 +115,18 @@ const AddPaymentInfo = ({
                     <FormControl>
                       <Input
                         {...field}
-                        type="number"
+                        type="text"
                         id="number-input"
                         aria-describedby="helper-text-explanation"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-6 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required
-                        value={accountNo}
+                        // value={accountNo}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          updateFormData({
+                            accountNo: e.target.value,
+                          });
+                        }}
                       />
                     </FormControl>
                     <FormMessage />
