@@ -2,27 +2,27 @@
 
 import AddBasicInfo from "@/components/dasboard/tables/createshop/addBasicInfo";
 import AddCoverImage from "@/components/dasboard/tables/createshop/addCoverImage";
-import AddLogo from "@/components/dasboard/tables/createshop/addLogo";
+// import AddLogo from "@/components/dasboard/tables/createshop/addLogo";
 import AddPaymentInfo from "@/components/dasboard/tables/createshop/addPaymentInfo";
 import AddShopAddress from "@/components/dasboard/tables/createshop/addShopAddress";
 import AddShopSettings from "@/components/dasboard/tables/createshop/addShopSettings";
 import Separator from "@/components/separator";
 import { useContext } from "react";
 import { Button } from "@/components/ui/button";
-import { FormContext } from "../../../../context/FormContext/formcontext";
+// import { FormContext } from "@/app/context/FormContext/formcontext";
 
 const CreateShop = () => {
-  const formContext = useContext(FormContext);
+  // const formContext = useContext(FormContext);
 
-  if (!formContext) {
-    throw new Error("CreateShop must be used within a FormProvider");
-  }
+  // if (!formContext) {
+  //   throw new Error("CreateShop must be used within a FormProvider");
+  // }
 
-  const { formData, updateFormData } = formContext;
+  // const { formData, updateFormData } = formContext;
 
   const onSubmit = () => {
     // "use server";
-    console.log(formData);
+    // console.log(formData);
   };
 
   return (
