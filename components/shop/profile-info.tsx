@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
-const ProfileInfo = () => {
+const ProfileInfo = ({ logo }: any) => {
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 1224px)",
   });
@@ -12,38 +12,11 @@ const ProfileInfo = () => {
   return (
     <div>
       <div className="p-5 flex flex-col justify-between mx-auto  border-2 border-b-gray-200">
-        {/* <div className="flex justify-between items-center mb-5 w-full mx-auto">
-          <div className="border-2 rounded-full p-1 relative">
-            <div
-              className={`h-3 w-3 rounded-full ${
-                isOnline ? "bg-green-500" : "bg-red-600"
-              } absolute top-3 right-2`}
-            ></div>
-            <Image
-              src="/shop/profile.webp"
-              alt="profile"
-              width={100}
-              height={100}
-              className="rounded-full bg-gray-100"
-            />
-          </div>
-          <div className="flex flex-col justify-start items-start">
-            <p className="font-normal text-gray-400">Since 2024</p>
-            <h2 className="text-gray-600">Gadget Store</h2>
-            <p className="mt-6 text-gray-600">44 Products</p>
-          </div>
-        </div> */}
         <div className="flex flex-col w-full p-6 border-b border-gray-200">
           <div className="flex items-center justify-start mb-4">
             <div className="flex items-center justify-center w-24 h-24 border border-gray-200 rounded-full shrink-0">
               <div className="relative w-[calc(100%-8px)] h-[calc(100%-8px)] overflow-hidden bg-gray-200 rounded-full">
-                {/* <img alt="logo" loading="lazy" decoding="async" data-nimg="fill" class="object-cover" style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent" sizes="(max-width: 768px) 100vw" srcset="/_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F1786%2FMedicine.jpg&amp;w=640&amp;q=75 640w, /_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F1786%2FMedicine.jpg&amp;w=750&amp;q=75 750w, /_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F1786%2FMedicine.jpg&amp;w=828&amp;q=75 828w, /_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F1786%2FMedicine.jpg&amp;w=1080&amp;q=75 1080w, /_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F1786%2FMedicine.jpg&amp;w=1200&amp;q=75 1200w, /_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F1786%2FMedicine.jpg&amp;w=1920&amp;q=75 1920w, /_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F1786%2FMedicine.jpg&amp;w=2048&amp;q=75 2048w, /_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F1786%2FMedicine.jpg&amp;w=3840&amp;q=75 3840w" src="/_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F1786%2FMedicine.jpg&amp;w=3840&amp;q=75"> */}
-                <Image
-                  src="/shop/profile.webp"
-                  alt="profile"
-                  width={100}
-                  height={100}
-                />
+                <Image src={logo} alt="profile" width={100} height={100} />
               </div>
             </div>
             <div className="ltr:pl-2.5 rtl:pr-2.5 ">

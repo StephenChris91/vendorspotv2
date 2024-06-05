@@ -73,3 +73,9 @@ export const getShopBySlug = async (slug: string) => {
     });
     return shop;
 };
+export const getShopByName = async (shopname: string) => {
+    const shop = await db.shop.findFirst({
+        where: { shopname }
+    });
+    return shop;
+};
