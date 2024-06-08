@@ -12,6 +12,7 @@ import { useFormContext } from "@/app/context/FormContext/formcontext";
 import { useCurrentUser } from "@/lib/use-session-client";
 import { createShop } from "@/actions/createshop";
 import { useToast } from "@/components/ui/use-toast";
+import { ProcessPayment } from "@/components/dasboard/tables/createshop/processPayment";
 
 const steps = [
   { component: AddLogo, label: "Shop Name" },
@@ -20,6 +21,7 @@ const steps = [
   { component: AddPaymentInfo, label: "Payment Info" },
   { component: AddShopAddress, label: "Shop Address" },
   { component: AddShopSettings, label: "Shop Settings" },
+  { component: ProcessPayment, label: "Make Payment" },
 ];
 
 const MultiStepForm = () => {
@@ -27,6 +29,7 @@ const MultiStepForm = () => {
   const { formData, updateFormData } = useFormContext();
   const user = useCurrentUser();
   const { toast } = useToast();
+  const [isPaymentProcessed, setPaymentProcessed] = useState(false);
   const StepComponent = steps[currentStep].component;
 
   const handleNext = () => {
@@ -43,10 +46,8 @@ const MultiStepForm = () => {
 
   const handleFinish = async () => {
     try {
-      // const plainFormData = JSON.parse(JSON.stringify(formData));
       const addshop = await createShop(formData);
       if (addshop.status === "success") {
-        // alert("Successfully created shop");
         updateFormData({});
         toast({
           variant: "default",
@@ -71,6 +72,7 @@ const MultiStepForm = () => {
           userName={user?.firstname || ""}
           {...formData}
           updateFormData={updateFormData}
+          setPaymentProcessed={setPaymentProcessed}
         />
       </div>
 
@@ -83,7 +85,9 @@ const MultiStepForm = () => {
           Previous
         </Button>
         {currentStep === steps.length - 1 ? (
-          <Button onClick={handleFinish}>Finish</Button>
+          <Button onClick={handleFinish} disabled={!isPaymentProcessed}>
+            Finish
+          </Button>
         ) : (
           <Button onClick={handleNext}>Next</Button>
         )}

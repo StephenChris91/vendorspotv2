@@ -119,3 +119,9 @@ export const shopSchema = z.object({
           message: "slug must be at least 2 characters.",
         }),
       });
+
+      export const paymentSchema = z.object({
+        email: z.string().min(2, {
+            message: "email must be at least 2 characters.",
+          }),
+      })

@@ -32,8 +32,11 @@ const UserDropdown = () => {
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center">
         {!user ? (
-          <Button className="w-full rounded-sm" onClick={handleSignOut}>
-            Sign Out
+          <Button
+            className="w-full rounded-sm bg-transparent shadow-none hover:bg-transparent hover:shadow-none"
+            // onClick={handleSignOut}
+          >
+            Sign In
           </Button>
         ) : !user?.isOnboardedVendor ? (
           <>

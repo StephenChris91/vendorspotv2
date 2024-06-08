@@ -53,6 +53,7 @@ model user {
   avatar            avatar?
   name              String?
   isOnboardedVendor Boolean?
+  hasPaid           Boolean?
 }
 
 model account {

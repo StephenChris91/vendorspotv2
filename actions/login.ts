@@ -38,13 +38,14 @@ export const login = async (values: z.infer<typeof loginSchema>) => {
         }
     }
 
-    const vendorOnboard = existingUser.role === 'Vendor' || !existingUser.isOnboardedVendor
+    const vendorOnboard = existingUser.role === 'Vendor' && existingUser.isOnboardedVendor
+    const vendorNotOnboarded = existingUser.role === 'Vendor' && !existingUser.isOnboardedVendor
 
         try {
             await signIn('credentials', {
                 email,
                 password,
-                redirectTo: vendorOnboard ? '/auth/onboarding' : DEFAULT_LOGIN_REDIRECT
+                redirectTo: vendorOnboard ? '/dashboard' : vendorNotOnboarded ? '/auth/onboarding' : '/auth/profile'
             })
         } catch (error) {
             if (error instanceof AuthError) {
