@@ -6,22 +6,22 @@ import { useMediaQuery } from "react-responsive";
 import ProfileInfo from "@/components/shop/profile-info";
 import { Button } from "@/components/ui/button";
 import { useParams } from "next/navigation";
-import { getShopByName, getShopBySlug } from "@/actions/createshop";
+import { getShopById } from "@/actions/createshop";
 import { shopType } from "@/app/types/types";
 
 const ShopMain = () => {
-  const { slug } = useParams();
-  const [shop, setShop] = useState<shopType | null>();
+  const { id } = useParams(); // Ensure your dynamic route is [id].tsx
+  const [shop, setShop] = useState<shopType | null>(null);
 
   useEffect(() => {
     const fetchShop = async () => {
-      if (slug) {
-        const shopData = await getShopBySlug(slug as string);
+      if (id) {
+        const shopData = await getShopById(id as string); // Convert id to a number
         setShop(shopData as shopType);
       }
     };
     fetchShop();
-  }, [slug]);
+  }, [id]);
 
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-device-width: 1224px)",
@@ -39,7 +39,7 @@ const ShopMain = () => {
           isDesktopOrLaptop ? "w-2/6" : "w-full"
         } h-auto rounded-md`}
       >
-        <div className="bg-gray-50 h-auto ">
+        <div className="bg-gray-50 h-auto">
           <ProfileInfo logo={shop?.logo} />
         </div>
       </ScrollArea>

@@ -79,3 +79,16 @@ export const getShopByName = async (shopname: string) => {
     });
     return shop;
 };
+
+
+export const getShopById = async (id: string) => {
+  try {
+    const shop = await db.shop.findUnique({
+      where: { id },
+    });
+    return shop;
+  } catch (error) {
+    console.error("Error fetching shop by ID:", error);
+    throw error;
+  }
+};
