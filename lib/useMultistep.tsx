@@ -12,7 +12,7 @@ import { useFormContext } from "@/app/context/FormContext/formcontext";
 import { useCurrentUser } from "@/lib/use-session-client";
 import { createShop } from "@/actions/createshop";
 import { useToast } from "@/components/ui/use-toast";
-import { ProcessPayment } from "@/components/dasboard/tables/createshop/processPayment";
+import ProcessPayment from "@/components/dasboard/tables/createshop/processPayment";
 
 const steps = [
   { component: AddLogo, label: "Shop Name" },

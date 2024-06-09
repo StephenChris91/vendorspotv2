@@ -5,10 +5,10 @@ import Google from 'next-auth/providers/google'
 import { loginSchema } from "./app/schemas";
 import { getUserByEmail } from "./lib/data/user";
 import { compare } from "bcrypt-ts";
+import type NextAuthOption from "next-auth";
 
 
-
-export default {
+export default  {
     providers: [
         Google({
             clientId: process.env.GOOGLE_CLIENT_ID,
