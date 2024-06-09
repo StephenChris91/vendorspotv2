@@ -7,6 +7,8 @@ const nextConfig = {
       "https://via.placeholder.com/150/771796",
       "via.placeholder.com",
       "mukoxyechbobgdvpbirs.supabase.co",
+      "https://vendorspot-marketplace.s3.eu-north-1.amazonaws.com",
+      "vendorspot-marketplace.s3.eu-north-1.amazonaws.com",
       // "https://mukoxyechbobgdvpbirs.supabase.co",
     ],
   },

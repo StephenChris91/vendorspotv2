@@ -11,7 +11,7 @@ const ShopProductCard = () => {
 
   return (
     <>
-      <article className=" bg-white h-full transform overflow-hidden rounded border border-border-200 border-opacity-70 bg-light transition-all duration-200 hover:-translate-y-0.5 hover:border-transparent hover:shadow">
+      <article className=" bg-white h-auto transform overflow-hidden rounded border border-border-200 border-opacity-70 bg-light transition-all duration-200 hover:-translate-y-0.5 hover:border-transparent hover:shadow">
         <div className="relative flex h-48 w-auto cursor-pointer items-center justify-center sm:h-64">
           <span className="sr-only">Product Image</span>
           <Image

@@ -81,6 +81,9 @@ export const getShopByName = async (shopname: string) => {
 };
 
 
+// actions/createshop.ts
+
+
 export const getShopById = async (id: string) => {
   try {
     const shop = await db.shop.findUnique({
@@ -88,7 +91,8 @@ export const getShopById = async (id: string) => {
     });
     return shop;
   } catch (error) {
-    console.error("Error fetching shop by ID:", error);
-    throw error;
+    console.error("Failed to fetch shop by ID:", error);
+    return null;
   }
 };
+

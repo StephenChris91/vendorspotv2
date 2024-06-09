@@ -8,16 +8,19 @@ import { Button } from "@/components/ui/button";
 import { useParams } from "next/navigation";
 import { getShopById } from "@/actions/createshop";
 import { shopType } from "@/app/types/types";
+import { shop } from "@prisma/client";
 
 const ShopMain = () => {
-  const { id } = useParams(); // Ensure your dynamic route is [id].tsx
-  const [shop, setShop] = useState<shopType | null>(null);
+  const { id } = useParams();
+  const [shop, setShop] = useState<shop | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchShop = async () => {
       if (id) {
-        const shopData = await getShopById(id as string); // Convert id to a number
-        setShop(shopData as shopType);
+        const shopData = await getShopById(id as string);
+        setShop(shopData);
+        setLoading(false);
       }
     };
     fetchShop();
@@ -27,6 +30,10 @@ const ShopMain = () => {
     query: "(min-device-width: 1224px)",
   });
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+
+  if (loading) {
+    return <div>Loading...</div>; // Display a loading indicator while fetching data
+  }
 
   return (
     <div
@@ -40,7 +47,7 @@ const ShopMain = () => {
         } h-auto rounded-md`}
       >
         <div className="bg-gray-50 h-auto">
-          <ProfileInfo logo={shop?.logo} />
+          <ProfileInfo logo={shop?.logo} {...shop} />
         </div>
       </ScrollArea>
       <div
@@ -48,7 +55,7 @@ const ShopMain = () => {
           isDesktopOrLaptop ? "w-full" : "w-full"
         } h-full flex gap-6 flex-wrap`}
       >
-        <Banner />
+        <Banner banner={shop?.banner} />
         <div className="w-full flex flex-wrap gap-6 justify-between items-center mx-auto">
           {Array.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).map((_, i) => (
             <ProductCard key={i} />
