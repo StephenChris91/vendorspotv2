@@ -9,21 +9,50 @@ import { useParams } from "next/navigation";
 import { getShopById } from "@/actions/createshop";
 import { shopType } from "@/app/types/types";
 import { shop } from "@prisma/client";
+import { SyncLoader } from "react-spinners";
+
+// Update the shop type to ensure logo and banner are always strings
+type ShopWithNonNullLogoAndBanner = shop & {
+  logo: string;
+  banner: string;
+};
 
 const ShopMain = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
+  const [shop, setShop] = useState<ShopWithNonNullLogoAndBanner | null>(null);
 
-  const [shop, setShop] = useState<shop | null>(null);
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
-  const isDesktopOrLaptop = useMediaQuery({ query: "(max-width: 1224px)" });
+  const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 1224px)" });
+
+  useEffect(() => {
+    const fetchShop = async () => {
+      if (id) {
+        try {
+          setLoading(true);
+          const shopData = await getShopById(id as string);
+          setShop(shopData as any);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching shop data:", error);
+          setLoading(false);
+        }
+      }
+    };
+    fetchShop();
+  }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>; // Display a loading indicator while fetching data
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <SyncLoader color="#36D7B7" />
+      </div>
+    );
   }
 
-  const defaultLogo = "/default-logo.png"; // Provide a path to a default logo image
-  const defaultBanner = "/default-banner.png"; // Provide a path to a default banner image
+  // Ensure logo and banner are always strings
+  const logo = shop?.logo ?? "/default-logo.png";
+  const banner = shop?.banner ?? "/default-banner.png";
 
   return (
     <div
@@ -41,8 +70,8 @@ const ShopMain = () => {
             shopname={shop?.shopname ?? ""}
             description={shop?.description ?? ""}
             address={shop?.address ?? ""}
-            logo={shop?.logo ?? ""}
-            banner={shop?.banner ?? ""}
+            logo={logo}
+            banner={banner}
             slug={shop?.slug ?? ""}
             bankName={shop?.bankName ?? ""}
             accountNo={shop?.accountNo ?? ""}
@@ -65,8 +94,8 @@ const ShopMain = () => {
           shopname={shop?.shopname ?? ""}
           description={shop?.description ?? ""}
           address={shop?.address ?? ""}
-          logo={shop?.logo ?? ""}
-          banner={shop?.banner ?? ""}
+          logo={logo}
+          banner={banner}
           slug={shop?.slug ?? ""}
           bankName={shop?.bankName ?? ""}
           accountNo={shop?.accountNo ?? ""}
@@ -79,7 +108,7 @@ const ShopMain = () => {
           accountName={shop?.accountName ?? ""}
         />
         <div className="w-full flex flex-wrap gap-6 justify-between items-center mx-auto">
-          {Array.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).map((_, i) => (
+          {Array.from({ length: 10 }).map((_, i) => (
             <ProductCard key={i} />
           ))}
         </div>

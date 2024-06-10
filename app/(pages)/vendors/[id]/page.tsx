@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import ShopMain from "./shop-main";
+import ShopMain from "../shop-main";
 
 const Shop = () => {
   return (
