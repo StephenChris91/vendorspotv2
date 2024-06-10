@@ -12,23 +12,21 @@ const VendorCard: React.FC<VendorCardProps> = ({ shop, onShopSelect }) => {
     <Link href={`/vendors/${shop.id}`} passHref>
       <div
         onClick={() => onShopSelect(shop)}
-        className="relative flex cursor-pointer items-center rounded border border-gray-200 p-5"
+        className="relative flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer transition-shadow hover:shadow-md"
       >
-        <div className="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gray-300">
+        <div className="flex items-center justify-center w-16 h-16 overflow-hidden bg-gray-300 rounded-full shrink-0">
           <img
             src={shop.logo as string}
             alt={shop.shopname as string}
-            className="w-20 h-20 rounded-full"
+            className="w-full h-full"
           />
         </div>
-        <div className="flex flex-col ltr:ml-4 rtl:mr-4">
-          <h2 className="mb-2 text-lg font-semibold">{shop.shopname}</h2>
-          <div className="flex flex-col justify-between mx-auto gap-2">
-            <p>{shop.state}</p>
-            <div className="flex justify-between items-center mx-auto gap-2">
-              <CiLocationOn className="text-3xl" />
-              <p>{shop.address}</p>
-            </div>
+        <div className="flex flex-col ml-4">
+          <h2 className="text-lg font-semibold mb-1">{shop.shopname}</h2>
+          <p className="text-sm text-gray-500 mb-1">{shop.state}</p>
+          <div className="flex items-center text-sm text-gray-500">
+            <CiLocationOn className="mr-1 text-xl" />
+            <p>{shop.address}</p>
           </div>
         </div>
       </div>

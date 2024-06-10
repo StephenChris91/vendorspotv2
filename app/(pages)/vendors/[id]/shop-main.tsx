@@ -12,28 +12,18 @@ import { shop } from "@prisma/client";
 
 const ShopMain = () => {
   const { id } = useParams();
-  const [shop, setShop] = useState<shop | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchShop = async () => {
-      if (id) {
-        const shopData = await getShopById(id as string);
-        setShop(shopData);
-        setLoading(false);
-      }
-    };
-    fetchShop();
-  }, [id]);
-
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-device-width: 1224px)",
-  });
+  const [shop, setShop] = useState<shop | null>(null);
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+  const isDesktopOrLaptop = useMediaQuery({ query: "(max-width: 1224px)" });
 
   if (loading) {
     return <div>Loading...</div>; // Display a loading indicator while fetching data
   }
+
+  const defaultLogo = "/default-logo.png"; // Provide a path to a default logo image
+  const defaultBanner = "/default-banner.png"; // Provide a path to a default banner image
 
   return (
     <div
@@ -47,7 +37,23 @@ const ShopMain = () => {
         } h-auto rounded-md`}
       >
         <div className="bg-gray-50 h-auto">
-          <ProfileInfo logo={shop?.logo} {...shop} />
+          <ProfileInfo
+            shopname={shop?.shopname ?? ""}
+            description={shop?.description ?? ""}
+            address={shop?.address ?? ""}
+            logo={shop?.logo ?? ""}
+            banner={shop?.banner ?? ""}
+            slug={shop?.slug ?? ""}
+            bankName={shop?.bankName ?? ""}
+            accountNo={shop?.accountNo ?? ""}
+            country={shop?.country ?? ""}
+            city={shop?.city ?? ""}
+            state={shop?.state ?? ""}
+            zip={shop?.zip ?? ""}
+            phoneNumber={shop?.phoneNumber ?? ""}
+            website={shop?.website ?? ""}
+            accountName={shop?.accountName ?? ""}
+          />
         </div>
       </ScrollArea>
       <div
@@ -55,7 +61,23 @@ const ShopMain = () => {
           isDesktopOrLaptop ? "w-full" : "w-full"
         } h-full flex gap-6 flex-wrap`}
       >
-        <Banner banner={shop?.banner} />
+        <Banner
+          shopname={shop?.shopname ?? ""}
+          description={shop?.description ?? ""}
+          address={shop?.address ?? ""}
+          logo={shop?.logo ?? ""}
+          banner={shop?.banner ?? ""}
+          slug={shop?.slug ?? ""}
+          bankName={shop?.bankName ?? ""}
+          accountNo={shop?.accountNo ?? ""}
+          country={shop?.country ?? ""}
+          city={shop?.city ?? ""}
+          state={shop?.state ?? ""}
+          zip={shop?.zip ?? ""}
+          phoneNumber={shop?.phoneNumber ?? ""}
+          website={shop?.website ?? ""}
+          accountName={shop?.accountName ?? ""}
+        />
         <div className="w-full flex flex-wrap gap-6 justify-between items-center mx-auto">
           {Array.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).map((_, i) => (
             <ProductCard key={i} />

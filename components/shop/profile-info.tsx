@@ -29,9 +29,16 @@ const ProfileInfo = ({
           <div className="flex items-center justify-start mb-4">
             <div className="flex items-center justify-center w-24 h-24 border border-gray-200 rounded-full shrink-0">
               <div className="relative w-[calc(100%-8px)] h-[calc(100%-8px)] overflow-hidden bg-gray-200 rounded-full">
-                <Image src={logo} alt="vendor=logo" width={100} height={100} />
+                <Image
+                  src={logo}
+                  alt="vendor-logo"
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-full"
+                />
               </div>
             </div>
+
             <div className="ltr:pl-2.5 rtl:pr-2.5">
               <div className="text-sm text-gray-400">Since 2023</div>
               <h3 className="mb-2 overflow-hidden text-lg font-semibold truncate text-heading">
@@ -78,7 +85,7 @@ const ProfileInfo = ({
           <span className="mb-1.5 text-lg font-semibold text-heading">
             Phone
           </span>
-          <p className="text-sm font-normal">{phoneNumber}</p>
+          <p className="text-sm font-normal blur-sm">{phoneNumber}</p>
         </div>
       </div>
     </div>

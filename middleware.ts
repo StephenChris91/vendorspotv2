@@ -1,45 +1,59 @@
-import NextAuth from 'next-auth'
+import NextAuth from 'next-auth';
 import authConfig from '@/auth.config';
+import { pathToRegexp } from 'path-to-regexp';
+import { NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 
 const { auth } = NextAuth(authConfig);
-import { DEFAULT_LOGIN_REDIRECT, publicRoutes, authRoutes, apiAuthPrefix, adminRoutes, DEFAULT_ADMIN_REDIRECT, DEFAULT_VENDOR_REDIRECT} from '@/routes'
 
+import { 
+  DEFAULT_LOGIN_REDIRECT, 
+  publicRoutes, 
+  authRoutes, 
+  apiAuthPrefix, 
+  adminRoutes, 
+  DEFAULT_ADMIN_REDIRECT 
+} from '@/routes';
 
+// Helper function to filter undefined values
+const filterRoutes = (routes: (string | undefined)[]): string[] => {
+  return routes.filter((route): route is string => typeof route === 'string');
+};
 
-import { NextResponse } from 'next/server';
-
-
+const matchRoute = (path: string, routes: string[]): boolean => {
+  return routes.some(route => {
+    const regex = pathToRegexp(route);
+    return regex.test(path);
+  });
+};
 
 export default auth((req, res) => {
-    const { nextUrl } = req;
-    const isLoggedIn = !!req.auth;
-    const isUser = req.auth?.user;
-    const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-    const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
-    const isAuthenticatedRoute = authRoutes.includes(nextUrl.pathname);
-    const isAdminRoutes = adminRoutes.includes(nextUrl.pathname);
+  const { nextUrl } = req;
+  const isLoggedIn = !!req.auth;
+  const isUser = req.auth?.user;
+  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+  const isPublicRoute = matchRoute(nextUrl.pathname, filterRoutes(publicRoutes));
+  const isAuthenticatedRoute = matchRoute(nextUrl.pathname, filterRoutes(authRoutes));
+  const isAdminRoute = matchRoute(nextUrl.pathname, filterRoutes(adminRoutes));
 
-    if (isApiAuthRoute) {
-        return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+  if (isApiAuthRoute) {
+    return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+  }
+
+  if (isAuthenticatedRoute) {
+    if (!isLoggedIn) {
+      return NextResponse.redirect(new URL(DEFAULT_ADMIN_REDIRECT, nextUrl));
     }
+  }
 
-    if (isAuthenticatedRoute) {
-        if (!isLoggedIn) {
-            return NextResponse.redirect(new URL(DEFAULT_ADMIN_REDIRECT, nextUrl));
-        }
+  if (!isLoggedIn && !isPublicRoute) {
+    return NextResponse.redirect(new URL('/', nextUrl));
+  }
 
-    }
-
-    if (!isLoggedIn && !isPublicRoute) {
-        return NextResponse.redirect(new URL('/', nextUrl));
-    }
-
-    // If no redirection or response is needed, return void
-    return;
+  // If no redirection or response is needed, return void
+  return;
 });
 
- 
-// See "Matching Paths" below to learn more
 export const config = {
-    matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)',],
+  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 };

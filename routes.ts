@@ -3,7 +3,7 @@
  * An array of routes accessible to all users who visit the site.
  * @type {string[]}
  */
-export const publicRoutes = ['/', '/auth/new-verification', '/auth/forgot-password', , '/auth/profile', ]
+export const publicRoutes: (string | undefined)[] = ['/', '/auth/new-verification', '/auth/forgot-password', '/auth/profile', '/vendors', '/vendors/:id', '/shop', '/track', '/compare', '/support'];
 
 
 /**
@@ -11,7 +11,7 @@ export const publicRoutes = ['/', '/auth/new-verification', '/auth/forgot-passwo
  * An array of routes accessible to only authenticated users who visit the site.
  * @type {string[]}
  */
-export const authRoutes = ['/auth/login', '/auth/signup', '/auth/profile', '/auth/new-password', '/auth/onboarding']
+export const authRoutes: (string | undefined)[] = ['/auth/login', '/auth/signup', '/auth/profile', '/auth/new-password', '/auth/onboarding']
 
 // '/auth/forgot-password', '/auth/reset-password', '/dashboard', '/auth/profile', '/settings', '/checkout'
 
@@ -21,7 +21,7 @@ export const authRoutes = ['/auth/login', '/auth/signup', '/auth/profile', '/aut
  * An array of routes accessible to only users with admin roles. This routes will redirect to the admin dashboard
  * @type {string[]}
  */
-export const adminRoutes = ['/dashboard', ]
+export const adminRoutes: (string | undefined)[] = ['/dashboard', ]
 
 
 /**
