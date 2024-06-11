@@ -2,7 +2,6 @@ import NextAuth from 'next-auth';
 import authConfig from '@/auth.config';
 import { pathToRegexp } from 'path-to-regexp';
 import { NextResponse } from 'next/server';
-import { NextRequest } from 'next/server';
 
 const { auth } = NextAuth(authConfig);
 

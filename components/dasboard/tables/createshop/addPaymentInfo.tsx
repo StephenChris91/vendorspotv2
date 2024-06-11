@@ -16,13 +16,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useCallback, useEffect } from "react";
 import { addPaymentSchema } from "@/app/schemas";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store/store";
-import debounce from "lodash.debounce";
-import { updateShopField } from "@/store/slices/shopSlice";
-import { useFormContext } from "@/app/context/FormContext/formcontext";
 
 interface AddPaymentInfoProps {
   accountName: string;

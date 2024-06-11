@@ -3,9 +3,6 @@
 import * as z from 'zod';
 import { hash } from 'bcrypt-ts'
 import { signupSchema } from '@/app/schemas';
-import { signIn } from '@/auth';
-import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
-import { AuthError } from 'next-auth';
 import { getUserByEmail } from '@/lib/data/user';
 import { db } from '@/prisma/prisma';
 import { generateVerificationToken } from '@/lib/data/tokens';
