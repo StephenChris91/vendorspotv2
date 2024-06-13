@@ -2,7 +2,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getUserByEmail } from '@/lib/data/user';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function POST(req: NextApiRequest, res: NextApiResponse) {
     try {
         const user = await getUserByEmail('stephenchriscodes@gmail.com');
         res.status(200).json({ user });
