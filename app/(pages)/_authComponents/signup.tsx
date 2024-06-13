@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,7 +19,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { signupSchema } from "@/app/schemas";
-import { db } from "@/prisma/prisma";
 import { useToast } from "@/components/ui/use-toast";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { useDispatch } from "react-redux";
@@ -39,15 +38,19 @@ export default function Signup({ open }: any) {
       email: "",
       password: "",
       confirmPassword: "",
-      role: isVendor ? "Vendor" : "Customer", // Use the isVendor state to set the role field
+      role: "Customer",
     },
   });
+
+  // Update form values when isVendor state changes
+  useEffect(() => {
+    form.setValue("role", isVendor ? "Vendor" : "Customer");
+  }, [isVendor, form]);
 
   const onSubmit = async (
     formData: Omit<z.infer<typeof signupSchema>, "data">
   ) => {
-    // const role = isVendor ? "Vendor" : "Customer";
-    const responseData = dispatch(signUpUser(formData) as any);
+    const responseData = await dispatch(signUpUser(formData) as any);
 
     if (responseData.error) {
       toast({
@@ -175,7 +178,7 @@ export default function Signup({ open }: any) {
             control={form.control}
             name="role"
             render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md  p-4 ">
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md p-4">
                 <FormControl>
                   <Checkbox
                     checked={isVendor}
@@ -190,7 +193,7 @@ export default function Signup({ open }: any) {
                   <FormLabel>Are you a seller?</FormLabel>
                   <FormDescription>
                     By selecting this option, you agree to become a seller on
-                    Vendorspot{" "}
+                    Vendorspot
                   </FormDescription>
                 </div>
               </FormItem>
@@ -204,15 +207,6 @@ export default function Signup({ open }: any) {
           </Button>
         </form>
       </Form>
-      {/* <p className="mt-3">
-        Already have an account?{" "}
-        <span
-          className="font-bold cursor-pointer"
-          onClick={() => router.push("/login")}
-        >
-          Login
-        </span>
-      </p> */}
     </div>
   );
 }
