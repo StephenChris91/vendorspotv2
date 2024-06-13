@@ -13,7 +13,7 @@ export async function uploadFileToS3(base64: string, fileName: string, userName:
     .toBuffer();
 
   const params = {
-    Bucket: process.env.AWS_BUCKET_NAME,
+    Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
     Key: `${userName}/${fileName}`, // User-specific folder
     Body: fileBuffer,
     ContentType: "image/jpg",
@@ -25,7 +25,7 @@ export async function uploadFileToS3(base64: string, fileName: string, userName:
     console.log("File uploaded successfully");
 
     // Construct the URL of the uploaded file
-    const url = `https://${params.Bucket}.s3.${process.env.AWS_BUCKET_REGION}.amazonaws.com/${params.Key}`;
+    const url = `https://${params.Bucket}.s3.${process.env.NEXT_PUBLIC_AWS_BUCKET_REGION}.amazonaws.com/${params.Key}`;
 
     return url;
   } catch (error) {

@@ -88,6 +88,7 @@ export const shopAddressSchema = z.object({
 
 
 export const shopSchema = z.object({
+  id: z.string().optional(),
   shopname: z.string(),
   description: z.string(),
   address: z.string(),

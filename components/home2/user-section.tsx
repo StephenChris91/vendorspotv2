@@ -5,13 +5,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { FaRegUser } from "react-icons/fa";
-import Login from "../auth/signin";
 import Link from "next/link";
 import { signOut } from "@/auth";
 import { currentUser } from "@/actions/user";
 import { useEffect, useState } from "react";
 import { User } from "next-auth";
 import { Logout } from "@/actions/logout";
+import Login from "@/app/(pages)/_authComponents/signin";
 
 const UserDropdown = () => {
   const [user, setUser] = useState<User>();

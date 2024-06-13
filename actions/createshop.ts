@@ -1,5 +1,6 @@
-// actions/createshop.ts
 'use server';
+import { shopType } from './../app/types/types.d';
+// actions/createshop.ts
 
 import { shopSchema } from "@/app/schemas";
 import { db } from "@/prisma/prisma";
@@ -7,7 +8,6 @@ import { z } from "zod";
 // import { getSessionContext } from '@blitzjs/server';
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
-
 export async function createShop(values: z.infer<typeof shopSchema>) {
     const session = await auth();
 
@@ -21,8 +21,8 @@ export async function createShop(values: z.infer<typeof shopSchema>) {
         return { error: 'Invalid credentials' };
     }
 
-    const { shopname, description, address, logo, banner, slug, bankName, accountNo, country, city, state, zip, phoneNumber, website, accountName } = validInput.data;
-    const existingShop = await getShopBySlug(slug);
+    const { id, shopname, description, address, logo, banner, slug, bankName, accountNo, country, city, state, zip, phoneNumber, website, accountName } = validInput.data;
+    const existingShop = await getShopById(id as string)
 
     if (existingShop) {
         return { error: 'This shop already exists!' };

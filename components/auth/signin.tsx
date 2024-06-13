@@ -1,7 +1,6 @@
 "use client";
 
 import { FiAlertCircle } from "react-icons/fi";
-import { SyncLoader } from "react-spinners";
 import { startTransition, useState } from "react";
 import { useDispatch } from "react-redux";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -54,28 +53,23 @@ export default function Login() {
       login(values).then((res: any) => {
         if (res?.error) {
           setErrorMsg(res?.error || "");
+          toast({
+            variant: "destructive",
+            title: "Error 😞",
+            description: res?.error,
+          });
         } else {
           setSuccess(res?.success || "");
+          toast({
+            variant: "default",
+            title: "Signed in! 😄",
+            description: "",
+            duration: 9000,
+          });
+          router.push("/");
         }
       });
     });
-
-    if (errorMsg) {
-      toast({
-        variant: "destructive",
-        title: "Error 😞",
-        description: errorMsg,
-      });
-    } else {
-      toast({
-        variant: "default",
-        title: "Signed in! 😄",
-        description: "",
-        duration: 9000,
-      });
-      // router.refresh();
-      // router.push("/");
-    }
   }
 
   return (

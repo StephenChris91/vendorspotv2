@@ -25,6 +25,7 @@ export default  {
                     const { email, password } = validInputFields.data;
 
                     const user = await getUserByEmail(email);
+                    console.log(user);
 
                     if(!user || !user?.password) return null;
 
