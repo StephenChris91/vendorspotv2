@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
       .toBuffer();
 
     const params = {
-      Bucket: process.env.AWS_BUCKET_NAME!,
+      Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME!,
       Key: `${session?.user.firstname}/banner/${fileName}`,
       Body: fileBuffer,
       ContentType: 'image/jpg',

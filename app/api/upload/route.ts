@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
       .toBuffer();
 
     const params = {
-      Bucket: process.env.AWS_BUCKET_NAME!,
+      Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME!,
       Key: `${session?.user.firstname}/${fileName}`,
       Body: fileBuffer,
       ContentType: 'image/jpg',
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     const command = new PutObjectCommand(params);
     await s3Client.send(command);
 
-    const url = `https://${params.Bucket}.s3.${process.env.AWS_BUCKET_REGION}.amazonaws.com/${params.Key}`;
+    const url = `https://${params.Bucket}.s3.${process.env.NEXT_PUBLIC_AWS_BUCKET_REGION}.amazonaws.com/${params.Key}`;
     return NextResponse.json({ url });
   } catch (error) {
     console.error('Error uploading file:', error);
