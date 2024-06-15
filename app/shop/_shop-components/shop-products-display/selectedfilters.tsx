@@ -15,7 +15,7 @@ const SelectedFilters: React.FC<SelectedFiltersProps> = ({
 }) => {
   return (
     <div className="mb-4">
-      <div className="flex justify-between items-center bg-gray-200 p-2">
+      <div className="flex justify-between items-center bg-blue-200 p-2">
         <div>
           <span className="font-bold">Active Filters:</span>
           {Object.entries(filters).map(([key, values]) =>

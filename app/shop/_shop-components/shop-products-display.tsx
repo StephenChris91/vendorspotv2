@@ -5,6 +5,14 @@ import SearchInput from "./shop-products-display/search-input";
 import SortDropdown from "./shop-products-display/sort-dropdown";
 import SelectedFilters from "./shop-products-display/selectedfilters";
 import ProductCard from "./shop-products-display/shop-product-card";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+} from "@/components/ui/pagination"; // Adjust the import path as per your project structure
 
 const ShopProductsDisplay: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -16,7 +24,9 @@ const ShopProductsDisplay: React.FC = () => {
     brands: [],
     tags: [],
   });
-  const [totalItems, setTotalItems] = useState(65867); // Example value, replace with actual count
+  const [totalItems, setTotalItems] = useState(50); // Example value, replace with actual count
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 20; // Number of products to display per page
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -44,15 +54,64 @@ const ShopProductsDisplay: React.FC = () => {
   };
 
   // Mock product data (replace with actual data fetching if needed)
-  const products = Array.from({ length: 20 }, (_, index) => ({
-    id: index + 1,
-    imageUrl: `https://picsum.photos/500/300?random=1`, // change this image part to actual product image url
-    rating: Math.floor(Math.random() * 5) + 1, // Random rating between 1 to 5
-    productName: `Product ${index + 1}`,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    price: (Math.random() * 1000).toFixed(2), // Random price
-    onSale: index % 3 === 0, // Example condition for on sale
-  }));
+  const generateMockProducts = () => {
+    return Array.from({ length: totalItems }, (_, index) => ({
+      id: index + 1,
+      imageUrl: `https://picsum.photos/500/300?random=${index + 1}`,
+      rating: Math.floor(Math.random() * 5) + 1,
+      productName: `Product ${index + 1}`,
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      price: (Math.random() * 1000).toFixed(2),
+      onSale: index % 3 === 0,
+    }));
+  };
+
+  const getTotalPages = () => {
+    return Math.ceil(totalItems / productsPerPage);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const getPaginatedProducts = () => {
+    const startIndex = (currentPage - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+    const allProducts = generateMockProducts();
+    return allProducts.slice(startIndex, endIndex);
+  };
+
+  const renderPagination = () => {
+    const totalPages = getTotalPages();
+    if (totalPages <= 1) return null;
+
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(
+        <PaginationItem key={i}>
+          <PaginationLink href="#" onClick={() => handlePageChange(i)}>
+            {i}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    return (
+      <Pagination>
+        <PaginationContent>
+          <PaginationPrevious
+            // disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+          />
+          {pageNumbers}
+          <PaginationNext
+            // disabled={currentPage === totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+          />
+        </PaginationContent>
+      </Pagination>
+    );
+  };
 
   return (
     <div className="p-4">
@@ -68,7 +127,7 @@ const ShopProductsDisplay: React.FC = () => {
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {/* Render product items here */}
-        {products.map((product) => (
+        {getPaginatedProducts().map((product) => (
           <ProductCard
             key={product.id}
             imageUrl={product.imageUrl}
@@ -80,6 +139,8 @@ const ShopProductsDisplay: React.FC = () => {
           />
         ))}
       </div>
+      {/* Pagination */}
+      {renderPagination()}
     </div>
   );
 };
