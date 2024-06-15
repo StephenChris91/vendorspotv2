@@ -1,6 +1,9 @@
-const Separator = ({ children }: { children: React.ReactNode }) => {
+import React from "react";
+
+const Separator: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <div className="flex border-b-2 border-gray-400 border-dashed pb-5 md:pb-7 mb-5">
+    <div className="my-4">
+      <div className="border-b border-gray-300 my-4" />
       {children}
     </div>
   );
