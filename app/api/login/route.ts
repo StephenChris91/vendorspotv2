@@ -1,7 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
-import { db } from '@/prisma/prisma';
-import { loginSchema } from '@/app/schemas';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { getUserByEmail } from '@/lib/data/user';
@@ -10,12 +7,6 @@ import { sendVerificationEmail } from '@/lib/mail';
 
 export async function POST(request: NextRequest) {
   try {
-    // const body = await request.json();
-    // const validInput = loginSchema.safeParse(body);
-
-    // if (!validInput.success) {
-    //   return NextResponse.json({ error: 'Invalid Credentials' }, { status: 400 });
-    // }
 
     const { email, password } = await request.json();
 

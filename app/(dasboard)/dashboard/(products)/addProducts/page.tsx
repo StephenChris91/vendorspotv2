@@ -1,432 +1,3 @@
-// "use client";
-
-// import React, { useState, useCallback } from "react";
-// import { useRouter } from "next/navigation";
-// import { useDropzone } from "react-dropzone";
-// import { ProductType } from "@/app/types/types";
-// import { createProduct } from "@/actions/creatProducts";
-// import { FaTimes, FaSyncAlt } from "react-icons/fa";
-// import { useCurrentUser } from "@/lib/use-session-client";
-
-// const ProductForm: React.FC = () => {
-//   const router = useRouter();
-//   const user = useCurrentUser();
-
-//   const initialFormData: ProductType = {
-//     name: "",
-//     slug: "",
-//     description: "",
-//     price: 0,
-//     sale_price: 0,
-//     sku: 0,
-//     quantity: 0,
-//     in_stock: true,
-//     is_taxable: false,
-//     height: 0,
-//     width: 0,
-//     image: "",
-//     video: "",
-//     gallery: [],
-//     author_id: "",
-//     manufacturer_id: "",
-//     is_digital: false,
-//     is_external: false,
-//     external_product_url: "",
-//     external_product_button_text: "",
-//     ratings: 0,
-//     total_reviews: 0,
-//     rating_count: 0,
-//     my_review: "",
-//     in_wishlist: false,
-//     categories: [],
-//     shop_id: "",
-//     status: "Draft",
-//     product_type: "Simple",
-//     language: "",
-//   };
-
-//   const [formData, setFormData] = useState<ProductType>(initialFormData);
-//   const [galleryFiles, setGalleryFiles] = useState<string[]>([]);
-
-//   const handleChange = (
-//     e: React.ChangeEvent<
-//       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-//     >
-//   ) => {
-//     const { name, value, type } = e.target;
-
-//     if (type === "checkbox") {
-//       setFormData({
-//         ...formData,
-//         [name]: (e.target as HTMLInputElement).checked,
-//       });
-//     } else if (type === "number") {
-//       setFormData({
-//         ...formData,
-//         [name]: Math.max(0, Number(value)), // Ensure no negative numbers
-//       });
-//     } else {
-//       setFormData({
-//         ...formData,
-//         [name]: value,
-//       });
-//     }
-//   };
-
-//   const generateSKU = () => {
-//     const newSKU = Math.floor(Math.random() * 1000000000); // Generate a random number as SKU
-//     setFormData({
-//       ...formData,
-//       sku: newSKU,
-//     });
-//   };
-
-//   const handleImageUpload = useCallback(
-//     (acceptedFiles: File[]) => {
-//       const file = acceptedFiles[0];
-//       const reader = new FileReader();
-
-//       reader.onloadend = async () => {
-//         const base64 = reader.result as string;
-//         try {
-//           const response = await fetch("/api/upload-product-image", {
-//             method: "POST",
-//             headers: {
-//               "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({
-//               base64: base64.split(",")[1],
-//               fileName: file.name,
-//               userName: user?.firstname,
-//             }),
-//           });
-
-//           const result = await response.json();
-//           if (response.ok) {
-//             setFormData({
-//               ...formData,
-//               image: result?.url,
-//             });
-//           } else {
-//             console.error("Error uploading file:", result.message);
-//           }
-//         } catch (error) {
-//           console.error("Error uploading file:", error);
-//         }
-//       };
-
-//       if (file) {
-//         reader.readAsDataURL(file);
-//       }
-//     },
-//     [formData]
-//   );
-
-//   const handleGalleryUpload = useCallback((acceptedFiles: File[]) => {
-//     acceptedFiles.forEach((file) => {
-//       const reader = new FileReader();
-
-//       reader.onloadend = () => {
-//         setGalleryFiles((prevFiles) => [...prevFiles, reader.result as string]);
-//       };
-
-//       reader.readAsDataURL(file);
-//     });
-//   }, []);
-
-//   const handleVideoUpload = async (acceptedFiles: File[]) => {
-//     const file = acceptedFiles[0];
-
-//     try {
-//       const response = await fetch("/api/generateUrl", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({
-//           fileName: file.name,
-//           fileType: file.type,
-//         }),
-//       });
-
-//       const result = await response.json();
-//       if (response.ok) {
-//         const videoResponse = await fetch(result.presignedUrl, {
-//           method: "PUT",
-//           body: file,
-//           headers: {
-//             "Content-Type": file.type,
-//           },
-//         });
-
-//         if (videoResponse.ok) {
-//           setFormData({
-//             ...formData,
-//             video: result.url,
-//           });
-//         } else {
-//           console.error("Error uploading video:", await videoResponse.text());
-//         }
-//       } else {
-//         console.error("Error generating presigned URL:", result.message);
-//       }
-//     } catch (error) {
-//       console.error("Error generating presigned URL:", error);
-//     }
-//   };
-
-//   const { getRootProps: getImageRootProps, getInputProps: getImageInputProps } =
-//     useDropzone({
-//       onDrop: handleImageUpload,
-//       accept: { "image/*": [] },
-//       multiple: false,
-//     });
-
-//   const {
-//     getRootProps: getGalleryRootProps,
-//     getInputProps: getGalleryInputProps,
-//   } = useDropzone({
-//     onDrop: handleGalleryUpload,
-//     accept: { "image/*": [] },
-//     multiple: true,
-//   });
-
-//   const { getRootProps: getVideoRootProps, getInputProps: getVideoInputProps } =
-//     useDropzone({
-//       onDrop: handleVideoUpload,
-//       accept: { "video/*": [] },
-//       multiple: false,
-//     });
-
-//   const handleSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault();
-
-//     try {
-//       // Perform the form submission logic here
-//       const response = await createProduct(formData);
-//       if (response.message === "success") {
-//         console.log("Product created successfully");
-//         router.push("/products");
-//       } else {
-//         console.error("Error creating product:", response.message);
-//       }
-//     } catch (error) {
-//       console.error("Error creating product:", error);
-//     }
-//   };
-
-//   return (
-//     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-32 pb-44">
-//       <form onSubmit={handleSubmit}>
-//         <div className="mb-4">
-//           <label
-//             htmlFor="name"
-//             className="block text-gray-700 text-sm font-bold mb-2"
-//           >
-//             Product Name
-//           </label>
-//           <input
-//             type="text"
-//             id="name"
-//             name="name"
-//             value={formData.name}
-//             onChange={handleChange}
-//             required
-//             className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-//           />
-//         </div>
-//         <div className="mb-4">
-//           <label
-//             htmlFor="slug"
-//             className="block text-gray-700 text-sm font-bold mb-2"
-//           >
-//             Slug
-//           </label>
-//           <input
-//             type="text"
-//             id="slug"
-//             name="slug"
-//             value={formData.slug}
-//             onChange={handleChange}
-//             required
-//             className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-//           />
-//         </div>
-//         <div className="mb-4">
-//           <label
-//             htmlFor="description"
-//             className="block text-gray-700 text-sm font-bold mb-2"
-//           >
-//             Description
-//           </label>
-//           <textarea
-//             id="description"
-//             name="description"
-//             value={formData.description}
-//             onChange={handleChange}
-//             required
-//             className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-//           />
-//         </div>
-//         <div className="mb-4">
-//           <label
-//             htmlFor="price"
-//             className="block text-gray-700 text-sm font-bold mb-2"
-//           >
-//             Price
-//           </label>
-//           <input
-//             type="number"
-//             id="price"
-//             name="price"
-//             value={formData.price}
-//             onChange={handleChange}
-//             required
-//             className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-//           />
-//         </div>
-//         <div className="mb-4">
-//           <label
-//             htmlFor="sale_price"
-//             className="block text-gray-700 text-sm font-bold mb-2"
-//           >
-//             Sale Price
-//           </label>
-//           <input
-//             type="number"
-//             id="sale_price"
-//             name="sale_price"
-//             value={formData.sale_price}
-//             onChange={handleChange}
-//             className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-//           />
-//         </div>
-//         <div className="mb-4">
-//           <label
-//             htmlFor="quantity"
-//             className="block text-gray-700 text-sm font-bold mb-2"
-//           >
-//             Quantity
-//           </label>
-//           <input
-//             type="number"
-//             id="quantity"
-//             name="quantity"
-//             value={formData.quantity}
-//             onChange={handleChange}
-//             required
-//             className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-//           />
-//         </div>
-//         <div className="mb-4">
-//           <label
-//             htmlFor="sku"
-//             className="block text-gray-700 text-sm font-bold mb-2"
-//           >
-//             SKU
-//           </label>
-//           <div className="flex">
-//             <input
-//               type="number"
-//               id="sku"
-//               name="sku"
-//               value={formData.sku}
-//               onChange={handleChange}
-//               required
-//               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-//             />
-//             <button
-//               type="button"
-//               onClick={generateSKU}
-//               className="ml-2 px-4 py-2 bg-indigo-500 text-white text-sm font-medium rounded-md"
-//             >
-//               <FaSyncAlt />
-//             </button>
-//           </div>
-//         </div>
-//         <div className="mb-4">
-//           <label
-//             htmlFor="image"
-//             className="block text-gray-700 text-sm font-bold mb-2"
-//           >
-//             Product Image
-//           </label>
-//           <div {...getImageRootProps()} className="border-dashed border-2 p-4">
-//             <input {...getImageInputProps()} />
-//             <p>Drag &apos;n&apos; drop an image here, or click to select one</p>
-//           </div>
-//           {formData.image && (
-//             <div className="mt-2">
-//               <img src={formData.image} alt="Product" className="max-h-48" />
-//             </div>
-//           )}
-//         </div>
-//         <div className="mb-4">
-//           <label
-//             htmlFor="gallery"
-//             className="block text-gray-700 text-sm font-bold mb-2"
-//           >
-//             Gallery
-//           </label>
-//           <div
-//             {...getGalleryRootProps()}
-//             className="border-dashed border-2 p-4"
-//           >
-//             <input {...getGalleryInputProps()} />
-//             <p>Drag &apos;n&apos; drop images here, or click to select</p>
-//           </div>
-//           {galleryFiles.length > 0 && (
-//             <div className="mt-2">
-//               {galleryFiles.map((file, index) => (
-//                 <img
-//                   key={index}
-//                   src={file}
-//                   alt={`Gallery ${index}`}
-//                   className="max-h-24 mr-2"
-//                 />
-//               ))}
-//             </div>
-//           )}
-//         </div>
-//         <div className="mb-4">
-//           <label
-//             htmlFor="video"
-//             className="block text-gray-700 text-sm font-bold mb-2"
-//           >
-//             Product Video
-//           </label>
-//           <div {...getVideoRootProps()} className="border-dashed border-2 p-4">
-//             <input {...getVideoInputProps()} />
-//             <p>Drag &apos;n&apos; drop a video here, or click to select one</p>
-//           </div>
-//           {formData.video && (
-//             <div className="mt-2">
-//               <video src={formData.video} controls className="max-h-48" />
-//             </div>
-//           )}
-//         </div>
-//         <div className="flex items-center justify-between">
-//           <button
-//             type="submit"
-//             className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-//           >
-//             Save
-//           </button>
-//           <button
-//             type="button"
-//             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-//             onClick={() => router.push("/products")}
-//           >
-//             <FaTimes className="inline" /> Cancel
-//           </button>
-//         </div>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default ProductForm;
-
 "use client";
 
 import React, { useState, useCallback } from "react";
@@ -593,22 +164,65 @@ const ProductForm: React.FC = () => {
   );
 
   const handleVideoUpload = useCallback(
-    (acceptedFiles: File[]) => {
+    async (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        setFormData({
-          ...formData,
-          video: reader.result as string,
-        });
-      };
+      console.log(file);
 
       if (file) {
-        reader.readAsDataURL(file);
+        try {
+          // Fetch the presigned URL from the server
+          const response = await fetch("/api/upload-product-video", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              fileName: file.name,
+              fileType: file.type,
+              userName: user?.firstname,
+            }),
+          });
+
+          const data = await response.json();
+
+          console.log("Server response:", data);
+
+          if (response.ok) {
+            const { presignedUrl, url } = data;
+
+            // Upload the file to S3 using the presigned URL
+            const uploadResponse = await fetch(presignedUrl, {
+              method: "PUT",
+              headers: {
+                "Content-Type": file.type,
+              },
+              body: file,
+            });
+
+            if (uploadResponse.ok) {
+              // Set the form data with the uploaded video URL
+              setFormData((prevData) => ({
+                ...prevData,
+                video: url,
+              }));
+            } else {
+              console.error(
+                "Error uploading video:",
+                await uploadResponse.text()
+              );
+            }
+          } else {
+            console.error(
+              "Error generating presigned URL:",
+              data.message || response.statusText
+            );
+          }
+        } catch (error) {
+          console.error("Error uploading video:", error);
+        }
       }
     },
-    [formData]
+    [setFormData]
   );
 
   const { getRootProps: getImageRootProps, getInputProps: getImageInputProps } =
@@ -634,24 +248,22 @@ const ProductForm: React.FC = () => {
       multiple: false,
     });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // try {
-    //   const updatedFormData = {
-    //     ...formData,
-    //     gallery: galleryFiles,
-    //   };
-    //   const response = await createProduct(updatedFormData);
-    //   if (response.status === "success") {
-    //     router.push("/products");
-    //   } else {
-    //     console.error(response.message);
-    //   }
-    // } catch (error) {
-    //   console.error("Failed to create product:", error);
-    // }
+    console.log("Form data:", formData);
 
-    console.log("Product: " + formData);
+    // Append gallery files URLs to formData
+    const updatedFormData = { ...formData, gallery: galleryFiles };
+
+    const response = await createProduct(updatedFormData);
+    console.log("Response:", response);
+
+    if (response.status === "success") {
+      console.log("Product created successfully");
+      router.push(`/`);
+    } else {
+      console.error("Error creating product:", response.message);
+    }
   };
 
   const removeGalleryImage = (index: number) => {

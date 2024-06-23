@@ -7,23 +7,24 @@ import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { getUserById } from "@/lib/data/user";
 import { ProductType } from "@/app/types/types";
+
 export async function createProduct(values: ProductType) {
   const session = await auth();
 
   if (!session?.user) {
-    return { error: 'User not authenticated' };
+    return { status: 'error', message: 'User not authenticated' };
   }
 
-  const user = await getUserById(session.user.id as string)
+  const user = await getUserById(session.user.id as string);
 
   if (!user || (user.role !== 'Vendor' && user.role !== 'Admin')) {
-    return { error: 'User not authorized to create a product' };
+    return { status: 'error', message: 'User not authorized to create a product' };
   }
 
   const validInput = productSchema.safeParse(values);
 
   if (!validInput.success) {
-    return { error: 'Invalid product data' };
+    return { status: 'error', message: 'Invalid product data' };
   }
 
   const {
