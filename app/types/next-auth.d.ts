@@ -68,6 +68,7 @@ declare module "next-auth" {
       role: userRole | null,
       name: string | null,
       emailVerified: Date | null,
+      shopId: string | null
     } & DefaultSession["token"]
   }
 }

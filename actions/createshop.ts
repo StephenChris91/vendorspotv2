@@ -50,6 +50,9 @@ export async function createShop(values: z.infer<typeof shopSchema>) {
         const shop = await db.shop.create({
             data: {
                 ...data,
+                user: {
+                    connect: { id: session.user.id },
+                },
             },
         });
 

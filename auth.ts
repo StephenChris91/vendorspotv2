@@ -68,6 +68,7 @@ export const {
                 session.user.isOnboardedVendor = token.isOnboardedVendor as boolean;
             }
             
+            
             return session
         },
         async jwt({ token }) {

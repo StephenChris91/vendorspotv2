@@ -6,13 +6,11 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Dashboard() {
   return (
-    <ScrollArea className="mt-20">
-      <div className="p-10">
-        <Summary />
-        <OrderStatus />
-        <OrderProcessingTable />
-        <OrderHistory />
-      </div>
-    </ScrollArea>
+    <div className="p-10 h-auto mt-32 pb-32">
+      <Summary />
+      <OrderStatus />
+      <OrderProcessingTable />
+      <OrderHistory />
+    </div>
   );
 }

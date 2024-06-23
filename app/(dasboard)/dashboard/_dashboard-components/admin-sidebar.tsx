@@ -161,6 +161,12 @@ const AdminSideBar = () => {
               >
                 All Low & Out of Stock Products
               </Link>
+              <Link
+                href="/dashboard/addProducts"
+                className="ml-5 hover:text-blue-600 text-gray-800"
+              >
+                Add Products
+              </Link>
               {/* Add more links as needed */}
             </div>
           )}

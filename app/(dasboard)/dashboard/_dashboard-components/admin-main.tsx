@@ -10,11 +10,11 @@ type AdminMainSectionProps = {
 
 const AdminMainSection = ({ children }: AdminMainSectionProps) => {
   return (
-    <ScrollArea className="w-full h-screen">
+    <div className="w-full h-auto">
       <AdminTopbar />
       {children}
       <Footer />
-    </ScrollArea>
+    </div>
   );
 };
 

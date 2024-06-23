@@ -1,10 +1,11 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+"use server";
+import { s3Client } from "@/lib/utils";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 import sharp from "sharp";
-import { s3Client } from "./utils";
 
 
 
-export async function uploadFile(base64: string, fileName: string, userName: string): Promise<string> {
+export async function uploadProductToS3(base64: string, fileName: string, userName: string, ) {
   const buffer = Buffer.from(base64, "base64");
   const fileBuffer = await sharp(buffer)
     .jpeg({ quality: 50 })
@@ -13,7 +14,7 @@ export async function uploadFile(base64: string, fileName: string, userName: str
 
   const params = {
     Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
-    Key: `${userName}/${fileName}`, // Consistent key structure
+    Key: `${userName}/shop/products/${fileName}`, // User-specific folder
     Body: fileBuffer,
     ContentType: "image/jpg",
   };

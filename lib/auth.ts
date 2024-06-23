@@ -15,3 +15,4 @@ export const useCurrentRole = async () => {
 
     return user?.role
 }
+
