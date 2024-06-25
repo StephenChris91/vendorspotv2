@@ -241,89 +241,30 @@ export type shopType = {
     accountName: string;
   };
 
-  export type ProductType = {
-    id?: string;
+  export interface ProductType {
     name: string;
-    slug?: string;
-    description?: string;
-    type_id?: number;
+    slug: string;
+    description: string;
     price: number;
     sale_price?: number;
-    language?: string;
     sku?: number;
     quantity: number;
     in_stock: boolean;
     is_taxable: boolean;
-    shipping_class_id?: number;
-    status: "Draft" | "Published" | "Suspended" | "OutOfStock";
-    product_type: "Simple" | "Variable";
-    height?: number;
-    width?: number;
-    image?: string;
-    image_id?: number;
+    image?: string; // Optional now
     video?: string;
     gallery?: string[];
-    gallery_id?: number;
-    deleted_at?: Date;
-    created_at?: Date;
-    updated_at?: Date;
-    author_id?: string;
-    manufacturer_id?: string;
-    is_digital?: boolean;
-    is_external?: boolean;
-    external_product_url?: string;
-    external_product_button_text?: string;
+    // author_id?: string;
     ratings?: number;
     total_reviews?: number;
-    rating_count?: number;
     my_review?: string;
     in_wishlist?: boolean;
     categories?: string[];
-    shop_id?: string;
-    type?: string;
-    images?: {
-      id?: string;
-      original: string;
-      thumbnail: string;
-      createdAt?: Date;
-      updatedAt?: Date;
-      productId?: string;
-      galleryId?: string;
-    }[];
-    Image?: {
-      id?: string;
-      original: string;
-      thumbnail: string;
-      createdAt?: Date;
-      updatedAt?: Date;
-      productId?: string;
-      galleryId?: string;
-    };
-    Gallery?: {
-      id?: string;
-      createdAt?: Date;
-      updatedAt?: Date;
-      images?: {
-        id?: string;
-        original: string;
-        thumbnail: string;
-        createdAt?: Date;
-        updatedAt?: Date;
-        productId?: string;
-        galleryId?: string;
-      }[];
-      productId?: string;
-      image?: {
-        id?: string;
-        original: string;
-        thumbnail: string;
-        createdAt?: Date;
-        updatedAt?: Date;
-        productId?: string;
-        galleryId?: string;
-      };
-    };
-  };
+    // shop_id: string;
+    status: 'Draft' | 'Published' | 'Suspended' | 'OutOfStock';
+    product_type: 'Simple' | 'Variable';
+  }
+  
   
   
   

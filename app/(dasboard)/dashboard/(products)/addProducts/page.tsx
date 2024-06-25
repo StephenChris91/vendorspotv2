@@ -1,13 +1,19 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import { z } from "zod";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDropzone } from "react-dropzone";
 import { ProductType } from "@/app/types/types";
 import { createProduct } from "@/actions/creatProducts";
 import { FaTimes, FaSyncAlt } from "react-icons/fa";
-import { v4 as uuidv4 } from "uuid";
 import { useCurrentUser } from "@/lib/use-session-client";
+import { handleImageUpload } from "@/lib/data/handleImageUpload";
+import { handleGalleryUpload } from "@/lib/data/handleGalleryUpload";
+import { handleChange } from "@/lib/data/handleChange";
+import { generateSKU } from "@/lib/data/generateSKU";
+import { handleVideoUpload } from "@/lib/data/handleVideoUpload";
+import { productSchema } from "@/app/schemas";
 
 const ProductForm: React.FC = () => {
   const router = useRouter();
@@ -22,212 +28,58 @@ const ProductForm: React.FC = () => {
     quantity: 0,
     in_stock: true,
     is_taxable: false,
-    height: 0,
-    width: 0,
     image: "",
     video: "",
     gallery: [],
-    author_id: "",
-    manufacturer_id: "",
-    is_digital: false,
-    is_external: false,
-    external_product_url: "",
-    external_product_button_text: "",
+    // author_id: "",
     ratings: 0,
     total_reviews: 0,
-    rating_count: 0,
     my_review: "",
     in_wishlist: false,
     categories: [],
-    shop_id: "",
+    // shop_id: "",
     status: "Draft",
     product_type: "Simple",
-    language: "",
+  };
+
+  // For number inputs
+  const handleNumberInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: value ? parseFloat(value) : 0,
+    });
+  };
+
+  // For UUID inputs
+  const handleUUIDInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   const [formData, setFormData] = useState<ProductType>(initialFormData);
   const [galleryFiles, setGalleryFiles] = useState<string[]>([]);
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value, type } = e.target;
+  const handleInputChange = handleChange(formData, setFormData);
 
-    if (type === "checkbox") {
-      setFormData({
-        ...formData,
-        [name]: (e.target as HTMLInputElement).checked,
-      });
-    } else if (type === "number") {
-      setFormData({
-        ...formData,
-        [name]: Math.max(0, Number(value)), // Ensure no negative numbers
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
-  };
+  const handleGenerateSKU = () => generateSKU(formData, setFormData);
 
-  const generateSKU = () => {
-    const newSKU = Math.floor(Math.random() * 1000000000); // Generate a random number as SKU
-    setFormData({
-      ...formData,
-      sku: newSKU,
-    });
-  };
-
-  const handleImageUpload = useCallback(
-    (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
-      const reader = new FileReader();
-
-      reader.onloadend = async () => {
-        const base64 = reader.result as string;
-        try {
-          const response = await fetch("/api/upload-product-image", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              base64: base64.split(",")[1],
-              fileName: file.name,
-              userName: user?.firstname,
-            }),
-          });
-
-          const result = await response.json();
-          if (response.ok) {
-            setFormData({
-              ...formData,
-              image: result?.url,
-            });
-          } else {
-            console.error("Error uploading file:", result.message);
-          }
-        } catch (error) {
-          console.error("Error uploading file:", error);
-        }
-      };
-
-      if (file) {
-        reader.readAsDataURL(file);
-      }
-    },
-    [formData]
+  const imageUploadHandler = handleImageUpload(formData, setFormData);
+  const galleryUploadHandler = handleGalleryUpload(
+    formData,
+    setFormData,
+    setGalleryFiles
   );
-
-  const handleGalleryUpload = useCallback(
-    (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
-      const reader = new FileReader();
-
-      reader.onloadend = async () => {
-        const base64 = reader.result as string;
-        try {
-          const response = await fetch("/api/upload-product-gallery", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              base64: base64.split(",")[1],
-              fileName: file.name,
-              userName: user?.firstname,
-            }),
-          });
-
-          const result = await response.json();
-          if (response.ok) {
-            setGalleryFiles((prevFiles) => [
-              ...prevFiles,
-              reader.result as string,
-            ]);
-          } else {
-            console.error("Error uploading file:", result.message);
-          }
-        } catch (error) {
-          console.error("Error uploading file:", error);
-        }
-      };
-
-      if (file) {
-        reader.readAsDataURL(file);
-      }
-    },
-    [formData]
-  );
-
-  const handleVideoUpload = useCallback(
-    async (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
-      console.log(file);
-
-      if (file) {
-        try {
-          // Fetch the presigned URL from the server
-          const response = await fetch("/api/upload-product-video", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              fileName: file.name,
-              fileType: file.type,
-              userName: user?.firstname,
-            }),
-          });
-
-          const data = await response.json();
-
-          console.log("Server response:", data);
-
-          if (response.ok) {
-            const { presignedUrl, url } = data;
-
-            // Upload the file to S3 using the presigned URL
-            const uploadResponse = await fetch(presignedUrl, {
-              method: "PUT",
-              headers: {
-                "Content-Type": file.type,
-              },
-              body: file,
-            });
-
-            if (uploadResponse.ok) {
-              // Set the form data with the uploaded video URL
-              setFormData((prevData) => ({
-                ...prevData,
-                video: url,
-              }));
-            } else {
-              console.error(
-                "Error uploading video:",
-                await uploadResponse.text()
-              );
-            }
-          } else {
-            console.error(
-              "Error generating presigned URL:",
-              data.message || response.statusText
-            );
-          }
-        } catch (error) {
-          console.error("Error uploading video:", error);
-        }
-      }
-    },
-    [setFormData]
-  );
+  const videoUploadHandler = handleVideoUpload(formData, setFormData);
 
   const { getRootProps: getImageRootProps, getInputProps: getImageInputProps } =
     useDropzone({
-      onDrop: handleImageUpload,
+      onDrop: imageUploadHandler,
       accept: { "image/*": [] },
       multiple: false,
     });
@@ -236,38 +88,47 @@ const ProductForm: React.FC = () => {
     getRootProps: getGalleryRootProps,
     getInputProps: getGalleryInputProps,
   } = useDropzone({
-    onDrop: handleGalleryUpload,
+    onDrop: galleryUploadHandler,
     accept: { "image/*": [] },
     multiple: true,
   });
 
   const { getRootProps: getVideoRootProps, getInputProps: getVideoInputProps } =
     useDropzone({
-      onDrop: handleVideoUpload,
+      onDrop: videoUploadHandler,
       accept: { "video/*": [] },
       multiple: false,
     });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("Form data:", formData);
 
-    // Append gallery files URLs to formData
-    const updatedFormData = { ...formData, gallery: galleryFiles };
+    const response = await fetch("/api/create-product", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
 
-    const response = await createProduct(updatedFormData);
-    console.log("Response:", response);
+    const result = await response.json();
 
-    if (response.status === "success") {
-      console.log("Product created successfully");
-      router.push(`/`);
+    if (response.ok) {
+      // Handle success
+      console.log("Product created:", result.product);
     } else {
-      console.error("Error creating product:", response.message);
+      // Handle error
+      console.error("Error creating product:", result.message);
     }
   };
 
   const removeGalleryImage = (index: number) => {
     setGalleryFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    // Update formData's gallery
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      gallery: prevFormData.gallery?.filter((_, i) => i !== index),
+    }));
   };
 
   return (
@@ -281,7 +142,7 @@ const ProductForm: React.FC = () => {
               type="text"
               name="name"
               value={formData.name}
-              onChange={handleChange}
+              onChange={handleInputChange}
               className="w-full p-2 border rounded"
               required
             />
@@ -292,7 +153,7 @@ const ProductForm: React.FC = () => {
               type="text"
               name="slug"
               value={formData.slug}
-              onChange={handleChange}
+              onChange={handleInputChange}
               className="w-full p-2 border rounded"
               required
             />
@@ -304,7 +165,7 @@ const ProductForm: React.FC = () => {
             <textarea
               name="description"
               value={formData.description}
-              onChange={handleChange}
+              onChange={handleInputChange}
               className="w-full p-2 border rounded"
               rows={4}
               required
@@ -318,7 +179,7 @@ const ProductForm: React.FC = () => {
               type="number"
               name="price"
               value={formData.price}
-              onChange={handleChange}
+              onChange={handleInputChange}
               className="w-full p-2 border rounded"
               required
             />
@@ -331,7 +192,7 @@ const ProductForm: React.FC = () => {
               type="number"
               name="sale_price"
               value={formData.sale_price}
-              onChange={handleChange}
+              onChange={handleInputChange}
               className="w-full p-2 border rounded"
             />
           </div>
@@ -342,13 +203,13 @@ const ProductForm: React.FC = () => {
                 type="text"
                 name="sku"
                 value={formData.sku}
-                onChange={handleChange}
+                onChange={handleInputChange}
                 className="w-full p-2 border rounded"
                 required
               />
               <button
                 type="button"
-                onClick={generateSKU}
+                onClick={handleGenerateSKU}
                 className="ml-2 p-2 bg-blue-600 text-white rounded"
               >
                 <FaSyncAlt />
@@ -363,7 +224,7 @@ const ProductForm: React.FC = () => {
               type="number"
               name="quantity"
               value={formData.quantity}
-              onChange={handleChange}
+              onChange={handleInputChange}
               className="w-full p-2 border rounded"
               required
             />
@@ -376,7 +237,7 @@ const ProductForm: React.FC = () => {
               type="checkbox"
               name="in_stock"
               checked={formData.in_stock}
-              onChange={handleChange}
+              onChange={handleInputChange}
               className="p-2 border rounded"
             />
           </div>
@@ -388,7 +249,7 @@ const ProductForm: React.FC = () => {
               type="checkbox"
               name="is_taxable"
               checked={formData.is_taxable}
-              onChange={handleChange}
+              onChange={handleInputChange}
               className="p-2 border rounded"
             />
           </div>
@@ -399,7 +260,7 @@ const ProductForm: React.FC = () => {
             <select
               name="status"
               value={formData.status}
-              onChange={handleChange}
+              onChange={handleInputChange}
               className="w-full p-2 border rounded"
               required
             >
@@ -416,7 +277,7 @@ const ProductForm: React.FC = () => {
             <select
               name="product_type"
               value={formData.product_type}
-              onChange={handleChange}
+              onChange={handleInputChange}
               className="w-full p-2 border rounded"
               required
             >
@@ -506,7 +367,7 @@ const ProductForm: React.FC = () => {
               type="text"
               name="author_id"
               value={user?.id}
-              onChange={handleChange}
+              onChange={handleInputChange}
               className="w-full p-2 border rounded"
             />
           </div>

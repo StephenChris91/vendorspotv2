@@ -1,14 +1,11 @@
-'use server';
-
 import { productSchema } from "@/app/schemas";
 import { db } from "@/prisma/prisma";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { getUserById } from "@/lib/data/user";
-import { ProductType } from "@/app/types/types";
 
-export async function createProduct(values: ProductType) {
+export async function createProduct(values: z.infer<typeof productSchema>) {
   const session = await auth();
 
   if (!session?.user) {
@@ -21,100 +18,66 @@ export async function createProduct(values: ProductType) {
     return { status: 'error', message: 'User not authorized to create a product' };
   }
 
+  const shop: any = await db.shop.findUnique({
+    where: {
+      userId: user.id,
+    },
+  });
+
+  if (!shop) {
+    return { status: 'error', message: 'No shop found for the user' };
+  }
+
   const validInput = productSchema.safeParse(values);
 
   if (!validInput.success) {
+    console.error("Invalid product data:", validInput.error.errors);
     return { status: 'error', message: 'Invalid product data' };
   }
 
-  const {
-    name,
-    slug,
-    description,
-    type_id,
-    price,
-    sale_price,
-    language = "",
-    sku,
-    quantity,
-    in_stock,
-    is_taxable,
-    shipping_class_id,
-    status,
-    product_type,
-    height,
-    width,
-    image,
-    video,
-    gallery,
-    gallery_id,
-    is_digital,
-    is_external,
-    external_product_url,
-    external_product_button_text = "",
-    ratings = 0,
-    total_reviews,
-    rating_count,
-    my_review,
-    in_wishlist,
-    shop_id,
-  } = validInput.data;
-
-  // Transform gallery data if necessary
-  const galleryData = gallery?.map((url) => ({
-    original: url,
-    thumbnail: url, // Assuming thumbnail is same as original for simplicity
-  })) ?? [];
-
-  // Handle the primary image if it exists
-  const imageData = image ? [{
-    original: image,
-    thumbnail: image, // Assuming thumbnail is same as original for simplicity
-  }] : [];
-
   try {
-    const product = await db.product.create({
-      data: {
-        name,
-        slug,
-        description,
-        type_id,
-        price,
-        sale_price,
-        language,
-        sku,
-        quantity,
-        in_stock,
-        is_taxable,
-        shipping_class_id,
-        status,
-        product_type,
-        height,
-        width,
-        video,
-        gallery: {
-          create: galleryData,
-        },
-        gallery_id,
-        is_digital,
-        is_external,
-        external_product_url,
-        external_product_button_text,
-        ratings,
-        total_reviews,
-        rating_count,
-        my_review,
-        in_wishlist,
-        shop: {
-          connect: { id: shop_id },
-        },
-        images: {
-          create: imageData,
-        },
+    const productData = {
+      ...validInput.data,
+      // author_id: user.id,
+      shop: {
+        connect: { id: shop.id },
       },
+      categories: {
+        connect: validInput.data.categories?.map(id => ({ id })) ?? [],
+      },
+      user: session.user.id
+    };
+
+    const product = await db.product.create({
+      data: productData,
     });
 
-    revalidatePath('/'); // Adjust this path as necessary
+    // if (validInput.data.image) {
+    //   await db.image.create({
+    //     data: {
+    //       url: validInput.data.image,
+    //       product: {
+    //         connect: { id: product.id },
+    //       },
+    //     },
+    //   });
+    // }
+
+    // if (validInput.data.gallery && validInput.data.gallery.length > 0) {
+    //   const galleryImages = validInput.data.gallery.map(url => ({ url }));
+    //   await db.gallery.create({
+    //     data: {
+    //       product: {
+    //         connect: { id: product.id },
+    //       },
+    //       Image: {
+    //         create: galleryImages,
+    //       },
+    //     },
+    //   });
+    // }
+
+    revalidatePath('/');
     return { status: 'success', product };
   } catch (error) {
     console.error(error);

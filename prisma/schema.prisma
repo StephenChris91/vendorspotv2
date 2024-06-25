@@ -87,7 +87,7 @@ model profile {
 }
 
 model shop {
-  id          String    @id @default(uuid())
+  id          String    @id @default(cuid())
   shopname    String?
   description String?
   address     String?
@@ -114,93 +114,60 @@ model shop {
 }
 
 model product {
-  id                           String        @id @default(uuid())
-  name                         String
-  slug                         String?
-  description                  String?
-  type_id                      Int?
-  price                        Float
-  sale_price                   Int?
-  language                     String
-  sku                          Int           @default(autoincrement())
-  quantity                     Int
-  in_stock                     Boolean
-  is_taxable                   Boolean
-  shipping_class_id            Int?
-  status                       ProductStatus @default(Published)
-  product_type                 ProductType   @default(Simple)
-  height                       Int?
-  width                        Int?
-  image_id                     Int?
-  video                        String?
-  gallery_id                   Int?
-  deleted_at                   DateTime?
-  created_at                   DateTime      @default(now())
-  updated_at                   DateTime      @default(now())
-  author_id                    String?
-  manufacturer_id              String?
-  is_digital                   Boolean?
-  is_external                  Boolean?
-  external_product_url         String?
-  external_product_button_text String?
-  ratings                      Float
-  total_reviews                Int?
-  rating_count                 Int?
-  my_review                    String?
-  in_wishlist                  Boolean?
-  shop_id                      String?
-  categories                   category[]
-  shop                         shop?         @relation("ShopProducts", fields: [shop_id], references: [id])
-  author                       user?         @relation("UserProducts", fields: [author_id], references: [id])
-  images                       Image[]
-  gallery                      gallery[]
+  id            String        @id @default(uuid())
+  name          String
+  slug          String
+  description   String
+  price         Int
+  sale_price    Int?
+  sku           Int?          @default(autoincrement())
+  quantity      Int?
+  in_stock      Boolean?
+  is_taxable    Boolean?
+  status        ProductStatus @default(Draft)
+  product_type  ProductType   @default(Simple)
+  video         String?
+  image_id      String?
+  image         String?
+  gallery_id    Int?
+  author_id     String?
+  ratings       Float?
+  total_reviews Int?
+  my_review     String?
+  in_wishlist   Boolean?
+  shop_id       String?
+  categories    category[]
+  shop          shop?         @relation("ShopProducts", fields: [shop_id], references: [id])
+  author        user?         @relation("UserProducts", fields: [author_id], references: [id])
+  gallery       String[]
 }
 
-model Image {
-  id        String   @id @default(uuid())
-  original  String
-  thumbnail String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  productId String?  @unique
-  product   product? @relation(fields: [productId], references: [id])
+model image {
+  id        String  @id @default(uuid())
+  url       String
+  productId String? @unique
   galleryId String?
-  gallery   gallery? @relation(fields: [galleryId], references: [id])
+  // gallery   gallery? @relation(fields: [galleryId], references: [id])
+  imageId   String?
 }
 
 model category {
-  id        String    @id @unique @default(uuid())
-  name      String
-  slug      String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now())
-  products  product[] @relation
+  id       String    @id @unique @default(uuid())
+  name     String
+  slug     String
+  products product[]
 
   @@unique([name, slug])
 }
 
-// model image {
+// model gallery {
 //   id        String   @id @default(uuid())
-//   original  String
-//   thumbnail String
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @default(now())
 //   productId String?
 //   product   product? @relation(fields: [productId], references: [id])
-//   galleryId String?
-//   gallery   gallery? @relation(fields: [galleryId], references: [id])
+//   Image     image[]
+
+//   @@unique([productId])
 // }
-
-model gallery {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  productId String?
-  product   product? @relation(fields: [productId], references: [id])
-  Image     Image[]
-
-  @@unique([productId])
-}
 
 model verificationToken {
   id      String   @id @default(uuid())
