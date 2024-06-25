@@ -242,28 +242,28 @@ export type shopType = {
   };
 
   export interface ProductType {
+    id?: string;
     name: string;
     slug: string;
     description: string;
     price: number;
-    sale_price?: number;
-    sku?: number;
+    sale_price: number;
+    sku: number;
     quantity: number;
     in_stock: boolean;
     is_taxable: boolean;
     image?: string; // Optional now
     video?: string;
-    gallery?: string[];
-    // author_id?: string;
+    gallery?: string[]; // Optional now
     ratings?: number;
     total_reviews?: number;
     my_review?: string;
     in_wishlist?: boolean;
     categories?: string[];
-    // shop_id: string;
     status: 'Draft' | 'Published' | 'Suspended' | 'OutOfStock';
     product_type: 'Simple' | 'Variable';
   }
+  
   
   
   

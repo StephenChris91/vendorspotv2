@@ -1,44 +1,11 @@
+import { getAllProducts } from "@/lib/data/products";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import type { ProductType } from "@/app/types/types";
 
 async function getData(): Promise<ProductType[]> {
   // Fetch data from your API here.
-  return [
-    {
-      id: "728ed52f",
-      product: "Product 1",
-      productType: "simple",
-      shop: "shop 1",
-      quantity: 28,
-      status: "processing",
-    },
-    {
-      id: "728ed52f",
-      product: "Product 1",
-      productType: "simple",
-      shop: "shop 1",
-      quantity: 28,
-      status: "processing",
-    },
-    {
-      id: "728ed52f",
-      product: "Product 1",
-      productType: "simple",
-      shop: "shop 1",
-      quantity: 28,
-      status: "processing",
-    },
-    {
-      id: "728ed52f",
-      product: "Product 1",
-      productType: "simple",
-      shop: "shop 1",
-      quantity: 28,
-      status: "processing",
-    },
-    // ...
-  ];
+  return await getAllProducts();
 }
 
 export default async function AllProductsTable() {

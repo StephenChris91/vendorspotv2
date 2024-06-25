@@ -119,9 +119,9 @@ model product {
   slug          String
   description   String
   price         Int
-  sale_price    Int?
-  sku           Int?          @default(autoincrement())
-  quantity      Int?
+  sale_price    Int
+  sku           Int           @default(autoincrement())
+  quantity      Int
   in_stock      Boolean?
   is_taxable    Boolean?
   status        ProductStatus @default(Draft)

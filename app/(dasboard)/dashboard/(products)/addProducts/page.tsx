@@ -18,7 +18,7 @@ import { productSchema } from "@/app/schemas";
 const ProductForm: React.FC = () => {
   const router = useRouter();
   const user = useCurrentUser();
-  const initialFormData: ProductType = {
+  let initialFormData: ProductType = {
     name: "",
     slug: "",
     description: "",
@@ -40,26 +40,6 @@ const ProductForm: React.FC = () => {
     // shop_id: "",
     status: "Draft",
     product_type: "Simple",
-  };
-
-  // For number inputs
-  const handleNumberInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setFormData({
-      ...formData,
-      [name]: value ? parseFloat(value) : 0,
-    });
-  };
-
-  // For UUID inputs
-  const handleUUIDInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
   };
 
   const [formData, setFormData] = useState<ProductType>(initialFormData);
@@ -116,6 +96,7 @@ const ProductForm: React.FC = () => {
     if (response.ok) {
       // Handle success
       console.log("Product created:", result.product);
+      setFormData(initialFormData);
     } else {
       // Handle error
       console.error("Error creating product:", result.message);
