@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import React, { useState } from "react";
+import React, { startTransition, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDropzone } from "react-dropzone";
 import { ProductType } from "@/app/types/types";
@@ -14,10 +14,13 @@ import { handleChange } from "@/lib/data/handleChange";
 import { generateSKU } from "@/lib/data/generateSKU";
 import { handleVideoUpload } from "@/lib/data/handleVideoUpload";
 import { productSchema } from "@/app/schemas";
+import { revalidatePath } from "next/cache";
+import { useToast } from "@/components/ui/use-toast";
 
 const ProductForm: React.FC = () => {
   const router = useRouter();
   const user = useCurrentUser();
+  const { toast } = useToast();
   let initialFormData: ProductType = {
     name: "",
     slug: "",
@@ -37,13 +40,15 @@ const ProductForm: React.FC = () => {
     my_review: "",
     in_wishlist: false,
     categories: [],
-    // shop_id: "",
+    shop_name: "",
     status: "Draft",
     product_type: "Simple",
   };
 
   const [formData, setFormData] = useState<ProductType>(initialFormData);
   const [galleryFiles, setGalleryFiles] = useState<string[]>([]);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleInputChange = handleChange(formData, setFormData);
 
@@ -92,15 +97,28 @@ const ProductForm: React.FC = () => {
     });
 
     const result = await response.json();
-
-    if (response.ok) {
-      // Handle success
-      console.log("Product created:", result.product);
-      setFormData(initialFormData);
-    } else {
-      // Handle error
-      console.error("Error creating product:", result.message);
-    }
+    startTransition(() => {
+      if (!response.ok) {
+        setErrorMsg(result.message);
+        toast({
+          variant: "destructive",
+          title: "Error 😞",
+          description: result.message,
+          duration: 9000,
+        });
+        console.error("Error creating product:", result.message);
+      } else {
+        // Handle success
+        setSuccess(result.message);
+        toast({
+          title: "Product Created Successful 😄",
+          description: result.message,
+          duration: 9000,
+        });
+        // revalidatePath("/dashboard/all-products");
+        setFormData(initialFormData);
+      }
+    });
   };
 
   const removeGalleryImage = (index: number) => {

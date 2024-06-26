@@ -1,18 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { AddLogo } from "@/components/dasboard/tables/createshop/addLogo";
-import AddBasicInfo from "@/components/dasboard/tables/createshop/addBasicInfo";
-import AddCoverImage from "@/components/dasboard/tables/createshop/addCoverImage";
-import AddPaymentInfo from "@/components/dasboard/tables/createshop/addPaymentInfo";
-import AddShopAddress from "@/components/dasboard/tables/createshop/addShopAddress";
-import AddShopSettings from "@/components/dasboard/tables/createshop/addShopSettings";
+
 import { Button } from "@/components/ui/button";
 import { useFormContext } from "@/app/context/FormContext/formcontext";
 import { useCurrentUser } from "@/lib/use-session-client";
 import { createShop } from "@/actions/createshop";
 import { useToast } from "@/components/ui/use-toast";
-import ProcessPayment from "@/components/dasboard/tables/createshop/processPayment";
+import { AddLogo } from "@/components/onboarding/addLogo";
+import AddBasicInfo from "@/components/onboarding/addBasicInfo";
+import AddCoverImage from "@/components/onboarding/addCoverImage";
+import AddPaymentInfo from "@/components/onboarding/addPaymentInfo";
+import AddShopAddress from "@/components/onboarding/addShopAddress";
+import AddShopSettings from "@/components/onboarding/addShopSettings";
+import ProcessPayment from "@/components/onboarding/processPayment";
+// import ProcessPayment from "@/components/dasboard/tables/createshop/processPayment";
 
 const steps = [
   { component: AddLogo, label: "Shop Name" },

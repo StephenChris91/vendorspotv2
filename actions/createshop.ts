@@ -99,3 +99,15 @@ export const getShopById = async (id: string) => {
   }
 };
 
+export const getShopWithProductsById = async (id: string) => {
+    const shop = await db.shop.findUnique({
+      where: { id },
+      include: {
+        products: true, // Include products related to the shop
+      },
+    });
+  
+    return shop;
+  };
+
+

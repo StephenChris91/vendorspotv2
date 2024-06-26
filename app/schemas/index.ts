@@ -149,6 +149,7 @@ export const shopSchema = z.object({
         in_wishlist: z.boolean().optional(),
         categories: z.array(z.string()).optional(),
         // shop_id: z.string(),
+        shop_name: z.string().optional(),
       });
       
 

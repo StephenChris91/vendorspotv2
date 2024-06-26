@@ -1,4 +1,4 @@
-import WithdrawsTable from "@/components/dasboard/tables/withdraws/withdraws";
+import WithdrawsTable from "../_dashboard-components/tables/withdraws/withdraws";
 
 const Categories = () => {
   return (

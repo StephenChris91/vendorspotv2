@@ -9,3 +9,4 @@ export const getAllShops = async () => {
     
     return shops
 }
+

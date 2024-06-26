@@ -1,4 +1,4 @@
-import AllPendingVendorsTables from "@/components/dasboard/tables/all-pending-vendors/all-pending-vendors";
+import AllPendingVendorsTables from "../../../_dashboard-components/tables/all-pending-vendors/all-pending-vendors";
 
 const PendingVendors = () => {
   return (

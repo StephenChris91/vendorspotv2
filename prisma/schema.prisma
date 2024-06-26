@@ -140,6 +140,7 @@ model product {
   shop          shop?         @relation("ShopProducts", fields: [shop_id], references: [id])
   author        user?         @relation("UserProducts", fields: [author_id], references: [id])
   gallery       String[]
+  shop_name     String?
 }
 
 model image {

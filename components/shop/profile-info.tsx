@@ -15,6 +15,7 @@ const ProfileInfo = ({
   address,
   description,
   phoneNumber,
+  products,
 }: shopType) => {
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 1224px)",
@@ -46,7 +47,10 @@ const ProfileInfo = ({
               </h3>
               <div className="flex flex-wrap text-sm rounded gap-x-4">
                 <div className="flex justify-center gap-1.5 text-gray-500">
-                  <div className="font-medium text-heading">26</div> products
+                  <div className="font-medium text-heading">
+                    {products?.length}
+                  </div>{" "}
+                  products
                 </div>
               </div>
             </div>

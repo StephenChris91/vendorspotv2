@@ -1,4 +1,4 @@
-import PageGroupTable from "@/components/dasboard/tables/page-groups/page-group-table";
+import PageGroupTable from "../../_dashboard-components/tables/page-groups/page-group-table";
 
 const PageGroups = () => {
   return (

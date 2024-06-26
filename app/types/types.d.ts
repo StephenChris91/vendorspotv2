@@ -239,10 +239,15 @@ export type shopType = {
     phoneNumber: string;
     website: string;
     accountName: string;
+    products?: ProductType[];
+  };
+
+  export type ShopWithProducts = shop & {
+    products: ProductType[];
   };
 
   export interface ProductType {
-    id?: string;
+    // id: string;
     name: string;
     slug: string;
     description: string;
@@ -252,17 +257,19 @@ export type shopType = {
     quantity: number;
     in_stock: boolean;
     is_taxable: boolean;
-    image?: string; // Optional now
+    image?: string;
     video?: string;
-    gallery?: string[]; // Optional now
+    gallery?: string[];
     ratings?: number;
     total_reviews?: number;
     my_review?: string;
     in_wishlist?: boolean;
     categories?: string[];
+    shop_name?: string; // Add this line
     status: 'Draft' | 'Published' | 'Suspended' | 'OutOfStock';
     product_type: 'Simple' | 'Variable';
   }
+  
   
   
   

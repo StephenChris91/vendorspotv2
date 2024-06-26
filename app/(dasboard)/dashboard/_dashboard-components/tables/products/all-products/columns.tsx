@@ -14,15 +14,15 @@ export const columns: ColumnDef<ProductType>[] = [
     header: "ID",
   },
   {
-    accessorKey: "product",
+    accessorKey: "name",
     header: "Product",
   },
   {
-    accessorKey: "productType",
+    accessorKey: "product_type",
     header: "Product Type",
   },
   {
-    accessorKey: "shop",
+    accessorKey: "shop_name",
     header: "Shop",
   },
   {

@@ -1,12 +1,24 @@
+'use server'
+
 // import { categories } from '@/db/categories';
 import { ProductType } from "@/app/types/types";
 import { db } from "@/prisma/prisma"
 
 
 export const getAllProducts = async (): Promise<ProductType[]> => {
-    const products = await db.product.findMany();
+    const products = await db.product.findMany({
+      include: {
+        shop: true,
+        // image: true,
+        // gallery: {
+        //   include: {
+        //     Image: true,
+        //   },
+        // },
+        categories: true,
+      },
+    });
   
-    // Transform products to match ProductType
     return products.map(product => ({
       id: product.id,
       name: product.name,
@@ -25,7 +37,8 @@ export const getAllProducts = async (): Promise<ProductType[]> => {
       total_reviews: product.total_reviews ?? 0,
       my_review: product.my_review ?? "",
       in_wishlist: product.in_wishlist ?? false,
-    //   categories: product.categories ?? [],
+      categories: product.categories?.map(c => c.id) ?? [],
+      shop_name: product.shop?.shopname ?? "Unknown",
       status: product.status,
       product_type: product.product_type,
     }));

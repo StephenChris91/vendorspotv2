@@ -1,4 +1,4 @@
-import TermsAndConditionsTable from "@/components/dasboard/tables/all-terms-and-conditions/terms-and-conditions-table";
+import TermsAndConditionsTable from "../../../_dashboard-components/tables/all-terms-and-conditions/terms-and-conditions-table";
 
 const AllTerms = () => {
   return (

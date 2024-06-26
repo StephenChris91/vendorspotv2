@@ -1,4 +1,4 @@
-import InventoryTable from "@/components/dasboard/tables/inventory/draft-products-table";
+import InventoryTable from "../_dashboard-components/tables/inventory/draft-products-table";
 
 const Inventory = () => {
   return (

@@ -1,4 +1,4 @@
-import AdminUsersTable from "@/components/dasboard/tables/admin-users-list/all-users-table";
+import AdminUsersTable from "../../_dashboard-components/tables/admin-users-list/all-users-table";
 
 const AdminList = () => {
   return (

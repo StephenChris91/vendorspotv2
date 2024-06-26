@@ -1,4 +1,4 @@
-import OrdersTable from "@/components/dasboard/tables/orders/orders-table";
+import OrdersTable from "../../_dashboard-components/tables/orders/orders-table";
 
 const Orders = () => {
   return (

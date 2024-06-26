@@ -1,4 +1,4 @@
-import MyStaffTable from "@/components/dasboard/tables/my-staff/my-staff-table";
+import MyStaffTable from "../../../_dashboard-components/tables/vendor-staff/my-staff-table";
 
 const MyStaff = () => {
   return (

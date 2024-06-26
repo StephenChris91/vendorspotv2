@@ -1,4 +1,4 @@
-import AllUsersTable from "@/components/dasboard/tables/all-users/all-users-table";
+import AllUsersTable from "../../_dashboard-components/tables/all-users/all-users-table";
 
 const AllUsers = () => {
   return (

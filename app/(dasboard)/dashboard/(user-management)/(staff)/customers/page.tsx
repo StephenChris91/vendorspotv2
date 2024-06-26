@@ -1,4 +1,4 @@
-import CustomersTable from "@/components/dasboard/tables/customers/customers-table";
+import CustomersTable from "../../../_dashboard-components/tables/customers/customers-table";
 
 const Customers = () => {
   return (

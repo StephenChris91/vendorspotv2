@@ -1,4 +1,4 @@
-import TagsTable from "@/components/dasboard/tables/tags/tags-table";
+import TagsTable from "../_dashboard-components/tables/tags/tags-table";
 
 const Categories = () => {
   return (

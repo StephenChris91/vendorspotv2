@@ -1,4 +1,4 @@
-import RefundsPolicyTable from "@/components/dasboard/tables/refunds-policy/refunds-policy-table";
+import RefundsPolicyTable from "../../_dashboard-components/tables/refunds-policy/refunds-policy-table";
 
 const RefundsPolicy = () => {
   return (

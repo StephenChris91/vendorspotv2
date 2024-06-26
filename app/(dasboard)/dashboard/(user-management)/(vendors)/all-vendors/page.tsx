@@ -1,4 +1,4 @@
-import AllVendorsTables from "@/components/dasboard/tables/all-vendors/all-vendors";
+import AllVendorsTables from "../../../_dashboard-components/tables/all-vendors/all-vendors";
 
 const AllVendors = () => {
   return (

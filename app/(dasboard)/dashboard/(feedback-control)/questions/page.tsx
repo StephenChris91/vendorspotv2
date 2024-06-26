@@ -1,4 +1,4 @@
-import QuestionsTable from "@/components/dasboard/tables/questions-table/questions-table";
+import QuestionsTable from "../../_dashboard-components/tables/questions-table/questions-table";
 
 const Questions = () => {
   return (

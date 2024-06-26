@@ -1,4 +1,4 @@
-import DraftProductsTable from "@/components/dasboard/tables/products/draft-products/draft-products-table";
+import DraftProductsTable from "../../_dashboard-components/tables/products/draft-products/draft-products-table";
 
 const MyDraftProducts = () => {
   return (

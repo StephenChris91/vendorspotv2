@@ -1,4 +1,4 @@
-import ShippingTable from "@/components/dasboard/tables/shipping/shipping-table";
+import ShippingTable from "../_dashboard-components/tables/shipping/shipping-table";
 
 const Shippings = () => {
   return (

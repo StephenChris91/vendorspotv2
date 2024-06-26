@@ -4,6 +4,7 @@ import { db } from '@/prisma/prisma';
 import { z } from 'zod';
 import { getUserByEmail, getUserById } from '@/lib/data/user';
 import { useCurrentSession } from '@/lib/use-session-server';
+import { revalidatePath } from 'next/cache';
 
 export async function POST(req: NextRequest) {
   try {
@@ -41,7 +42,7 @@ export async function POST(req: NextRequest) {
     //   user: user,
     //   author_id: user.id,
     // user: {
-    //     connect: { user: user}
+    //     connect: { user: user.id}
     // },
       shop: {
         connect: { id: shop.id },
@@ -55,6 +56,10 @@ export async function POST(req: NextRequest) {
     const product = await db.product.create({
       data: productData,
     });
+
+    if(product){
+      revalidatePath('/dashboard/all-products')
+    }
 
     // if (validInput.data.image) {
     //   await db.image.create({

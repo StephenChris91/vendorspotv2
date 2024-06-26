@@ -1,4 +1,4 @@
-import FAQsPage from "@/components/dasboard/tables/all-faqs/faqs-table";
+import FAQsPage from "../../../_dashboard-components/tables/all-faqs/faqs-table";
 
 const AllFAQs = () => {
   return (

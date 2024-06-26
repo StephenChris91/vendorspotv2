@@ -1,4 +1,4 @@
-import TaxesTable from "@/components/dasboard/tables/taxes/taxes-table";
+import TaxesTable from "../_dashboard-components/tables/taxes/taxes-table";
 
 const Categories = () => {
   return (

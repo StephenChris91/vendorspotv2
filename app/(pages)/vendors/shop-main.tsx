@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from "react";
-import ProductCard from "@/components/shop/product-card";
+// import ShopProductCard from "@/components/shop/shop-product-card";
 import Banner from "@/components/shop/banner";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useMediaQuery } from "react-responsive";
 import ProfileInfo from "@/components/shop/profile-info";
 import { Button } from "@/components/ui/button";
 import { useParams } from "next/navigation";
-import { getShopById } from "@/actions/createshop";
-import { shopType } from "@/app/types/types";
-import { shop } from "@prisma/client";
+import { getShopById, getShopWithProductsById } from "@/actions/createshop";
+import { ShopWithProducts } from "@/app/types/types";
 import { SyncLoader } from "react-spinners";
-
-// Update the shop type to ensure logo and banner are always strings
-type ShopWithNonNullLogoAndBanner = shop & {
-  logo: string;
-  banner: string;
-};
+import ShopProductCard from "@/components/shop/product-card";
 
 const ShopMain = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
-  const [shop, setShop] = useState<ShopWithNonNullLogoAndBanner | null>(null);
+  const [shop, setShop] = useState<ShopWithProducts | null>(null);
 
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 1224px)" });
@@ -30,8 +24,8 @@ const ShopMain = () => {
       if (id) {
         try {
           setLoading(true);
-          const shopData = await getShopById(id as string);
-          setShop(shopData as any);
+          const shopData = await getShopWithProductsById(id as string);
+          setShop(shopData as ShopWithProducts);
           setLoading(false);
         } catch (error) {
           console.error("Error fetching shop data:", error);
@@ -82,6 +76,7 @@ const ShopMain = () => {
             phoneNumber={shop?.phoneNumber ?? ""}
             website={shop?.website ?? ""}
             accountName={shop?.accountName ?? ""}
+            products={shop?.products ?? []}
           />
         </div>
       </ScrollArea>
@@ -106,10 +101,11 @@ const ShopMain = () => {
           phoneNumber={shop?.phoneNumber ?? ""}
           website={shop?.website ?? ""}
           accountName={shop?.accountName ?? ""}
+          // products={shop?.products ?? []}
         />
         <div className="w-full flex flex-wrap gap-6 justify-between items-center mx-auto">
-          {Array.from({ length: 10 }).map((_, i) => (
-            <ProductCard key={i} />
+          {shop?.products.map((product: any) => (
+            <ShopProductCard key={product.id} product={product} />
           ))}
         </div>
         <div className="flex justify-between items-center mx-auto">

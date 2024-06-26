@@ -1,4 +1,5 @@
-import RefundReasonsTable from "@/components/dasboard/tables/refunds-reasons/refunds-reasons";
+import RefundReasonsTable from "../../_dashboard-components/tables/refunds-reasons/refunds-reasons";
+
 const RefundsReasons = () => {
   return (
     <div className="mt-32">

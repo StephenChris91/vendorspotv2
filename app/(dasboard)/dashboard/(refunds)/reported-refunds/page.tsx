@@ -1,9 +1,9 @@
-import RefundsReasonsTable from "@/components/dasboard/tables/reported-refunds/reported-refunds-table";
+import ReportedRefundsTable from "../../_dashboard-components/tables/reported-refunds/reported-refunds-table";
 
 const ReportedRefunds = () => {
   return (
     <div className=" p-10 mt-32">
-      <RefundsReasonsTable />
+      <ReportedRefundsTable />
     </div>
   );
 };

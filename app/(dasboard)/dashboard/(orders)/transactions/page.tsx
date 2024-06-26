@@ -1,4 +1,4 @@
-import TransactionsTable from "@/components/dasboard/tables/transactions/transactions-table";
+import TransactionsTable from "../../_dashboard-components/tables/transactions/transactions-table";
 
 const Transactions = () => {
   return (

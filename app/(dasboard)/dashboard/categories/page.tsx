@@ -1,4 +1,4 @@
-import CategoriesTable from "@/components/dasboard/tables/categories/draft-products-table";
+import CategoriesTable from "../_dashboard-components/tables/categories/draft-products-table";
 
 const Categories = async () => {
   return (

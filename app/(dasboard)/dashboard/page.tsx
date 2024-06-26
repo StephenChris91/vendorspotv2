@@ -1,8 +1,8 @@
-import OrderProcessingTable from "@/components/dasboard/tables/order-processing/order-processing-table";
 import OrderHistory from "@/components/dasboard/orderHistory";
 import OrderStatus from "@/components/dasboard/orderStatus";
 import Summary from "@/components/dasboard/summary";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import OrderProcessingTable from "./_dashboard-components/tables/order-processing/order-processing-table";
 
 export default function Dashboard() {
   return (
