@@ -1,4 +1,18 @@
-const ProductDetails = () => {
+import { ProductType } from "@/app/types/types";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+
+// SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+
+interface ProductDetailsProps {
+  product: ProductType;
+}
+
+const ProductDetails = ({ product }: ProductDetailsProps) => {
   return (
     <article className="rounded-lg bg-light">
       <div className="flex flex-col border-b border-border-200 border-opacity-70 md:flex-row">
@@ -8,68 +22,70 @@ const ProductDetails = () => {
               22%
             </div>
           </div>
-          <div className="product-gallery h-full">
-            <div>
-              <div className="relative">
-                <div
-                  className="swiper swiper-initialized swiper-horizontal swiper-backface-hidden"
-                  id="productGallery"
-                >
-                  <div className="swiper-wrapper">
-                    <div className="swiper-slide !flex items-center justify-center selection:bg-transparent swiper-slide-active"></div>
-                  </div>
-                </div>
-                <div className="absolute z-10 flex items-center justify-center w-8 h-8 -mt-4 transition-all duration-200 border rounded-full shadow-xl cursor-pointer product-gallery-prev top-2/4 border-border-200 border-opacity-70 bg-light text-heading hover:bg-gray-100 ltr:-left-4 rtl:-right-4 md:-mt-5 md:h-9 md:w-9 ltr:md:-left-5 rtl:md:-right-5 swiper-button-disabled swiper-button-lock">
-                  <svg
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    className="w-4 h-4"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M15 19l-7-7 7-7"
-                    ></path>
-                  </svg>
-                </div>
-                <div className="absolute z-10 flex items-center justify-center w-8 h-8 -mt-4 transition-all duration-200 border rounded-full shadow-xl cursor-pointer product-gallery-next top-2/4 border-border-200 border-opacity-70 bg-light text-heading hover:bg-gray-100 ltr:-right-4 rtl:-left-4 md:-mt-5 md:h-9 md:w-9 ltr:md:-right-5 rtl:md:-left-5 swiper-button-disabled swiper-button-lock">
-                  <svg
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    className="w-4 h-4"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 5l7 7-7 7"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
-              <div className="relative mx-auto mt-5 max-w-md lg:mt-8 lg:pb-2 hidden">
-                <div
-                  className="swiper swiper-initialized swiper-horizontal swiper-free-mode swiper-watch-progress swiper-thumbs"
-                  id="productGalleryThumbs"
-                >
-                  <div className="swiper-wrapper">
-                    <div className="swiper-slide !flex cursor-pointer items-center justify-center overflow-hidden rounded border border-border-200 border-opacity-75 hover:opacity-75">
-                      <div className="relative w-20 h-20"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="product-gallery h-full relative">
+            <button className="absolute z-10 flex items-center justify-center w-8 h-8 -mt-4 transition-all duration-200 border rounded-full shadow-xl cursor-pointer product-gallery-prev top-2/4 left-4 md:-mt-5 md:h-9 md:w-9 ltr:md:-left-5 rtl:md:-right-5 swiper-button-disabled swiper-button-lock">
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="w-4 h-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M15 19l-7-7 7-7"
+                ></path>
+              </svg>
+            </button>
+            <Swiper
+              modules={[Navigation, Pagination, Scrollbar, A11y]}
+              spaceBetween={0}
+              slidesPerView={1}
+              navigation={{
+                nextEl: ".product-gallery-next",
+                prevEl: ".product-gallery-prev",
+              }}
+              onSwiper={(swiper) => console.log(swiper)}
+              onSlideChange={() => console.log("slide change")}
+            >
+              {product.gallery?.map((image: string, index: any) => (
+                <SwiperSlide key={index}>
+                  <img src={image} alt={`Product image ${index + 1}`} />
+                </SwiperSlide>
+              ))}
+              {product.video && (
+                <SwiperSlide>
+                  <video controls>
+                    <source src={product.video} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </SwiperSlide>
+              )}
+            </Swiper>
+
+            <button className="absolute z-10 flex items-center justify-center w-8 h-8 -mt-4 transition-all duration-200 border rounded-full shadow-xl cursor-pointer product-gallery-next top-2/4 right-4 md:-mt-5 md:h-9 md:w-9 ltr:md:-right-5 rtl:md:-left-5 swiper-button-disabled swiper-button-lock">
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="w-4 h-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 5l7 7-7 7"
+                ></path>
+              </svg>
+            </button>
           </div>
         </div>
         <div className="flex flex-col items-start p-5 pt-10 md:w-1/2 lg:p-14 xl:p-16">
           <div className="w-full">
             <div className="flex w-full items-start justify-between space-x-8 rtl:space-x-reverse">
               <h1 className="text-lg font-semibold tracking-tight text-heading md:text-xl xl:text-2xl cursor-pointer transition-colors hover:text-accent">
-                PureGrowth Organic Infant Formula
+                {product.name}
               </h1>
               <div>
                 <button
@@ -89,7 +105,9 @@ const ProductDetails = () => {
               </div>
             </div>
             <div className="mt-2 flex items-center justify-between">
-              <span className="block text-sm font-normal text-body">1 pcs</span>
+              <span className="block text-sm font-normal text-body">
+                {product.quantity}
+              </span>
               <div className="inline-flex shrink-0 items-center rounded border border-accent bg-accent px-3 py-1 text-sm text-white">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -109,10 +127,10 @@ const ProductDetails = () => {
             </div>
             <span className="my-5 flex items-center md:my-10">
               <ins className="text-2xl font-semibold text-accent no-underline md:text-3xl">
-                $35.00
+                {product.price}
               </ins>
               <del className="text-sm font-normal text-muted ltr:ml-2 rtl:mr-2 md:text-base">
-                $45.00
+                {product.sale_price}
               </del>
             </span>
             <div className="mt-6 flex flex-col items-center md:mt-6 lg:flex-row">
@@ -124,7 +142,7 @@ const ProductDetails = () => {
                 </div>
               </div>
               <span className="whitespace-nowrap text-base text-normal ltr:lg:ml-7 rtl:lg:mr-7">
-                876 pieces available
+                {product.quantity} pieces available
               </span>
             </div>
           </div>
@@ -149,10 +167,10 @@ const ProductDetails = () => {
           </div>
           <div className="mt-2 flex items-center">
             <span className="py-1 text-sm font-semibold capitalize text-heading ltr:mr-6 rtl:ml-6">
-              Sellers
+              Seller:
             </span>
             <button className="text-sm tracking-wider text-accent underline transition hover:text-accent-hover hover:no-underline">
-              Medicine
+              {product.shop_name}
             </button>
           </div>
         </div>

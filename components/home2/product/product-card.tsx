@@ -16,36 +16,26 @@ import { PiHeart } from "react-icons/pi";
 import { PiEye } from "react-icons/pi";
 import { PiShoppingCartSimple } from "react-icons/pi";
 import ProductModal from "@/components/shop/product-modal";
+import { useQuery } from "@tanstack/react-query";
+import { getAllProducts } from "@/actions/products";
+import { ProductType } from "@/app/types/types";
+import { db } from "@/prisma/prisma";
 
 interface ProductCardProps {
-  title: string;
-  description?: string;
-  price?: number;
-  image?: StaticImageData;
-  category?: string;
-  subcategory?: string;
-  wishlist?: string;
-  stock?: number;
-  rating?: number;
-  ratingCount?: number;
-  ratingAverage?: number;
-  viewable?: boolean;
-  hot?: boolean;
-  discount?: number;
+  product: ProductType;
   single?: boolean;
   hasButton?: boolean;
 }
 
-export const ProductCard: FC<ProductCardProps> = ({
-  title,
-  description,
-  price,
-  image,
+export const ProductCard = ({
   single,
   hasButton,
-}) => {
-  //   const [isSingle, setIsSingle] = useState(single);
+  product,
+}: ProductCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
+    null
+  );
 
   const overlayRef = useRef(null);
 
@@ -58,8 +48,10 @@ export const ProductCard: FC<ProductCardProps> = ({
   }, []);
 
   function openModal() {
+    setSelectedProduct(product);
     setIsModalOpen(true);
   }
+
   return (
     <>
       <Card className="w-auto max-w-xs border rounded-none h-auto border-gray-400">
@@ -70,7 +62,7 @@ export const ProductCard: FC<ProductCardProps> = ({
             } w-full overflow-hidden rounded-sm`}
           >
             <Image
-              src={image ?? laptop}
+              src={product?.image ?? laptop}
               alt="banner-3"
               width={0}
               height={0}
@@ -98,11 +90,17 @@ export const ProductCard: FC<ProductCardProps> = ({
             ) : null}
           </div>
           <div className="grid gap-1.5 mb-5">
-            <h3 className="font-semibold text-sm md:text-base">{title}</h3>
-            <p className="font-semibold text-sm md:text-base">$99</p>
-            <p className="text-sm md:text-base text-muted">
-              {description || ""}
+            <h3 className="font-semibold text-sm md:text-base">
+              {product?.name}
+            </h3>
+            <p className="font-semibold text-sm md:text-base">
+              ${product?.price}
             </p>
+            <p className="text-sm md:text-base text-muted">
+              {product?.description || ""}
+            </p>
+            <p className="text-sm md:text-base ">{product?.categories || ""}</p>
+            <p className="text-sm md:text-base ">{product?.shop_name || ""}</p>
           </div>
           {hasButton ? (
             <div className="flex justify-between items-center mx-auto gap-1 w-full">
@@ -121,10 +119,15 @@ export const ProductCard: FC<ProductCardProps> = ({
           ) : null}
         </div>
       </Card>
-      <ProductModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      {selectedProduct && (
+        <ProductModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          product={selectedProduct}
+        />
+      )}
     </>
   );
 };
+
+export default ProductCard;

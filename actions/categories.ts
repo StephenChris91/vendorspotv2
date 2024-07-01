@@ -49,10 +49,12 @@ export const getCategoryBySlug = async (slug: string) => {
 }
 
 export const getAllCategories = async () => {
-    const categories = await db.category.findMany()
-    
-    return categories
-}
+  return await db.category.findMany({
+    orderBy: {
+      name: 'asc',
+    },
+  });
+};
 
 export const getCategoryById = async (id: string) => {
     const category = await db.category.findFirst({

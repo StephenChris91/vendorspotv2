@@ -18,7 +18,7 @@ export async function createProduct(values: z.infer<typeof productSchema>) {
     return { status: 'error', message: 'User not authorized to create a product' };
   }
 
-  const shop: any = await db.shop.findUnique({
+  const shop = await db.shop.findUnique({
     where: {
       userId: user.id,
     },
@@ -35,15 +35,24 @@ export async function createProduct(values: z.infer<typeof productSchema>) {
     return { status: 'error', message: 'Invalid product data' };
   }
 
+  const categoryIds = validInput.data.categories ?? [];
+  const categories = await db.category.findMany({
+    where: { id: { in: categoryIds } }
+  });
+
+  if (categories.length !== categoryIds.length) {
+    console.error("Some categories not found:", { expected: categoryIds.length, found: categories.length });
+    return { status: 'error', message: 'Some categories not found' };
+  }
+
   try {
     const productData = {
       ...validInput.data,
-      // author_id: user.id,
       shop: {
         connect: { id: shop.id },
       },
       categories: {
-        connect: validInput.data.categories?.map(id => ({ id })) ?? [],
+        connect: categoryIds.map(id => ({ id })),
       },
       user: session.user.id
     };
@@ -51,31 +60,6 @@ export async function createProduct(values: z.infer<typeof productSchema>) {
     const product = await db.product.create({
       data: productData,
     });
-
-    // if (validInput.data.image) {
-    //   await db.image.create({
-    //     data: {
-    //       url: validInput.data.image,
-    //       product: {
-    //         connect: { id: product.id },
-    //       },
-    //     },
-    //   });
-    // }
-
-    // if (validInput.data.gallery && validInput.data.gallery.length > 0) {
-    //   const galleryImages = validInput.data.gallery.map(url => ({ url }));
-    //   await db.gallery.create({
-    //     data: {
-    //       product: {
-    //         connect: { id: product.id },
-    //       },
-    //       Image: {
-    //         create: galleryImages,
-    //       },
-    //     },
-    //   });
-    // }
 
     revalidatePath('/');
     return { status: 'success', product };

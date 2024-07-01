@@ -7,7 +7,9 @@ import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "@/store/store";
+
 import Providers from "@/provider";
+import QueryClientContextProvider from "@/lib/context/queryclient-providers";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -33,11 +35,15 @@ export default async function Layout({
   return (
     <html lang="en" className={cn(GeistSans.className)}>
       <body className={cn(fontSans.variable)}>
+        {/* <PersistGate persistor={persistor} loading={null}> */}
         <Providers>
           <SessionProvider session={session}>
-            <div>{children}</div>
+            <QueryClientContextProvider>
+              <div>{children}</div>
+            </QueryClientContextProvider>
           </SessionProvider>
         </Providers>
+        {/* </PersistGate> */}
       </body>
     </html>
   );

@@ -125,5 +125,17 @@ h6 {
     display: flex;
     justify-content: space-between;
   }
+
+  .swiper-button-next, .swiper-button-prev {
+    position: unset;
+  }
+  
+  .swiper-button-next::after, .swiper-button-prev::after, .swiper-button-next::before, .swiper-button-prev:before {
+    content: unset;
+  }
+
+  .btn {
+    
+  }
   
   

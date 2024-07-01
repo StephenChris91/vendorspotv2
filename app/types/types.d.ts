@@ -2,13 +2,13 @@ import { StaticImageData } from "next/image";
 import { JSXElementConstructor } from "react";
 import { JsxElement } from "typescript";
 
-export interface Product {
-    id: number;
-    name: string;
-    imageUrl: StaticImageData;
-    sale?: string;
-    price?: number;
-}
+// export interface Product {
+//     id: number;
+//     name: string;
+//     imageUrl: StaticImageData;
+//     sale?: string;
+//     price?: number;
+// }
 
 export interface catTitle {
     title: string;
@@ -67,7 +67,7 @@ export type InventoryType = {
     sku: number
 }
 export type CategoriesType = {
-    id: string,
+    id?: string,
     name: string,
     slug: string,
 }
@@ -247,7 +247,7 @@ export type shopType = {
   };
 
   export interface ProductType {
-    // id: string;
+    id?: string;
     name: string;
     slug: string;
     description: string;
@@ -255,7 +255,7 @@ export type shopType = {
     sale_price: number;
     sku: number;
     quantity: number;
-    in_stock: boolean;
+    in_stock: boolean | null;
     is_taxable: boolean;
     image?: string;
     video?: string;
@@ -265,10 +265,11 @@ export type shopType = {
     my_review?: string;
     in_wishlist?: boolean;
     categories?: string[];
-    shop_name?: string; // Add this line
+    shop_name?: string;
     status: 'Draft' | 'Published' | 'Suspended' | 'OutOfStock';
     product_type: 'Simple' | 'Variable';
   }
+  
   
   
   

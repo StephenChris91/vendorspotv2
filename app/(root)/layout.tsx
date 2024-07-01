@@ -15,6 +15,7 @@ import Footer from "@/components/footer";
 import StoreProvider from "@/store/store-provider";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+import QueryClientContextProvider from "@/lib/context/queryclient-providers";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -38,16 +39,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div lang="en" className={cn(GeistSans.className)}>
       <div className={cn(fontSans.variable)}>
         <StoreProvider>
-          <main className="">
-            <PromoBanner />
-            <UpperNav />
-            <MiddleNav />
-            <LowerNav />
-            <ProductCart />
-            <div className="">{children}</div>
-            <Footer />
-            <Toaster />
-          </main>
+          <QueryClientContextProvider>
+            <main className="">
+              <PromoBanner />
+              <UpperNav />
+              <MiddleNav />
+              <LowerNav />
+              <ProductCart />
+              <div className="">{children}</div>
+              <Footer />
+              <Toaster />
+            </main>
+          </QueryClientContextProvider>
         </StoreProvider>
       </div>
     </div>
