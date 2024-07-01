@@ -80,7 +80,7 @@ export function CategoryDisplay() {
                               {category.name}/
                             </RadioGroupItem>
                             <Label
-                              htmlFor={category.id.toString()}
+                              htmlFor={category.id?.toString()}
                               className="ml-2 text-black font-bold"
                             >
                               {category.name}

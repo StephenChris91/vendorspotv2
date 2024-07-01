@@ -1,25 +1,7 @@
 "use client";
-import { gsap } from "gsap";
-import laptop from "@/public/shop/Laptop-3.webp";
-import { Button } from "@/components/ui/button";
-import Image, { StaticImageData } from "next/image";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { useState, useEffect, useRef, FC } from "react";
-import { PiHeart } from "react-icons/pi";
-import { PiEye } from "react-icons/pi";
-import { PiShoppingCartSimple } from "react-icons/pi";
-import ProductModal from "@/components/shop/product-modal";
-import { useQuery } from "@tanstack/react-query";
-import { getAllProducts } from "@/actions/products";
+import { Card } from "flowbite-react";
 import { ProductType } from "@/app/types/types";
-import { db } from "@/prisma/prisma";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   product: ProductType;
@@ -27,107 +9,58 @@ interface ProductCardProps {
   hasButton?: boolean;
 }
 
-export const ProductCard = ({
-  single,
-  hasButton,
-  product,
-}: ProductCardProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
-    null
-  );
+export const ProductCard = ({ product }: ProductCardProps) => {
+  const router = useRouter();
 
-  const overlayRef = useRef(null);
-
-  useEffect(() => {
-    gsap.from(overlayRef?.current, {
-      autoAlpha: 0,
-      duration: 1,
-      ease: "power3.out",
-    });
-  }, []);
-
-  function openModal() {
-    setSelectedProduct(product);
-    setIsModalOpen(true);
-  }
+  const handleClick = () => {
+    router.push(`/product/${product.id}`);
+  };
 
   return (
-    <>
-      <Card className="w-auto max-w-xs border rounded-none h-auto border-gray-400">
-        <div className="grid  p-4">
-          <div
-            className={`relative ${
-              single ? "aspect-[4/5]" : ""
-            } w-full overflow-hidden rounded-sm`}
-          >
-            <Image
-              src={product?.image ?? laptop}
-              alt="banner-3"
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{
-                width: "100%",
-                height: `${single ? "100%" : "200px"}`,
-                objectFit: "cover",
-              }}
-              className={`${single ? "aspect-[4/5]" : ""}`}
-            />
-
-            {!single ? (
-              <div
-                ref={overlayRef}
-                className="absolute top-0 left-0 w-full h-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black bg-opacity-50"
-              >
-                <PiHeart className="text-white h-7 w-7 p-1 mx-2 cursor-pointer" />
-                <PiShoppingCartSimple className=" text-white h-7 w-7 p-1 mx-2 cursor-pointer" />
-                <PiEye
-                  className=" text-white h-7 w-7 p-1 mx-2 cursor-pointer"
-                  onClick={openModal}
-                />
-              </div>
-            ) : null}
-          </div>
-          <div className="grid gap-1.5 mb-5">
-            <h3 className="font-semibold text-sm md:text-base">
-              {product?.name}
-            </h3>
-            <p className="font-semibold text-sm md:text-base">
-              ${product?.price}
-            </p>
-            <p className="text-sm md:text-base text-muted">
-              {product?.description || ""}
-            </p>
-            <p className="text-sm md:text-base ">{product?.categories || ""}</p>
-            <p className="text-sm md:text-base ">{product?.shop_name || ""}</p>
-          </div>
-          {hasButton ? (
-            <div className="flex justify-between items-center mx-auto gap-1 w-full">
-              <PiHeart className="bg-blue-300 text-blue-800 h-10 w-10 p-1 " />
-              <Button
-                size="lg"
-                className="bg-blue-500 hover:bg-green-500 w-[80%] rounded-sm"
-              >
-                Add to cart
-              </Button>
-              <PiEye
-                className="bg-blue-300 text-blue-800 h-10 w-10 p-1 cursor-pointer "
-                onClick={openModal}
-              />
-            </div>
-          ) : null}
-        </div>
-      </Card>
-      {selectedProduct && (
-        <ProductModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          product={selectedProduct}
-        />
-      )}
-    </>
+    <Card
+      className="max-w-sm cursor-pointer"
+      imgAlt={product.name}
+      imgSrc={product.image ?? "/images/products/default-product.png"}
+      onClick={handleClick} // Redirect to product details on click
+    >
+      <a href="#">
+        <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+          {product.name}
+        </h5>
+      </a>
+      <div className="mb-5 mt-2.5 flex items-center">
+        {Array(5)
+          .fill(0)
+          .map((_, index) => (
+            <svg
+              key={index}
+              className="h-5 w-5 text-yellow-300"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            </svg>
+          ))}
+        <span className="ml-3 mr-2 rounded bg-cyan-100 px-2.5 py-0.5 text-xs font-semibold text-cyan-800 dark:bg-cyan-200 dark:text-cyan-800">
+          {product.ratings?.toFixed(1) ?? "N/A"}
+        </span>
+      </div>
+      <div className="flex items-center justify-between">
+        <span className="text-lg font-bold text-gray-900 dark:text-white">
+          ${product.price}
+        </span>
+        <a
+          href="#"
+          className="rounded-sm bg-cyan-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
+          onClick={(e) => {
+            e.preventDefault();
+            handleClick();
+          }}
+        >
+          Add to cart
+        </a>
+      </div>
+    </Card>
   );
 };
-
-export default ProductCard;

@@ -5,7 +5,10 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
   try {
-    const products = await db.product.findMany();
+    const products = await db.product.findMany(
+        {include: {categories: true, shop: true} }
+    );
+    
     return NextResponse.json(products);
   } catch (error) {
     console.error("Error fetching products:", error);
