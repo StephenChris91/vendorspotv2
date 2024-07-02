@@ -170,7 +170,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
               Seller:
             </span>
             <button className="text-sm tracking-wider text-accent underline transition hover:text-accent-hover hover:no-underline">
-              {product.shop_name}
+              {product.shop?.shopname}
             </button>
           </div>
         </div>

@@ -5,7 +5,13 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { useState, useEffect, useRef, FC } from "react";
-import { PiHeart, PiEye, PiShoppingCartSimple } from "react-icons/pi";
+import {
+  PiHeart,
+  PiEye,
+  PiShoppingCartSimple,
+  PiCarThin,
+  PiShoppingCartDuotone,
+} from "react-icons/pi";
 import ProductModal from "@/components/shop/product-modal";
 import { ProductType } from "@/app/types/types";
 
@@ -36,7 +42,11 @@ const ProductCard: FC<ProductCardProps> = ({ single, hasButton, product }) => {
     <>
       <Card className="w-auto max-w-xs border rounded-none h-auto border-gray-400">
         <div className="grid  p-4">
-          <div className={`relative ${single ? "aspect-[4/5]" : ""} w-full overflow-hidden rounded-sm`}>
+          <div
+            className={`relative ${
+              single ? "aspect-[4/5]" : ""
+            } w-full overflow-hidden rounded-sm`}
+          >
             <Image
               src={product.image ?? laptop}
               alt={product.name}
@@ -66,17 +76,29 @@ const ProductCard: FC<ProductCardProps> = ({ single, hasButton, product }) => {
             ) : null}
           </div>
           <div className="grid gap-1.5 mb-5">
-            <h3 className="font-semibold text-sm md:text-base">{product.name}</h3>
-            <p className="font-semibold text-sm md:text-base">${product.price}</p>
-            <p className="text-sm md:text-base text-muted">{product.description || ""}</p>
+            <h3 className="font-semibold text-sm md:text-base">
+              {product.name}
+            </h3>
+            <p className="font-semibold text-sm md:text-base">
+              ${product.price}
+            </p>
+            <p className="text-sm md:text-base text-muted">
+              {product.description || ""}
+            </p>
           </div>
           {hasButton ? (
             <div className="flex justify-between items-center mx-auto gap-1 w-full">
               <PiHeart className="bg-blue-300 text-blue-800 h-10 w-10 p-1 " />
-              <Button size="lg" className="bg-blue-500 hover:bg-green-500 w-[80%] rounded-sm">
-                Add to cart
+              <Button
+                size="lg"
+                className="bg-blue-500 hover:bg-green-500 w-[80%] rounded-sm"
+              >
+                <PiShoppingCartDuotone />
               </Button>
-              <PiEye className="bg-blue-300 text-blue-800 h-10 w-10 p-1 cursor-pointer " onClick={openModal} />
+              <PiEye
+                className="bg-blue-300 text-blue-800 h-10 w-10 p-1 cursor-pointer "
+                onClick={openModal}
+              />
             </div>
           ) : null}
         </div>

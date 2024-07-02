@@ -68,7 +68,6 @@ const ProductForm: React.FC = () => {
     my_review: "",
     in_wishlist: false,
     categories: [], // Initialize with empty array
-    shop_name: "",
     status: "Draft",
     product_type: "Simple",
   };

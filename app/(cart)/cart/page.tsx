@@ -1,6 +1,6 @@
 import CartPage from "@/components/cart/cart-page";
 
-const Page = () => {
+const Cart = () => {
   return (
     <section className="small-wrapper">
       <CartPage />
@@ -8,8 +8,8 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Cart;
 
-Page.getInitialProps = async (ctx: any) => {
-  return { currentPath: ctx.pathname === "/cart" };
-};
+// Page.getInitialProps = async (ctx: any) => {
+//   return { currentPath: ctx.pathname === "/cart" };
+// };

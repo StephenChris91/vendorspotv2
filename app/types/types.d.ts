@@ -224,6 +224,7 @@ export type CartTableType = {
 
 
 export type shopType = {
+    id?: string;
     shopname: string;
     description: string;
     address: string;
@@ -265,7 +266,10 @@ export type shopType = {
     my_review?: string;
     in_wishlist?: boolean;
     categories?: string[];
-    shop_name?: string;
+    shop?: {
+        id?: string;
+        shopname?: string;
+    };
     status: 'Draft' | 'Published' | 'Suspended' | 'OutOfStock';
     product_type: 'Simple' | 'Variable';
   }

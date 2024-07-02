@@ -2,6 +2,9 @@
 import { Card } from "flowbite-react";
 import { ProductType } from "@/app/types/types";
 import { useRouter } from "next/navigation";
+import { PiCarThin, PiShoppingCartDuotone } from "react-icons/pi";
+import { useEffect } from "react";
+import Link from "next/link";
 
 interface ProductCardProps {
   product: ProductType;
@@ -12,6 +15,10 @@ interface ProductCardProps {
 export const ProductCard = ({ product }: ProductCardProps) => {
   const router = useRouter();
 
+  useEffect(() => {
+    console.log(product);
+  }, []);
+
   const handleClick = () => {
     router.push(`/product/${product.id}`);
   };
@@ -21,13 +28,20 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       className="max-w-sm cursor-pointer"
       imgAlt={product.name}
       imgSrc={product.image ?? "/images/products/default-product.png"}
-      onClick={handleClick} // Redirect to product details on click
     >
-      <a href="#">
-        <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-          {product.name}
-        </h5>
-      </a>
+      <div>
+        <Link href={`/product/${product.id}`}>
+          <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+            {product.name}
+          </h5>
+        </Link>
+        <Link href={`/vendors/${product.shop?.id}`}>
+          <p className="text-sm text-muted font-semibold tracking-tight text-gray-500 dark:text-white">
+            Seller: {product.shop?.shopname}
+          </p>
+        </Link>
+      </div>
+
       <div className="mb-5 mt-2.5 flex items-center">
         {Array(5)
           .fill(0)
@@ -58,7 +72,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             handleClick();
           }}
         >
-          Add to cart
+          <PiShoppingCartDuotone className="text-bold text-lg" />
         </a>
       </div>
     </Card>

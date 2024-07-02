@@ -1,9 +1,8 @@
 "use client";
 
-import { Card } from "../ui/card";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import shopLogo from "@/public/shop/shop-logo.png";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { shopType } from "@/app/types/types";
 import { CSSProperties } from "react";
 import { SyncLoader } from "react-spinners";
@@ -20,6 +19,7 @@ const override: CSSProperties = {
 
 const ShopVendors = () => {
   const color = "#3364FF";
+  const router = useRouter();
   const {
     data: vendors,
     isLoading,
@@ -32,7 +32,7 @@ const ShopVendors = () => {
   const limited = vendors?.slice(0, 4);
   if (isLoading)
     return (
-      <div className="flex items-center justify-between mx-auto">
+      <div className="flex items-center justify-center mx-auto">
         <SyncLoader cssOverride={override} color={color} />
       </div>
     );
@@ -40,35 +40,39 @@ const ShopVendors = () => {
   if (error) return <ErrorPage title="Error" message="No Products found" />;
 
   return (
-    <section className="small-wrapper flex-col flex justify-between items-center mx-auto gap-5 w-full mb-12">
-      <h1>Shop By Vendors</h1>
+    <section className="small-wrapper flex flex-col items-center mx-auto gap-5 w-full mb-12">
+      <h1 className="text-2xl font-bold mb-6">Shop By Vendors</h1>
 
-      <div className="flex justify-between items-center mx-auto gap-3 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
         {limited?.map((item) => (
-          <Card className="w-full max-w-xs border rounded-none h-auto border-gray-400">
-            <div className="flex justify-between px-6 items-center mx-auto w-full">
-              <div className="overflow-hidden">
+          <div
+            key={item.id}
+            className="w-full max-w-xs border rounded-none h-auto border-gray-300 shadow-sm transition-transform duration-200 hover:scale-105 cursor-pointer"
+            onClick={() => router.push(`/vendors/${item.id}`)}
+          >
+            <div className="flex flex-col items-center p-6">
+              <div className="overflow-hidden mb-4 w-full h-40">
                 <Image
                   src={item.logo}
-                  alt="banner-3"
+                  alt={`${item.shopname} logo`}
                   width={0}
                   height={0}
                   sizes="100vw"
                   style={{
                     width: "100%",
-                    // height: "auto",
+                    height: "100%",
                     objectFit: "cover",
                   }}
-                  className="py-7"
+                  className="rounded-lg"
                 />
               </div>
-              <div className="mb-5">
-                <h3 className="font-semibold text-sm md:text-base w-full">
+              <div className="text-center">
+                <h3 className="font-semibold text-base md:text-lg">
                   {item.shopname}
                 </h3>
               </div>
             </div>
-          </Card>
+          </div>
         ))}
       </div>
     </section>
