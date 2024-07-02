@@ -11,8 +11,10 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import { removeFromCart } from "@/store/slices/cartSlice";
+import { useRouter } from "next/navigation";
 
 const ProductCart: React.FC = () => {
+  const router = useRouter();
   const { cart } = useCart();
   const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cart.reduce(
@@ -101,7 +103,12 @@ const ProductCart: React.FC = () => {
                       )}
                     </div>
                     <footer className="fixed bottom-0 z-10 w-96 max-w-full bg-white px-6 py-5">
-                      <button className="flex h-12 w-full justify-between rounded-full bg-blue-500 p-1 text-sm font-bold shadow-700 transition-colors hover:bg-blue-600 focus:bg-blue-600 focus:outline-0 md:h-14">
+                      <button
+                        onClick={() => {
+                          router.push("/cart");
+                        }}
+                        className="flex h-12 w-full justify-between rounded-full bg-blue-500 p-1 text-sm font-bold shadow-700 transition-colors hover:bg-blue-600 focus:bg-blue-600 focus:outline-0 md:h-14"
+                      >
                         <span className="flex h-full flex-1 items-center px-5 text-white">
                           Checkout
                         </span>
