@@ -214,13 +214,14 @@ export type QuestionsType = {
     feedbacks: JsxElement,
     date: string,
 }
-export type CartTableType = {
-    id: string, 
-    products: JsxElement,
-    quantity: JsxElement,
-    price: JsxElement,
-    total: JsxElement,
-}
+export interface CartTableType {
+    id: string;
+    product: string;
+    price: number;
+    quantity: number;
+    subtotal: number;
+    logo?: string; // optional, assuming products might have a logo or image
+  }
 
 
 export type shopType = {

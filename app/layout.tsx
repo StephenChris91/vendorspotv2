@@ -10,6 +10,7 @@ import { store, persistor } from "@/store/store";
 
 import Providers from "@/provider";
 import QueryClientContextProvider from "@/lib/context/queryclient-providers";
+import { CartProvider } from "@/lib/context/cart/cart-context";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -38,9 +39,11 @@ export default async function Layout({
         {/* <PersistGate persistor={persistor} loading={null}> */}
         <Providers>
           <SessionProvider session={session}>
-            <QueryClientContextProvider>
-              <div>{children}</div>
-            </QueryClientContextProvider>
+            <CartProvider>
+              <QueryClientContextProvider>
+                <div>{children}</div>
+              </QueryClientContextProvider>
+            </CartProvider>
           </SessionProvider>
         </Providers>
         {/* </PersistGate> */}

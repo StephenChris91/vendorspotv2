@@ -2,9 +2,10 @@
 import { Card } from "flowbite-react";
 import { ProductType } from "@/app/types/types";
 import { useRouter } from "next/navigation";
-import { PiCarThin, PiShoppingCartDuotone } from "react-icons/pi";
+import { PiShoppingCartDuotone } from "react-icons/pi";
 import { useEffect } from "react";
 import Link from "next/link";
+import { useCart } from "@/lib/context/cart/cart-context";
 
 interface ProductCardProps {
   product: ProductType;
@@ -14,13 +15,23 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product }: ProductCardProps) => {
   const router = useRouter();
+  const { addToCart } = useCart();
 
   useEffect(() => {
     console.log(product);
-  }, []);
+  }, [product]);
 
   const handleClick = () => {
     router.push(`/product/${product.id}`);
+  };
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      product: product.name,
+      price: product.price,
+      quantity: 1,
+    });
   };
 
   return (
@@ -64,16 +75,15 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         <span className="text-lg font-bold text-gray-900 dark:text-white">
           ${product.price}
         </span>
-        <a
-          href="#"
+        <button
           className="rounded-sm bg-cyan-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
           onClick={(e) => {
             e.preventDefault();
-            handleClick();
+            handleAddToCart();
           }}
         >
           <PiShoppingCartDuotone className="text-bold text-lg" />
-        </a>
+        </button>
       </div>
     </Card>
   );
