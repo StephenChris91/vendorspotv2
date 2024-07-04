@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { PiTrashDuotone } from "react-icons/pi";
 import { TbEdit } from "react-icons/tb";
 import { CartTableType } from "@/app/types/types";
-import { useCart } from "@/lib/context/cart/cart-context";
+import { useCart } from "@/lib/context/cart/cart-provider";
 
 // Define the columns for the cart table
 export const columns: ColumnDef<CartTableType>[] = [

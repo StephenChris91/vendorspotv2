@@ -1,6 +1,6 @@
 "use client";
 
-import { useCart } from "@/lib/context/cart/cart-context";
+import { useCart } from "@/lib/context/cart/cart-provider";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import type { CartTableType } from "@/app/types/types";

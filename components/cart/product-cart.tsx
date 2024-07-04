@@ -1,26 +1,42 @@
 "use client";
 
-import { useCart } from "@/lib/context/cart/cart-context";
-import EmptyCartIcon from "../icons/empt-cart-icon";
-import EmptyShoppingBagIcon from "../icons/empty-shopping-bag-icon";
-import CloseIcon from "../icons/close-icon";
+import CloseIcon from "@/components/icons/close-icon";
+import EmptyCartIcon from "@/components/icons/empt-cart-icon";
+import EmptyShoppingBagIcon from "@/components/icons/empty-shopping-bag-icon";
 import {
   Sheet,
   SheetTrigger,
   SheetContent,
   SheetClose,
 } from "@/components/ui/sheet";
-import { removeFromCart } from "@/store/slices/cartSlice";
+import { useCart } from "@/lib/context/cart/cart-provider";
 import { useRouter } from "next/navigation";
+import { CartItem } from "@/app/types/types";
+import Link from "next/link";
 
 const ProductCart: React.FC = () => {
   const router = useRouter();
-  const { cart } = useCart();
-  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const { cart, removeFromCart } = useCart();
+
+  // Ensure cart items have correct properties
+  // console.log(cart);
+
+  // Calculate total quantity and total price
+  const totalQuantity = cart.reduce((sum, item) => {
+    if (typeof item.quantity === "number") {
+      return sum + item.quantity;
+    }
+    console.warn("Invalid quantity", item);
+    return sum;
+  }, 0);
+
+  const totalPrice = cart.reduce((sum, item) => {
+    if (typeof item.price === "number" && typeof item.quantity === "number") {
+      return sum + item.price * item.quantity;
+    }
+    console.warn("Invalid price or quantity", item);
+    return sum;
+  }, 0);
 
   return (
     <Sheet>
@@ -38,12 +54,12 @@ const ProductCart: React.FC = () => {
         </button>
       </SheetTrigger>
       <SheetContent className="p-0 max-w-96">
-        <div className="absolute inset-y-0 outline-none ltr:right-0 rtl:right-0 ">
+        <div className="absolute inset-y-0 outline-none ltr:right-0 rtl:right-0">
           <div className="h-full w-96 max-w-full">
             <div className="flex h-full flex-col bg-white text-base shadow-xl">
               <div
                 data-overlayscrollbars-initialize=""
-                className="h-full w-full flex justify-between items-center mx-auto "
+                className="h-full w-full flex justify-between items-center mx-auto"
                 data-overlayscrollbars="host"
               >
                 <div className="os-size-observer">
@@ -85,11 +101,18 @@ const ProductCart: React.FC = () => {
                               className="flex justify-between items-center border-b py-4"
                             >
                               <div className="flex flex-col">
-                                <span>{item.product}</span>
+                                <span>{item.name}</span>
                                 <span>Quantity: {item.quantity}</span>
                                 <span>
                                   ${(item.price * item.quantity).toFixed(2)}
                                 </span>
+                              </div>
+                              <div className="flex items-center justify-center w-12 h-12 rounded-full  text-white font-semibold text-center">
+                                <img
+                                  src={item.image}
+                                  alt={item.name}
+                                  className="flex"
+                                />
                               </div>
                               <button
                                 className="text-red-500"
@@ -103,10 +126,8 @@ const ProductCart: React.FC = () => {
                       )}
                     </div>
                     <footer className="fixed bottom-0 z-10 w-96 max-w-full bg-white px-6 py-5">
-                      <button
-                        onClick={() => {
-                          router.push("/cart");
-                        }}
+                      <Link
+                        href="/checkout"
                         className="flex h-12 w-full justify-between rounded-full bg-blue-500 p-1 text-sm font-bold shadow-700 transition-colors hover:bg-blue-600 focus:bg-blue-600 focus:outline-0 md:h-14"
                       >
                         <span className="flex h-full flex-1 items-center px-5 text-white">
@@ -115,7 +136,7 @@ const ProductCart: React.FC = () => {
                         <span className="flex h-full shrink-0 items-center rounded-full bg-white px-5 text-blue-500">
                           ${totalPrice.toFixed(2)}
                         </span>
-                      </button>
+                      </Link>
                     </footer>
                   </section>
                 </div>

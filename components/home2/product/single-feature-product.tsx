@@ -7,6 +7,7 @@ import axios from "axios";
 import ErrorPage from "../error";
 import { SyncLoader } from "react-spinners";
 import { CSSProperties } from "react";
+import { useCart } from "@/lib/context/cart/cart-provider";
 
 const override: CSSProperties = {
   display: "flex",
@@ -20,6 +21,7 @@ const override: CSSProperties = {
 const SingleFeatureProduct = () => {
   const color = "#3364FF";
 
+  const { getCartItems } = useCart();
   const {
     data: singleProduct,
     error,

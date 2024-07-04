@@ -15,8 +15,6 @@ import UpperNav from "@/components/home2/upper-nav";
 import MiddleNav from "@/components/home2/middle-nav";
 import LowerNav from "@/components/home2/lower-nav";
 import Footer from "@/components/footer";
-import StoreProvider from "@/store/store-provider";
-import { SessionProvider } from "next-auth/react";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -37,18 +35,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div lang="en" className={cn(GeistSans.className)}>
       <div className={cn(fontSans.variable)}>
-        <StoreProvider>
-          <main className="">
-            <PromoBanner />
-            <UpperNav />
-            <MiddleNav />
-            <LowerNav />
-            <ProductCart />
-            <div className="">{children}</div>
-            <Footer />
-            <Toaster />
-          </main>
-        </StoreProvider>
+        <main className="">
+          <PromoBanner />
+          <UpperNav />
+          <MiddleNav />
+          <LowerNav />
+          <ProductCart />
+          <div className="">{children}</div>
+          <Footer />
+          <Toaster />
+        </main>
       </div>
     </div>
   );

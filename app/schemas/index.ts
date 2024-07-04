@@ -153,6 +153,14 @@ export const shopSchema = z.object({
       });
       
 
+      export const shippingSchema = z.object({
+        name: z.string().nonempty("Name is required"),
+        address: z.string().nonempty("Address is required"),
+        city: z.string().nonempty("City is required"),
+        state: z.string().nonempty("State is required"),
+        zip: z.string().nonempty("ZIP code is required"),
+      });
+
 // Corresponding TypeScript type derived from the schema
 // export type ProductType = z.infer<typeof productSchema>;
 

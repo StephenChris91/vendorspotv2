@@ -1,12 +1,12 @@
 "use client";
 
 import axios from "axios";
-import { ProductCard } from "./product-card";
 import { useQuery } from "@tanstack/react-query";
 import { ProductType } from "@/app/types/types";
 import { SyncLoader } from "react-spinners";
 import ErrorPage from "../error";
 import { CSSProperties } from "react";
+import { ProductCard } from "./product-card";
 
 const override: CSSProperties = {
   display: "flex",

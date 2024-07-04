@@ -5,12 +5,8 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
-import { PersistGate } from "redux-persist/integration/react";
-import { store, persistor } from "@/store/store";
-
-import Providers from "@/provider";
 import QueryClientContextProvider from "@/lib/context/queryclient-providers";
-import { CartProvider } from "@/lib/context/cart/cart-context";
+import { CartProvider } from "@/lib/context/cart/cart-provider";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -36,16 +32,13 @@ export default async function Layout({
   return (
     <html lang="en" className={cn(GeistSans.className)}>
       <body className={cn(fontSans.variable)}>
-        {/* <PersistGate persistor={persistor} loading={null}> */}
-        <Providers>
+        <QueryClientContextProvider>
           <SessionProvider session={session}>
             <CartProvider>
-              <QueryClientContextProvider>
-                <div>{children}</div>
-              </QueryClientContextProvider>
+              <div>{children}</div>
             </CartProvider>
           </SessionProvider>
-        </Providers>
+        </QueryClientContextProvider>
         {/* </PersistGate> */}
       </body>
     </html>

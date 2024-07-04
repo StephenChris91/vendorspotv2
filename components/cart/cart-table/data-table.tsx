@@ -8,9 +8,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useState } from "react";
-import { useCart } from "@/lib/context/cart/cart-context";
-import { CartTableType } from "@/app/types/types";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {

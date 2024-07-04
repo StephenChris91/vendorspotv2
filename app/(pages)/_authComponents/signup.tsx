@@ -22,12 +22,11 @@ import { signupSchema } from "@/app/schemas";
 import { useToast } from "@/components/ui/use-toast";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { useDispatch } from "react-redux";
-import { signUpUser } from "@/store/slices/userSlice";
+import { register } from "@/actions/register";
 
 export default function Signup({ open }: any) {
   const router = useRouter();
   const { toast } = useToast();
-  const dispatch = useDispatch();
   const [isVendor, setIsVendor] = useState(false);
 
   const form = useForm<z.infer<typeof signupSchema>>({
@@ -50,7 +49,7 @@ export default function Signup({ open }: any) {
   const onSubmit = async (
     formData: Omit<z.infer<typeof signupSchema>, "data">
   ) => {
-    const responseData = await dispatch(signUpUser(formData) as any);
+    const responseData = await register(formData);
 
     if (responseData.error) {
       toast({
@@ -64,7 +63,7 @@ export default function Signup({ open }: any) {
       toast({
         variant: "default",
         title: "Success",
-        description: responseData.message,
+        description: responseData.error,
         duration: 5000,
       });
       router.refresh();

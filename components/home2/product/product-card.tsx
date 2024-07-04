@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { PiShoppingCartDuotone } from "react-icons/pi";
 import { useEffect } from "react";
 import Link from "next/link";
-import { useCart } from "@/lib/context/cart/cart-context";
+import { useCart } from "@/lib/context/cart/cart-provider";
+import { convertProductToCartItem } from "@/lib/utils";
 
 interface ProductCardProps {
   product: ProductType;
@@ -13,7 +14,7 @@ interface ProductCardProps {
   hasButton?: boolean;
 }
 
-export const ProductCard = ({ product }: ProductCardProps) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const router = useRouter();
   const { addToCart } = useCart();
 
@@ -26,12 +27,8 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   const handleAddToCart = () => {
-    addToCart({
-      id: product.id,
-      product: product.name,
-      price: product.price,
-      quantity: 1,
-    });
+    const cartItem = convertProductToCartItem(product);
+    addToCart(cartItem);
   };
 
   return (
@@ -40,12 +37,10 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       imgAlt={product.name}
       imgSrc={product.image ?? "/images/products/default-product.png"}
     >
-      <div>
-        <Link href={`/product/${product.id}`}>
-          <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-            {product.name}
-          </h5>
-        </Link>
+      <div onClick={handleClick}>
+        <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+          {product.name}
+        </h5>
         <Link href={`/vendors/${product.shop?.id}`}>
           <p className="text-sm text-muted font-semibold tracking-tight text-gray-500 dark:text-white">
             Seller: {product.shop?.shopname}

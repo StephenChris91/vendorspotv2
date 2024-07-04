@@ -42,14 +42,13 @@ export type OrderProcessing = {
     actions?: JSXElement
   }
 
-// export type ProductType = {
-//     id: string,
-//     product: string,
-//     productType: "simple" | "variables",
-//     shop: string,
-//     quantity: number,
-//     status: "pendings" | "processing" | "success" | "failed",
-// }
+  export interface CartItemType {
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    image?: string;
+  }
 
 export type DraftProductType = {
     id: string,
@@ -216,7 +215,7 @@ export type QuestionsType = {
 }
 export interface CartTableType {
     id: string;
-    product: string;
+    name: string;
     price: number;
     quantity: number;
     subtotal: number;
@@ -273,10 +272,19 @@ export type shopType = {
     };
     status: 'Draft' | 'Published' | 'Suspended' | 'OutOfStock';
     product_type: 'Simple' | 'Variable';
+    [key: string]: any;
   }
   
-  
-  
+  // app/types/types.ts
+export interface CartItem {
+    id: string;
+    product: string;
+    price: number;
+    quantity: number;
+    subtotal?: number;
+    name?: string;
+    image: string; // Add this line
+  }
   
   
   
