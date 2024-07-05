@@ -23,7 +23,6 @@ import { db } from "@/prisma/prisma";
 import { useToast } from "../ui/use-toast";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { useDispatch } from "react-redux";
-import { signUpUser } from "@/store/slices/userSlice";
 import { register } from "@/actions/register";
 import { FiAlertCircle } from "react-icons/fi";
 

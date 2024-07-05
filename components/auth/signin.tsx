@@ -21,8 +21,6 @@ import { useToast } from "../ui/use-toast";
 import { loginSchema } from "@/app/schemas";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { signInUser } from "@/store/slices/userSlice";
-import { AppDispatch } from "@/store/store";
 import { login } from "@/actions/login";
 import { SignUpModal } from "@/app/(pages)/_authComponents/sign-up-modal";
 import SocialLogin from "./social/social-login";
@@ -35,7 +33,6 @@ export default function Login() {
 
   const router = useRouter();
   const { toast } = useToast();
-  const dispatch: AppDispatch = useDispatch();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {

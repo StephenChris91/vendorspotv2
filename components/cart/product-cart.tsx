@@ -1,7 +1,6 @@
 "use client";
 
 import CloseIcon from "@/components/icons/close-icon";
-import EmptyCartIcon from "@/components/icons/empt-cart-icon";
 import EmptyShoppingBagIcon from "@/components/icons/empty-shopping-bag-icon";
 import {
   Sheet,
@@ -13,13 +12,11 @@ import { useCart } from "@/lib/context/cart/cart-provider";
 import { useRouter } from "next/navigation";
 import { CartItem } from "@/app/types/types";
 import Link from "next/link";
+import EmptyCartIcon from "../icons/empt-cart-icon";
 
 const ProductCart: React.FC = () => {
   const router = useRouter();
   const { cart, removeFromCart } = useCart();
-
-  // Ensure cart items have correct properties
-  // console.log(cart);
 
   // Calculate total quantity and total price
   const totalQuantity = cart.reduce((sum, item) => {
@@ -71,7 +68,7 @@ const ProductCart: React.FC = () => {
                   className="mr-0 mb-0 ml-0 top-0 left-0 w-full p-0"
                 >
                   <section className="relative flex h-full flex-col">
-                    <header className="fixed top-0 z-10 flex w-96 max-w-md items-center justify-between border-b border-border-200 border-opacity-75 bg-light px-6 py-4">
+                    <header className="fixed top-0 z-10 flex w-full items-center justify-between border-b border-border-200 border-opacity-75 bg-white px-6 py-4 shadow">
                       <div className="flex font-semibold text-blue-500">
                         <EmptyShoppingBagIcon />
                         <span className="flex ltr:ml-2 rtl:mr-2">
@@ -79,13 +76,13 @@ const ProductCart: React.FC = () => {
                         </span>
                       </div>
                       <SheetClose asChild>
-                        <button className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-500 text-muted transition-all duration-200 hover:bg-blue-600 hover:text-light focus:bg-blue-600 focus:text-white focus:outline-0 ltr:ml-3 ltr:-mr-2 rtl:mr-3 rtl:-ml-2">
+                        <button className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-500 text-white transition-all duration-200 hover:bg-blue-600 focus:bg-blue-600 focus:outline-0 ltr:ml-3 ltr:-mr-2 rtl:mr-3 rtl:-ml-2">
                           <span className="sr-only">close</span>
                           <CloseIcon />
                         </button>
                       </SheetClose>
                     </header>
-                    <div className="grow pt-16 pb-20 mx-auto">
+                    <div className="grow pt-20 pb-24 mx-auto w-full max-w-full overflow-y-auto">
                       {cart.length === 0 ? (
                         <div className="flex h-full flex-col items-center justify-center">
                           <EmptyCartIcon />
@@ -94,28 +91,34 @@ const ProductCart: React.FC = () => {
                           </h4>
                         </div>
                       ) : (
-                        <div className="p-4">
+                        <div className="p-4 space-y-4">
                           {cart.map((item) => (
                             <div
                               key={item.id}
                               className="flex justify-between items-center border-b py-4"
                             >
-                              <div className="flex flex-col">
-                                <span>{item.name}</span>
-                                <span>Quantity: {item.quantity}</span>
-                                <span>
-                                  ${(item.price * item.quantity).toFixed(2)}
-                                </span>
-                              </div>
-                              <div className="flex items-center justify-center w-12 h-12 rounded-full  text-white font-semibold text-center">
-                                <img
-                                  src={item.image}
-                                  alt={item.name}
-                                  className="flex"
-                                />
+                              <div className="flex items-center space-x-4">
+                                <div className="w-16 h-16 rounded-lg overflow-hidden border border-gray-200">
+                                  <img
+                                    src={item.image}
+                                    alt={item.name}
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+                                <div className="flex flex-col">
+                                  <span className="font-semibold">
+                                    {item.name}
+                                  </span>
+                                  <span className="text-sm text-gray-600">
+                                    Quantity: {item.quantity}
+                                  </span>
+                                  <span className="text-sm text-gray-600">
+                                    ${(item.price * item.quantity).toFixed(2)}
+                                  </span>
+                                </div>
                               </div>
                               <button
-                                className="text-red-500"
+                                className="text-red-500 hover:text-red-700"
                                 onClick={() => removeFromCart(item.id)}
                               >
                                 <CloseIcon />
@@ -125,10 +128,10 @@ const ProductCart: React.FC = () => {
                         </div>
                       )}
                     </div>
-                    <footer className="fixed bottom-0 z-10 w-96 max-w-full bg-white px-6 py-5">
+                    <footer className="fixed bottom-0 z-10 w-full bg-white px-6 py-5 shadow">
                       <Link
                         href="/checkout"
-                        className="flex h-12 w-full justify-between rounded-full bg-blue-500 p-1 text-sm font-bold shadow-700 transition-colors hover:bg-blue-600 focus:bg-blue-600 focus:outline-0 md:h-14"
+                        className="flex h-12 w-full justify-between items-center rounded-full bg-blue-500 p-1 text-sm font-bold shadow-700 transition-colors hover:bg-blue-600 focus:bg-blue-600 focus:outline-0 md:h-14"
                       >
                         <span className="flex h-full flex-1 items-center px-5 text-white">
                           Checkout
