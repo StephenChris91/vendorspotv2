@@ -19,7 +19,6 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { loginSchema } from "@/app/schemas";
 import { useRouter } from "next/navigation";
-import { AppDispatch } from "@/store/store";
 import { login } from "@/actions/login";
 import { SignUpModal } from "@/app/(pages)/_authComponents/sign-up-modal";
 import SocialLogin from "@/components/auth/social/social-login";
@@ -33,7 +32,6 @@ export default function Login() {
 
   const router = useRouter();
   const { toast } = useToast();
-  const dispatch: AppDispatch = useDispatch();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
