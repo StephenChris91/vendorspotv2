@@ -4,10 +4,7 @@ import { useFormContext } from "@/app/context/FormContext/formcontext";
 import Separator from "@/components/separator";
 import { Input } from "@/components/ui/input";
 import { useCurrentUser } from "@/lib/use-session-client";
-import { updateShopField } from "@/store/slices/shopSlice";
-import { RootState } from "@/store/store";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 interface AddBasicInfoProps {
   banner: string;
