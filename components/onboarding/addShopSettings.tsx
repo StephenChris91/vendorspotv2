@@ -19,10 +19,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import React, { useEffect, useCallback } from "react";
 import { shopSettingsSchema } from "@/app/schemas";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, store } from "@/store/store";
 import debounce from "lodash.debounce";
-import { updateShopField } from "@/store/slices/shopSlice";
 import { useFormContext } from "@/app/context/FormContext/formcontext";
 
 interface AddShopSettingsProps {
