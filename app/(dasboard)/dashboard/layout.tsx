@@ -5,8 +5,6 @@ import { cn } from "@/lib/utils";
 import AdminSideBar from "@/components/dasboard/admin-sidebar";
 import AdminMainSection from "@/components/dasboard/admin-main";
 import { Metadata } from "next";
-import { SessionProvider } from "next-auth/react";
-import { auth } from "@/auth";
 
 const fontSans = FontSans({
   subsets: ["latin"],

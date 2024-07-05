@@ -5,11 +5,9 @@ import { PiMagnifyingGlassLight, PiStorefront } from "react-icons/pi";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-// import { getServerSession } from "next-auth";
 import Link from "next/link";
 // import { User } from "@/app/context/user-context";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
 import { useEffect } from "react";
 import { useCurrentUser } from "@/lib/use-session-client";
 const AdminTopbar = () => {
